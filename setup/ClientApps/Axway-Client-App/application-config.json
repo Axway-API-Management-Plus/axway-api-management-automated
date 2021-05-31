@@ -1,0 +1,31 @@
+{
+  "name": "Axway Client App",
+  "organization": "Axway",
+  "state": "approved",
+  "enabled": true,
+  "credentials": [
+    {
+      "credentialType": "apikeys",
+      "secret": "45aeb5e1-5848-4df1-a3d3-b5af262e9d2f",
+      "corsOrigins": ["*"],
+      "apiKey": "ba2bde52-9604-4165-95fa-ecd28a3675c0"
+    }
+  ],
+  "apis": [
+    {
+      "state": "approved",
+      "apiName": "HL7-Interface-Module",
+      "apiVersion": "2.1"
+    },
+    {
+      "state": "approved",
+      "apiName": "Greeting API",
+      "apiVersion": "1.0.0"
+    },
+    {
+      "state": "approved",
+      "apiName": "FHIR Device",
+      "apiVersion": "1.0.0"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "",
+    "version" : "3.7",
+    "title" : "EMR-DiagnosticInfo",
+    "x-summary" : "Processes submitted patient diagnostics data"
+  },
+  "host" : "api-env.demo.axway.com:8065",
+  "basePath" : "/api/emr/diagnostic",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "operationId" : "All",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    }
+  },
+  "x-axway" : {
+    "serviceType" : "rest",
+    "image" : "/api/portal/v1.3/discovery/swagger/apis/ad5c51d1-1c14-48dd-af14-32fd3fc6995d/image",
+    "basePaths" : [ "https://api-env.demo.axway.com:8065" ],
+    "expired" : false,
+    "retirementDate" : 0,
+    "corsEnabled" : true,
+    "deprecated" : false,
+    "availableSDK" : {
+      "ios-swift" : "/discovery/sdk/ad5c51d1-1c14-48dd-af14-32fd3fc6995d/ios-swift",
+      "titanium" : "/discovery/sdk/ad5c51d1-1c14-48dd-af14-32fd3fc6995d/titanium",
+      "android" : "/discovery/sdk/ad5c51d1-1c14-48dd-af14-32fd3fc6995d/android",
+      "nodejs" : "/discovery/sdk/ad5c51d1-1c14-48dd-af14-32fd3fc6995d/nodejs"
+    },
+    "apiResourceType" : "swagger11ex",
+    "id" : "ad5c51d1-1c14-48dd-af14-32fd3fc6995d",
+    "state" : "published",
+    "tags" : {
+      "Industry" : [ "Healthcare" ],
+      "Type" : [ "Demo_Amplify_PlexusHealth" ],
+      "Category" : [ "Diagnostic" ]
+    }
+  }
+}

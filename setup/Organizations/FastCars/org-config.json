@@ -1,0 +1,9 @@
+{
+  "name" : "FastCars",
+  "description" : "Car Manufacturer",
+  "image" : "org-image.jpg",
+  "enabled" : true,
+  "development" : false,
+  "createdOn" : 1559043756061,
+  "restricted" : false
+}

@@ -1,0 +1,44 @@
+{
+  "name" : "EMR-HealthCatalog",
+  "path" : "/api/emr/catalog",
+  "state" : "published",
+  "version" : "3.7",
+  "organization" : "Plexus Health",
+  "apiDefinition" : "EMR-HealthCatalog.json",
+  "summary" : "Processes health data for patient symptom recommendation",
+  "backendBasepath" : "${BACKEND_HOST}/api/api/emr/catalog/",
+  "image" : "api-image.jpg",
+  "securityProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "devices" : [ {
+      "name" : "API Key",
+      "type" : "apiKey",
+      "order" : 1,
+      "properties" : {
+        "apiKeyFieldName" : "KeyId",
+        "takeFrom" : "HEADER",
+        "removeCredentialsOnSuccess" : "true"
+      }
+    } ]
+  } ],
+  "tags" : {
+    "Industry" : [ "Healthcare" ],
+    "Type" : [ "Demo_Amplify_PlexusHealth" ],
+    "Category" : [ "Catalog" ]
+  },
+  "clientOrganizations" : [ "Plexus Health" ],
+  "applications" : [ {
+    "name" : "Plexus Suite - Appointment Management",
+    "enabled" : true,
+    "state" : "approved"
+  }, {
+    "name" : "Plexus Health Center",
+    "enabled" : true,
+    "state" : "approved"
+  }, {
+    "name" : "Plexus Suite - Patient Monitoring",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}

@@ -1,0 +1,10 @@
+{
+  "name" : "FHIR",
+  "email" : "contact@fhirfocus.com",
+  "description" : "FHIR Focused Healtcare Providers",
+  "image" : "org-image.jpg",
+  "enabled" : true,
+  "development" : true,
+  "createdOn" : 1556526117010,
+  "restricted" : false
+}

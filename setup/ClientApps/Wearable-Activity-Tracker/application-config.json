@@ -1,0 +1,8 @@
+{
+  "name" : "Wearable - Activity Tracker",
+  "organization" : "Community",
+  "description" : "Smart device app monitoring patient heart rate and activity tracking",
+  "state" : "approved",
+  "enabled" : true,
+  "email" : "plexus.activity.contact@careconnex.com"
+}

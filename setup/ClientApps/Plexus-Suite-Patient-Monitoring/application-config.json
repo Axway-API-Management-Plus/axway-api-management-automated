@@ -1,0 +1,54 @@
+{
+  "name" : "Plexus Suite - Patient Monitoring",
+  "organization" : "Plexus Health",
+  "description" : "Physician app providing insight in wearable tracking data",
+  "state" : "approved",
+  "enabled" : true,
+  "credentials" : [ {
+    "credentialType" : "apikeys",
+    "secret" : "b73b904a-425d-4367-b6c0-2846d6d5efc8",
+    "corsOrigins" : [ "*" ],
+    "apiKey" : "47b01f8e-c955-4aec-a426-9824086e46dc"
+  } ],
+  "apis" : [ {
+    "state" : "approved",
+    "apiName" : "Security-HIPAA-Control",
+    "apiVersion" : "1.0"
+  }, {
+    "state" : "approved",
+    "apiName" : "HL7-Message-Maker",
+    "apiVersion" : "2.1"
+  }, {
+    "state" : "approved",
+    "apiName" : "INS-InsuranceCheck",
+    "apiVersion" : "1.3"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-HealthCatalog",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-System-Physicians",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-DiagnosticInfo",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "HL7-Interface-Module",
+    "apiVersion" : "2.1"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-System-Surgery",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "HL7-Element-DB",
+    "apiVersion" : "2.1"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-System-Patient",
+    "apiVersion" : "3.7"
+  } ]
+}

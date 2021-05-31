@@ -1,0 +1,8 @@
+{
+  "name" : "Plexus Health",
+  "image" : "org-image.jpg",
+  "enabled" : true,
+  "development" : true,
+  "createdOn" : 1556526467536,
+  "restricted" : false
+}

@@ -1,0 +1,32 @@
+{
+  "name" : "Plexus Suite - Surgery Center",
+  "organization" : "Plexus Health",
+  "description" : "Physician app providing patient surgery tools and equipment management",
+  "state" : "approved",
+  "enabled" : true,
+  "apis" : [ {
+    "state" : "approved",
+    "apiName" : "HL7-Interface-Module",
+    "apiVersion" : "2.1"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-DiagnosticInfo",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-System-Surgery",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "HL7-Message-Maker",
+    "apiVersion" : "2.1"
+  }, {
+    "state" : "approved",
+    "apiName" : "EMR-System-Physicians",
+    "apiVersion" : "3.7"
+  }, {
+    "state" : "approved",
+    "apiName" : "HL7-Element-DB",
+    "apiVersion" : "2.1"
+  } ]
+}

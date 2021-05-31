@@ -1,0 +1,59 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "",
+    "version" : "3.7",
+    "title" : "EMR-HealthCatalog",
+    "x-summary" : "Processes health data for patient symptom recommendation"
+  },
+  "host" : "api-env.demo.axway.com:8065",
+  "basePath" : "/api/emr/catalog",
+  "schemes" : [ "https" ],
+  "security" : [ {
+    "API Key" : [ ]
+  } ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "operationId" : "All",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "API Key" : {
+      "description" : "API Key",
+      "type" : "apiKey",
+      "name" : "KeyId",
+      "in" : "header"
+    }
+  },
+  "x-axway" : {
+    "serviceType" : "rest",
+    "image" : "/api/portal/v1.3/discovery/swagger/apis/6aa233ca-5ae9-49f6-a428-2fb41d28fbcc/image",
+    "basePaths" : [ "https://api-env.demo.axway.com:8065" ],
+    "expired" : false,
+    "retirementDate" : 0,
+    "corsEnabled" : true,
+    "deprecated" : false,
+    "availableSDK" : {
+      "ios-swift" : "/discovery/sdk/6aa233ca-5ae9-49f6-a428-2fb41d28fbcc/ios-swift",
+      "titanium" : "/discovery/sdk/6aa233ca-5ae9-49f6-a428-2fb41d28fbcc/titanium",
+      "android" : "/discovery/sdk/6aa233ca-5ae9-49f6-a428-2fb41d28fbcc/android",
+      "nodejs" : "/discovery/sdk/6aa233ca-5ae9-49f6-a428-2fb41d28fbcc/nodejs"
+    },
+    "apiResourceType" : "swagger11ex",
+    "id" : "6aa233ca-5ae9-49f6-a428-2fb41d28fbcc",
+    "state" : "published",
+    "tags" : {
+      "Industry" : [ "Healthcare" ],
+      "Type" : [ "Demo_Amplify_PlexusHealth" ],
+      "Category" : [ "Catalog" ]
+    }
+  }
+}

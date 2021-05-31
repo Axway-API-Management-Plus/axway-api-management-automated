@@ -1,0 +1,8 @@
+{
+  "name" : "Community",
+  "description" : "Unverified untrusted developer users. Not intended for production-level client applications",
+  "enabled" : true,
+  "development" : false,
+  "createdOn" : 1556038716879,
+  "restricted" : true
+}
