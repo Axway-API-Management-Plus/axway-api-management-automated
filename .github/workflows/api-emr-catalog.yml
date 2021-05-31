@@ -38,4 +38,4 @@ jobs:
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: |
           printenv
-          mvn clean exec:java
+          mvn clean exec:java --file config/pom.xml
