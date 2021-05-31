@@ -20,6 +20,10 @@
             <url>https://maven.pkg.github.com/cwiechmann/api-project-examples</url>
         </repository>
     </distributionManagement>
+    
+    <properties>
+        <project.scm.id>github</project.scm.id>
+    </properties>
 
     <dependencies>
         <dependency>
