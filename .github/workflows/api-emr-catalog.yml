@@ -25,6 +25,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+      - name: List current directory
+        run: |
+          ls -la
       - name: Deploy API
         env:
           APIM_USER: ${{ secrets.APIM_USER }}
