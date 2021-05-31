@@ -34,4 +34,7 @@ jobs:
           APIM_PASS: ${{ secrets.APIM_PASS }}
           APIM_HOST: ${{ secrets.APIM_HOST }}
           APIM_PORT: ${{ secrets.APIM_PORT }}
-        run: mvn clean exec:java
+        run: |
+          printenv
+          cd ${{env.working-directory}}
+          mvn clean exec:java
