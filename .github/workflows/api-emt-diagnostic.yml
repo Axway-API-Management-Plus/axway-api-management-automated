@@ -37,6 +37,10 @@ jobs:
           APIM_HOST: ${{ secrets.APIM_HOST }}
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: mvn clean exec:java
+
+  Deploy-API-Package:
+    needs: API-Deployment
+    runs-on: ubuntu-latest
       - name: Publish package
         run: mvn --batch-mode deploy
         env:

@@ -11,4 +11,4 @@ GitHub Actions is used as the integration pipeline, but you can use any other pi
 | API-Name                             | Description                                                                                           | Last update  |
 | :---                                 | :---:                                                                                                 | :---         |
 | [EMR-Catalog](api-emr-catalog)       | An API just deployed without anything special.                                                        | 2021/05/31   |
-| [EMR-Diagnostic](api-emr-diagnostic) | This API, if released, will create a new Release-Artefact and upload to GitHub packages               | 2021/05/31   |
+| [EMR-Diagnostic](api-emr-diagnostic) | This API, creates a new Release-Artefact and uploads to GitHub packages.                              | 2021/05/31   |
