@@ -12,6 +12,14 @@
     <properties>
         <apiConfigFile>config/api-config.json</apiConfigFile>
     </properties>
+    
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/octocat/hello-world</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

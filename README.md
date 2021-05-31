@@ -8,7 +8,7 @@ integration testing, release management, etc.
 
 GitHub Actions is used as the integration pipeline, but you can use any other pipeline tool like Jenkins or Azure pipelines equivalently.
 
-| API-Name                             | Description                                                                      | Last update  |
-| :---                                 | :---:                                                                            | :---         |
-| [EMR-Catalog](api-emr-catalog)       | An API just deployed without anything special.                                   | 2021/05/31   |
-| [EMR-Diagnostis](api-emr-diagnostic) |                                                                                  | 2021/05/31   |
+| API-Name                             | Description                                                                                           | Last update  |
+| :---                                 | :---:                                                                                                 | :---         |
+| [EMR-Catalog](api-emr-catalog)       | An API just deployed without anything special.                                                        | 2021/05/31   |
+| [EMR-Diagnostic](api-emr-diagnostic) | This API, if released, will create a new Release-Artefact and upload to GitHub packages               | 2021/05/31   |

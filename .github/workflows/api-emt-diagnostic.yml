@@ -36,5 +36,8 @@ jobs:
           APIM_PASS: ${{ secrets.APIM_PASS }}
           APIM_HOST: ${{ secrets.APIM_HOST }}
           APIM_PORT: ${{ secrets.APIM_PORT }}
-        run: |
-          mvn clean exec:java --file config/pom.xml
+        run: mvn clean exec:java
+      - name: Publish package
+        run: mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
