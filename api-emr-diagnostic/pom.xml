@@ -21,6 +21,10 @@
             <url>https://maven.pkg.github.com/cwiechmann/api-project-examples</url>
         </repository>
     </distributionManagement>
+    
+    <scm>
+        <developerConnection>scm:git:https://github.com/cwiechmann/api-project-examples.git</developerConnection>
+    </scm>
 
     <dependencies>
         <dependency>
