@@ -3,7 +3,7 @@ name: Deploy EMR-Catalog API
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - api-emr-catalog/**
 
