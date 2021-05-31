@@ -9,8 +9,9 @@ on:
 
 jobs:
   API-Deployment:
-    env:
-      workingDirectory: 'api-emr-catalog'
+    defaults:
+      run:
+        working-directory: api-emr-catalog
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
