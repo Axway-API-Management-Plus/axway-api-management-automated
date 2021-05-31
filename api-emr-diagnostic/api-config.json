@@ -1,5 +1,5 @@
 {
-  "name" : "EMR-DiagnosticInfo",
+  "name" : "EMR-DiagnosticInfo-2",
   "path" : "/api/emr/diagnostic",
   "state" : "published",
   "version" : "3.7",
