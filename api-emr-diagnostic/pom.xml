@@ -5,7 +5,7 @@
     <groupId>axway.api-management.api</groupId>
     <version>1.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>EMR Catalog API</name>
+    <name>EMR Diagnostic API</name>
     <description>EMR Diagnostic API</description>
 
     <properties>
@@ -23,8 +23,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/cwiechmann/api-project-examples.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -60,8 +59,9 @@
             </plugin>
             <!-- Create a deployable artefact -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.3.0</version>
                 <configuration>
                     <descriptors>
                         <descriptor>api-assembly.xml</descriptor>
