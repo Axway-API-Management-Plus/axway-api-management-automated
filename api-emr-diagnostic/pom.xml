@@ -4,7 +4,7 @@
 
     <artifactId>emr-diagnostic-api</artifactId>
     <groupId>axway.api-management.api</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>EMR Catalog API</name>
     <description>EMR Diagnostic API</description>
@@ -24,7 +24,8 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/cwiechmann/api-project-examples.git</developerConnection>
-    </scm>
+      <tag>HEAD</tag>
+  </scm>
 
     <dependencies>
         <dependency>
@@ -52,7 +53,7 @@
                 <configuration>
                     <addResourcesToClasspath>true</addResourcesToClasspath>
                     <mainClass>com.axway.apim.APIImportApp</mainClass>
-                    <classpath/>
+                    <classpath />
                     <commandlineArgs>
                         -c ${apiConfigFile} -h ${env.APIM_HOST} -u ${env.APIM_USER} -p ${env.APIM_PASS} -port ${env.APIM_PORT} -force -returnCodeMapping 10:0
                     </commandlineArgs>
