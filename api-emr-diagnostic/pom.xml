@@ -3,7 +3,7 @@
 
     <artifactId>emr-diagnostic-api</artifactId>
     <groupId>axway.api-management.api</groupId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <name>EMR Catalog API</name>
     <description>EMR Diagnostic API</description>
@@ -23,7 +23,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/cwiechmann/api-project-examples.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>emr-diagnostic-api-1.0.2</tag>
   </scm>
 
     <dependencies>
