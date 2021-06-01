@@ -6,7 +6,7 @@
     <groupId>axway.api-management.api</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>EMR Catalog API</name>
+    <name>EMR Diagnostic API4Prod</name>
     <description>EMR Diagnostic API</description>
 
     <properties>
@@ -33,11 +33,11 @@
             <version>1.3.7</version>
         </dependency>
         <!-- A reference to the API which should be deployed on Prod -->
-        <dependency>
+        <!-- <dependency>
             <groupId>axway.api-management.api</groupId>
             <artifactId>emr-diagnostic-api</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
