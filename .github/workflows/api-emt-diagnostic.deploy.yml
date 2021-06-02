@@ -40,19 +40,23 @@ jobs:
           file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:latest
-  deploy-api-builder-image:
+  deploy-api-builder:
     name: Deploy API-Builder on K8S
+    needs: create-latest-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: List current directory
         run: |
-          kubectl
-          helm
+          ls -la
+      - name: Update deployment file
+        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yml
+      - name: Deploy to Kubernetes
+        run: kubectl apply -f deploy.yml
 
   deploy-api:
     name: Deploy API on API-Management
     runs-on: ubuntu-latest
-    needs: create-latest-docker-image
+    needs: deploy-api-builder-image
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
