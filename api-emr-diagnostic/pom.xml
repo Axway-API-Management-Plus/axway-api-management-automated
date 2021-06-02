@@ -58,6 +58,22 @@
                     </commandlineArgs>
                 </configuration>
             </plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-release-plugin</artifactId>
+    <version>2.3.2</version>
+    <executions>
+        <execution>
+            <id>default</id>
+            <goals>
+                <goal>perform</goal>
+            </goals>
+            <configuration>
+                <pomFileName>api-emr-diagnostic/pom.xml</pomFileName>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
             <!-- Create a deployable artefact -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
