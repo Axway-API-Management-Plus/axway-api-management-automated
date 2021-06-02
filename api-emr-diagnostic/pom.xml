@@ -4,7 +4,7 @@
 
     <artifactId>emr-diagnostic-api</artifactId>
     <groupId>axway.api-management.api</groupId>
-    <version>1.0.9-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>EMR Diagnostic API</name>
     <description>EMR Diagnostic API</description>
