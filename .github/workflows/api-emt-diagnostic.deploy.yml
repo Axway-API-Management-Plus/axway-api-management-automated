@@ -12,9 +12,9 @@ on:
     tags:
       - '*api-emr-diagnostic*'
 
-defaults:
-  run:
-    working-directory: api-emr-diagnostic
+#defaults:
+#  run:
+#    working-directory: api-emr-diagnostic
 
 jobs:
   API-Deployment:
