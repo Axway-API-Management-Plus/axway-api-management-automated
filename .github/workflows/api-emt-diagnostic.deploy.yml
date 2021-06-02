@@ -56,7 +56,7 @@ jobs:
   deploy-api:
     name: Deploy API on API-Management
     runs-on: ubuntu-latest
-    needs: deploy-api-builder-image
+    needs: deploy-api-builder
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
