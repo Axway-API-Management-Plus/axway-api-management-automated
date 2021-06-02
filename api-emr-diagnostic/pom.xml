@@ -4,7 +4,7 @@
 
     <artifactId>emr-diagnostic-api</artifactId>
     <groupId>axway.api-management.api</groupId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>EMR Diagnostic API</name>
     <description>EMR Diagnostic API</description>
@@ -58,6 +58,42 @@
                     </commandlineArgs>
                 </configuration>
             </plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-release-plugin</artifactId>
+    <version>2.3.2</version>
+    <executions>
+        <execution>
+            <id>default</id>
+            <goals>
+                <goal>perform</goal>
+            </goals>
+            <configuration>
+                <pomFileName>api-emr-diagnostic/pom.xml</pomFileName>
+                <arguments>-f api-emr-diagnostic/pom.xml</arguments>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+            <!-- Create a deployable artefact
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>api-assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 </project>
