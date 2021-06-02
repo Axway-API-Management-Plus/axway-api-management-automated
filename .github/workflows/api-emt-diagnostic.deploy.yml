@@ -40,6 +40,15 @@ jobs:
           file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:latest
+  deploy-api-builder-image:
+    name: Deploy API-Builder on K8S
+    runs-on: ubuntu-latest
+    steps:
+      - name: List current directory
+        run: |
+          kubectl
+          helm
+
   deploy-api:
     name: Deploy API on API-Management
     runs-on: ubuntu-latest
