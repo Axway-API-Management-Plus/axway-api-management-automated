@@ -23,8 +23,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/cwiechmann/api-project-examples.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <dependencies>
         <dependency>
