@@ -73,6 +73,6 @@ jobs:
       - name: Release package
         run: |
           git status
-          mvn -B release:prepare release:perform
+          mvn -B -f api-emr-diagnostic/pom.xml release:prepare release:perform
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
