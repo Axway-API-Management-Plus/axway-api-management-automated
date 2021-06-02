@@ -51,17 +51,17 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' ${{ env.apiId }}/config/api-deployment.yaml
+        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yaml
       - name: Deploy to Kubernetes
-        uses: steebchen/kubectl@master
+        uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f config/api-deployment.yaml
+          args: apply -f ${{ env.apiId }}/config/api-deployment.yaml
       - name: Verify deployment
-        uses: steebchen/kubectl@master
+        uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: '"rollout status deployment/${{ env.apiId }}"'
 
