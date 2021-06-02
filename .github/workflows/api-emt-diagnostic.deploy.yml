@@ -20,9 +20,9 @@ jobs:
   create-latest-docker-image:
     name: Push Docker image to Docker Hub (latest)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: api-emr-diagnostic/emr-diagnostic-app
+#    defaults:
+#      run:
+#        working-directory: api-emr-diagnostic/emr-diagnostic-app
     steps:
       - uses: hmarr/debug-action@v2
       - name: Check out the repo
@@ -39,8 +39,8 @@ jobs:
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
-          context: ./api-emr-diagnostic
-          file: ./api-emr-diagnostic/Dockerfile
+          context: ./emr-diagnostic-app
+          file: ./emr-diagnostic-app/Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/octo-image:latest
   deploy-api:
