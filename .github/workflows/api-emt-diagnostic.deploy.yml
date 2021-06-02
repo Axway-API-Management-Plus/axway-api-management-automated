@@ -70,12 +70,18 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
+      - name: List current directory
+        run: |
+          ls -la
       - name: Release prepare
         run: |
           git status
-          mvn -B -f api-emr-diagnostic/pom.xml release:prepare release:perform
+          mvn -B -f api-emr-diagnostic/pom.xml release:prepare
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List current directory
+        run: |
+          ls -la
       - name: Release perform
         run: |
           mvn -B -f api-emr-diagnostic/pom.xml release:perform
