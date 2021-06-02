@@ -1,5 +1,8 @@
 name: EMR-Diagnotics API
 
+env:
+  somevar: 'api-emr-diagnostic'
+
 on:
   push:
     branches:
@@ -40,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-emr-diagnostic/emr-diagnostic-app/Dockerfile
+          file: ./${{ env.somevar }}/emr-diagnostic-app/Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/octo-image:latest
   deploy-api:
