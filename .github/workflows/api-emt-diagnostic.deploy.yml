@@ -35,7 +35,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: List current directory
         run: |
-          ls -la
+          pwd
+          ls -l
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
