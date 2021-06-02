@@ -51,7 +51,7 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yaml
+        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' ${{ env.apiId }}/config/api-deployment.yaml
       - name: Deploy to Kubernetes
         uses: steebchen/kubectl@master
         env:
