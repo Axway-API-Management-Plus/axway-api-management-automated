@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: emr-diagnostic-app
+        working-directory: ./emr-diagnostic-app
     steps:
       - uses: hmarr/debug-action@v2
       - name: Check out the repo
@@ -33,6 +33,9 @@ jobs:
           registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: List current directory
+        run: |
+          ls -la
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
