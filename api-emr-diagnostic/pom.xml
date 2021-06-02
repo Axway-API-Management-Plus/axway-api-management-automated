@@ -70,11 +70,12 @@
             </goals>
             <configuration>
                 <pomFileName>api-emr-diagnostic/pom.xml</pomFileName>
+                <arguments>-f api-emr-diagnostic/pom.xml</arguments>
             </configuration>
         </execution>
     </executions>
 </plugin>
-            <!-- Create a deployable artefact -->
+            <!-- Create a deployable artefact
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -92,7 +93,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
