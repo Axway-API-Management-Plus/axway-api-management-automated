@@ -53,7 +53,17 @@ jobs:
       - name: Update deployment file
         run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yaml
       - name: Deploy to Kubernetes
-        run: kubectl apply -f deploy.yml
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f config/api-deployment.yaml
+      - name: Verify deployment
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: '"rollout status deployment/${{ env.apiId }}"'
 
   deploy-api:
     name: Deploy API on API-Management
