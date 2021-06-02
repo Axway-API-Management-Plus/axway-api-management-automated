@@ -39,7 +39,7 @@ jobs:
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
-          context: ./emr-diagnostic-app
+          context: ./api-emr-diagnostic/emr-diagnostic-app
           file: ./Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/octo-image:latest
