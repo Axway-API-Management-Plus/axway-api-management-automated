@@ -46,6 +46,10 @@ jobs:
     #needs: create-latest-docker-image
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: List current directory
+        run: ls -l
       - name: Update deployment file
         run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yml
       - name: Deploy to Kubernetes
