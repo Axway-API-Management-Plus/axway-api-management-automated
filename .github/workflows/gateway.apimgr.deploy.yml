@@ -39,11 +39,13 @@ jobs:
         run: docker pull ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }}
       - name: Create image tag
         run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+      - name: Create FED-File
+        run: tar cvfz apimanager.fed apimgr/fed/*
       - name: Build image
         run: |
           tar xvfz APIGateway_7.7.20210330-DockerScripts-2.2.0-2.tar.gz
           echo "${{ secrets.APIGATEWAY_LICENSE }}" | base64 -d > license.lic
-          ./apigw-emt-scripts-2.2.0-2/build_gw_image.py --license=license.lic --default-cert --fed=apimgr/fed/configs.xml --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}
+          ./apigw-emt-scripts-2.2.0-2/build_gw_image.py --license=license.lic --default-cert --fed=apimanager.fed --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}
       - name: Push image
         run: |
           docker push ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}
