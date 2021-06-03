@@ -32,8 +32,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker-registry.demo.axway.com
-          username: ${{ secrets.AXWAY_DOCKER_REG_USER }}
-          password: ${{ secrets.AXWAY_DOCKER_REG_PASS }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull base image
         run: docker pull ${{ env.dockerRegistry }}/${{ env.baseImage }}
       - name: Create image tag
