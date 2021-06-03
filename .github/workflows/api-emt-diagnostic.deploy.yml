@@ -21,7 +21,6 @@ defaults:
 
 jobs:
   create-latest-docker-image:
-    if: github.event.release.tag_name
     name: Create & Push Image
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +44,7 @@ jobs:
           tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
   deploy-api-builder:
     name: Deploy API-Builder on K8S
-    #needs: create-latest-docker-image
+    needs: create-latest-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
