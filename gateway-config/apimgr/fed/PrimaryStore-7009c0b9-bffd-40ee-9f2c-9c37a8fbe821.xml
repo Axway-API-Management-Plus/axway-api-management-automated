@@ -17452,7 +17452,7 @@
 	<fval name="traceAttributes"><value>1</value></fval>
 	<fval name="traceBody"><value>0</value></fval>
 	<fval name="traceLevel"><value>3</value></fval>
-	<fval name="traceMsg"><value></value></fval>
+	<fval name="traceMsg"><value>XXX</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="8086304639307381545" parentPK="1494605159343373361">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
