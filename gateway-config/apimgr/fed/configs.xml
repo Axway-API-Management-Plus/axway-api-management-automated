@@ -1,5 +1,5 @@
 <configuration activeAssembly='UPGRADED'>
- <storeType name='CertStore' >
+ <storeType name='CertStore'>
   <branch>
    <node>/[Certificates]name=Certificate Store</node>
   </branch>
