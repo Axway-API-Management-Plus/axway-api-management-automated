@@ -6,7 +6,7 @@
   "organization" : "Plexus Health",
   "apiDefinition" : "EMR-DiagnosticInfo.json",
   "summary" : "Processes submitted patient diagnostics data",
-  "backendBasepath" : "${BACKEND_HOST}/api/api/emr/diagnostic/",
+  "backendBasepath" : "http://api-emr-diagnostic:8080/api/api/emr/diagnostic/",
   "image" : "api-image.jpg",
   "tags" : {
     "Industry" : [ "Healthcare" ],
