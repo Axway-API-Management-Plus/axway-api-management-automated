@@ -62,10 +62,11 @@ jobs:
           aws-region: eu-west-1
       - name: Deploy to Kubernetes
         run: |
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
-          echo "$HOME"
-          ls -la $HOME/.kube/config
           ls -la $HOME
+          printenv
+          echo $HOME
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          ls -la $HOME/.kube/config
           kubectl apply -f ${{ env.apiId }}/config/api-deployment.yaml
       - name: Verify deployment
         uses: actions-hub/kubectl@master
