@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+VersionComment: First version of upgraded configuration (Environment)
+Name: Upgraded (Environment)
+Description: Upgraded configuration (Environment)
+Version: v1 (Environment)
+

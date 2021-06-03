@@ -1,0 +1,61 @@
+name: Deploy API-Manager
+
+env:
+  dockerRegistry: docker-registry.demo.axway.com
+  baseImage: "other-demo/base:77-20210330"
+  outImage: other-demo/manager:77-20210330-rbi"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - gateway-config/apimgr/**
+  release:
+    types:
+      - published
+
+defaults:
+  run:
+    working-directory: gateway-config
+
+jobs:
+  create-apimr-docker-image:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Create & Push APIMGR Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v2
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker-registry.demo.axway.com
+          username: ${{ secrets.AXWAY_DOCKER_REG_USER }}
+          password: ${{ secrets.AXWAY_DOCKER_REG_PASS }}
+      - name: Pull base image
+        run: docker pull ${{ env.dockerRegistry }}/${{ env.baseImage }}
+      - name: Create image tag
+        run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+      - name: Build image
+        run: |
+          tar xvfz APIGateway_7.7.20210330-DockerScripts-2.2.0-2.tar.gz
+          echo "${{ secrets.APIGATEWAY_LICENSE }}" | base64 -d > license.lic
+          ./apigw-emt-scripts-2.2.0-2/build_gw_image.py --license=license.lic --default-cert --fed=apimgr/fed --out-image=${{ env.dockerRegistry }}/${{ env.outImage }}
+      - name: Push image
+        run: |
+          docker push ${{ env.dockerRegistry }}/${{ env.outImage }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+      - name: Deploy to Kubernetes
+        run: |
+          mkdir  $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          kubectl apply -n apim -f config/api-deployment.yaml
+      - name: Verify deployment
+        run: kubectl -n apim rollout status deployment/${{ env.apiId }}
