@@ -65,6 +65,7 @@ jobs:
           ls -la $HOME
           printenv
           echo $HOME
+          mkdir  $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
           ls -la $HOME/.kube/config
           kubectl apply -f ${{ env.apiId }}/config/api-deployment.yaml
