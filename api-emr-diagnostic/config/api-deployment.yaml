@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
         - name: api-emr-diagnostic
+          #image: docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:latest
           image: <IMAGE>
           resources:
             requests:
@@ -36,3 +37,5 @@ spec:
               cpu: "150m"
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: docker.pkg.github.com
