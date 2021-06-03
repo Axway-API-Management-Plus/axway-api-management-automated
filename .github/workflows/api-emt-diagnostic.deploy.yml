@@ -21,6 +21,7 @@ defaults:
 
 jobs:
   create-latest-docker-image:
+    if: github.event.release.tag_name
     name: Create & Push Image
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +45,7 @@ jobs:
           tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
   deploy-api-builder:
     name: Deploy API-Builder on K8S
-    needs: create-latest-docker-image
+    #needs: create-latest-docker-image
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -53,8 +54,6 @@ jobs:
         run: ls -l
       - name: Update deployment file
         run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
-      - name: Install AWS-CLI
-        run: aws --version
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -64,6 +63,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          ls -l $HOME/.kube/config
           kubectl apply -f ${{ env.apiId }}/config/api-deployment.yaml
       - name: Verify deployment
         uses: actions-hub/kubectl@master
