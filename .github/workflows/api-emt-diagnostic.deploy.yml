@@ -64,13 +64,9 @@ jobs:
         run: |
           mkdir  $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
-          kubectl apply -f config/api-deployment.yaml
+          kubectl apply -n apim -f config/api-deployment.yaml
       - name: Verify deployment
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: '"rollout status deployment/${{ env.apiId }}"'
+        run: kubectl -n apim rollout status deployment/${{ env.apiId }}
 
   deploy-api:
     name: Deploy API on API-Management
