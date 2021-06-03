@@ -21,6 +21,7 @@ defaults:
 
 jobs:
   create-latest-docker-image:
+    if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip builder')"
     name: Create & Push Image
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +43,7 @@ jobs:
           file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
           push: true
           tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
+
   deploy-api-builder:
     name: Deploy API-Builder on K8S
     needs: create-latest-docker-image
@@ -68,6 +70,7 @@ jobs:
         run: kubectl -n apim rollout status deployment/${{ env.apiId }}
 
   deploy-api:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Deploy API on API-Management
     runs-on: ubuntu-latest
     needs: deploy-api-builder
