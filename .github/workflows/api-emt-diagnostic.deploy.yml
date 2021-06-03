@@ -33,13 +33,15 @@ jobs:
           registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create image tag
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
           context: ./${{ env.apiId }}/emr-diagnostic-app
           file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
           push: true
-          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:latest
+          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.GITHUB_SHA_SHORT }}
   deploy-api-builder:
     name: Deploy API-Builder on K8S
     needs: create-latest-docker-image
@@ -50,7 +52,7 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: sed -i 's|<IMAGE>|docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:'latest'|' config/api-deployment.yaml
+        run: sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'${{ env.GITHUB_SHA_SHORT }}'|' config/api-deployment.yaml
       - name: Deploy to Kubernetes
         uses: actions-hub/kubectl@master
         env:
