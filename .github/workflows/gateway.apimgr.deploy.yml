@@ -40,7 +40,7 @@ jobs:
       - name: Create image tag
         run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: Create FED-File
-        run: jar cvfm apimanager.fed apimgr/2d95fbb5-ab97-43e5-8c9f-e7598be14370/meta-inf/manifest.mf apimgr/2d95fbb5-ab97-43e5-8c9f-e7598be14370/*
+        run: jar cvfm apimanager.fed apimgr/fed/meta-inf/manifest.mf apimgr/fed/*
       - name: Build image
         run: |
           tar xvfz APIGateway_7.7.20210330-DockerScripts-2.2.0-2.tar.gz
