@@ -34,16 +34,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create image tag
-        run: |
-          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-          echo "Created image tag: $GITHUB_SHA_SHORT"
+        run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
           context: ./${{ env.apiId }}/emr-diagnostic-app
           file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
           push: true
-          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.GITHUB_SHA_SHORT }}
+          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
   deploy-api-builder:
     name: Deploy API-Builder on K8S
     needs: create-latest-docker-image
@@ -54,10 +52,7 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: |
-          echo "Using image tag: ${{ env.GITHUB_SHA_SHORT }}"
-          printenv
-          sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'$env.GITHUB_SHA_SHORT'|' config/api-deployment.yaml
+        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
       - name: Deploy to Kubernetes
         uses: actions-hub/kubectl@master
         env:
