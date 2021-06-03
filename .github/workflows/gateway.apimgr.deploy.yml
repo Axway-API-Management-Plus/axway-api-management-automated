@@ -1,9 +1,9 @@
 name: Deploy API-Manager
 
 env:
-  dockerRegistry: docker-registry.demo.axway.com
-  baseImage: "other-demo/base:77-20210330"
-  outImage: other-demo/manager:77-20210330-rbi"
+  dockerRegistry: docker.pkg.github.com/cwiechmann/api-project-examples
+  baseImage: "base:77-20210330"
+  outImage: manager:77-20210330-v1"
 
 on:
   push:
