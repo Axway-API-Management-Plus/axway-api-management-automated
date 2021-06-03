@@ -13,6 +13,15 @@
     "Type" : [ "Demo_Amplify_PlexusHealth" ],
     "Category" : [ "Diagnostic" ]
   },
+  "authenticationProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "parameters" : {
+      "username" : "CAF9ySY0ZOAyi2T04lJ1ojyDBFr/sj9t",
+      "password" : ""
+    },
+    "type" : "http_basic"
+  } ],
   "clientOrganizations" : [ "Plexus Health" ],
   "applications" : [ {
     "name" : "Plexus Suite - Appointment Management",
