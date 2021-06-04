@@ -1,5 +1,5 @@
 <configuration activeAssembly='DEFAULT'>
- <storeType name='PrimaryStore'>
+ <storeType name='PrimaryStore' >
   <branch>
    <node>/</node>
   </branch>
