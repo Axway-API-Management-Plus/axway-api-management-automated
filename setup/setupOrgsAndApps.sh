@@ -16,10 +16,11 @@ TYPE=$1
 
 if [ "$TYPE" == "" ]; then
     echo "Type not set, importing orgs and applications"
+    TYPE="all"
 fi
 
 # Import all organizations
-if [ "$TYPE" == "org" || "$TYPE" == "all" ]; then
+if [ "$TYPE" == "org" -o "$TYPE" == "all" ]; then
     cd ${cliData}/Organizations
     for orgDirectory in `find . -mindepth 1 -type d`
     do
@@ -29,7 +30,7 @@ if [ "$TYPE" == "org" || "$TYPE" == "all" ]; then
 fi
 
 # Import all applications
-if [ "$TYPE" == "apps" || "$TYPE" == "all" ]; then
+if [ "$TYPE" == "apps" -o "$TYPE" == "all" ]; then
     cd ${cliData}/ClientApps
     for appDirectory in `find . -mindepth 1 -type d`
     do
