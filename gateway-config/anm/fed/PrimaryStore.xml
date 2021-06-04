@@ -14237,7 +14237,7 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="285281451314368016" parentPK="8738720299439200645">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeValue"><value>region=</value></fval>
+	<fval name="attributeValue"><value>region=${env.REGION == &apos;[invalid field]&apos; ? &quot;&quot; : env.REGION}</value></fval>
 	<fval name="category"><value contentType="reference">3469427337568264841</value></fval>
 	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
 	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
@@ -14285,7 +14285,7 @@
 	<fval name="logSuccess"><value>Filter passed</value></fval>
 	<fval name="matchingRule"><value>MATCH_ONE</value></fval>
 	<fval name="name"><value>Is managed by Elasticsearch API?</value></fval>
-	<fval name="successNode"><value contentType="reference">5757167639308200879</value></fval>
+	<fval name="successNode"><value contentType="reference">285281451314368016</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeCompare" entityPK="-3831194401617171359" parentPK="2322417291383708101">
 	<fval name="attrName"><value>http.request.path</value></fval>
@@ -14364,7 +14364,7 @@
 	<fval name="stickyness"><value>0</value></fval>
 	<fval name="successNode"><value contentType="reference">-699485521426593451</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
-	<fval name="url"><value>${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}${regionFilter}</value></fval>
+	<fval name="url"><value>${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}</value></fval>
 	<fval name="useRootCerts"><value>0</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-2692583695723910506" parentPK="5757167639308200879">
