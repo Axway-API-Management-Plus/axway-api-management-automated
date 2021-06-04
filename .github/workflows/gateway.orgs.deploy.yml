@@ -1,11 +1,11 @@
-name: Deploy Organizations
+name: Deploy Client Apps
 
 on:
   push:
     branches:
       - main
     paths:
-      - setup/Organizations/**
+      - setup/ClientApps/**
 
 defaults:
   run:
@@ -14,16 +14,18 @@ defaults:
 jobs:
   deploy-client-apps:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    name: Deploy Organizations
+    name: Deploy Client Applications
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Deploy Client apps
+      - name: Deploy Organizations
         env:
           APIM_USER: ${{ secrets.APIM_USER }}
           APIM_PASS: ${{ secrets.APIM_PASS }}
           APIM_HOST: ${{ secrets.APIM_HOST }}
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: |
-          ./setupOrgsAndApps.sh apps
+          ./setupOrgsAndApps.sh orgs
+        
