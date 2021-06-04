@@ -30,7 +30,7 @@
 			"env"
 		]
 	},
-	"start": "http.setresponse.1",
+	"start": "setcontext.1",
 	"nodes": {
 		"http.setresponse.1": {
 			"type": "nodehandler://axway-flow/http",
@@ -43,6 +43,13 @@
 					"type": "number",
 					"metaName": "Status",
 					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.response",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
 				}
 			],
 			"outputs": {
@@ -52,6 +59,29 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set response",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "object",
+					"value": "{\"Hello\":\"World\"}",
+					"metaName": "Value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [
+						"http.setresponse.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
 		}
 	}
 }
