@@ -14237,7 +14237,7 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="285281451314368016" parentPK="8738720299439200645">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeValue"><value>region=${env.REGION == &apos;[invalid field]&apos; ? &quot;&quot; : env.REGION}</value></fval>
+	<fval name="attributeValue"><value>region=</value></fval>
 	<fval name="category"><value contentType="reference">3469427337568264841</value></fval>
 	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
 	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
