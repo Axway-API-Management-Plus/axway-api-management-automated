@@ -18,8 +18,13 @@ if [ "$TYPE" == "" ]; then
     TYPE="all"
 fi
 
+if [ "$TYPE" != "orgs" -a "$TYPE" != "apps" ]; then
+    echo "Unkown TYPE: $TYPE. Must be either 'orgs' or 'apps'"
+    exit 99
+fi
+
 # Import all organizations
-if [ "$TYPE" == "org" -o "$TYPE" == "all" ]; then
+if [ "$TYPE" == "orgs" -o "$TYPE" == "all" ]; then
     cd Organizations
     for orgDirectory in `find . -mindepth 1 -type d`
     do
