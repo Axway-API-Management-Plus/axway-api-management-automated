@@ -14170,16 +14170,18 @@
 	<fval name="ldapServiceProvider"><value>com.sun.jndi.ldap.LdapCtxFactory</value></fval>
 	<fval name="maxInputLen"><value>20971520</value></fval>
 	<fval name="maxOutputLen"><value>20971520</value></fval>
+	<fval name="maxRequestMemory"></fval>
 	<fval name="maxTransTimeout"><value>240000</value></fval>
 	<fval name="name"><value>Default System Settings</value></fval>
 	<fval name="offerTlsServerName"><value>0</value></fval>
 	<fval name="outputEncodings"><value>.inherit</value></fval>
 	<fval name="realm"><value>DefaultRealm</value></fval>
 	<fval name="schemaParserMaxPoolSize"><value>0</value></fval>
+	<fval name="serverBrand"><value></value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="sunLdapConnectTimeout"><value>20000</value></fval>
 	<fval name="tokenDriftTimeSecs"><value>300</value></fval>
-	<fval name="tracelevel"><value>INFO</value></fval>
+	<fval name="tracelevel"><value>DEBUG</value></fval>
 	<fval name="verifyServerHostname"><value>1</value></fval>
 	<fval name="xpathAllowedNodeOpsNum"><value>4096</value></fval>
 </entity>
