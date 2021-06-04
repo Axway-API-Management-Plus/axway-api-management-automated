@@ -112,7 +112,7 @@ jobs:
       - name: Run API tests
         run: |
           sleep 1
-          newman run ./tests/DiagnosticAPI.postman_collection.json -e ${{ env.HOME }}/lib/Demo-Environment.postman_environment.json --reporter-json-export output.json --insecure
+          newman run ./tests/DiagnosticAPI.postman_collection.json -e $HOME/lib/Demo-Environment.postman_environment.json --reporter-json-export output.json --insecure
 
 #  Publish-API:
 #    runs-on: ubuntu-latest
