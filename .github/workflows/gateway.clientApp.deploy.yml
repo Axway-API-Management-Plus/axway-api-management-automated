@@ -20,6 +20,7 @@ jobs:
       - uses: hmarr/debug-action@v2
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: All apps
+      - name: Deploy client apps
         run: |
+          ls -la
           setupOrgsAndApps.sh apps
