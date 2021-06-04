@@ -24,20 +24,12 @@
   } ],
   "clientOrganizations" : [ "Plexus Health" ],
   "applications" : [ {
-    "name" : "Plexus Suite - Appointment Management",
-    "enabled" : true,
-    "state" : "approved"
+    "name" : "Plexus Suite - Appointment Management"
   }, {
-    "name" : "Plexus Health Center",
-    "enabled" : true,
-    "state" : "approved"
+    "name" : "Plexus Health Center"
   }, {
-    "name" : "Plexus Suite - Surgery Center",
-    "enabled" : true,
-    "state" : "approved"
+    "name" : "Plexus Suite - Surgery Center"
   }, {
-    "name" : "Plexus Suite - Patient Monitoring",
-    "enabled" : true,
-    "state" : "approved"
+    "name" : "Plexus Suite - Patient Monitoring"
   } ]
 }
