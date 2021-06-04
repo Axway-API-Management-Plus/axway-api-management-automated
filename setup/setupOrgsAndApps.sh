@@ -43,4 +43,4 @@ if [ "$TYPE" == "apps" -o "$TYPE" == "all" ]; then
     done
 fi
 
-exit
+exit 0
