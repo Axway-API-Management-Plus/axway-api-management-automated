@@ -27,6 +27,6 @@ jobs:
           APIM_HOST: ${{ secrets.APIM_HOST }}
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: |
-          printenv
+          ls -l
           ./setupOrgsAndApps.sh apps
         
