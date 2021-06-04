@@ -1,7 +1,6 @@
 #!/bin/bash
 
 currentDir=$PWD
-cliData=${currentDir}/../apim-cli-data
 APIM_CLI_VERSION="${APIM_CLI_VERSION:=1.3.7}"
 CLI_DIR=$currentDir/apim-cli
 
@@ -21,21 +20,21 @@ fi
 
 # Import all organizations
 if [ "$TYPE" == "org" -o "$TYPE" == "all" ]; then
-    cd ${cliData}/Organizations
+    cd Organizations
     for orgDirectory in `find . -mindepth 1 -type d`
     do
         echo "Import organization from config: $orgDirectory"
-        $CLI org import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c ${cliData}/Organizations/$orgDirectory/org-config.json
+        $CLI org import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c Organizations/$orgDirectory/org-config.json
     done
 fi
 
 # Import all applications
 if [ "$TYPE" == "apps" -o "$TYPE" == "all" ]; then
-    cd ${cliData}/ClientApps
+    cd ClientApps
     for appDirectory in `find . -mindepth 1 -type d`
     do
         echo "Import applicaton from config directory: $appDirectory"
-        $CLI app import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c ${cliData}/ClientApps/$appDirectory/application-config.json
+        $CLI app import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c ClientApps/$appDirectory/application-config.json
     done
 fi
 
