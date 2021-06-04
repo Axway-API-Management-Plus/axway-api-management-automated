@@ -11,7 +11,7 @@ fi
 
 CLI=$CLI_DIR/apim-cli-$APIM_CLI_VERSION/scripts/apim.sh
 
-TYPE="$1"
+TYPE=$1
 
 if [ "$TYPE" == "" ]; then
     echo "Type not set, importing orgs and applications"
