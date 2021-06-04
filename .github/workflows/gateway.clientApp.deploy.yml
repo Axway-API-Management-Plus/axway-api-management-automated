@@ -1,11 +1,11 @@
-name: Deploy Organizations
+name: Deploy Client Applications
 
 on:
   push:
     branches:
       - main
     paths:
-      - setup/Organizations/**
+      - setup/ClientApps/**
 
 defaults:
   run:
@@ -14,7 +14,7 @@ defaults:
 jobs:
   deploy-client-apps:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    name: Deploy Organizations
+    name: Deploy Client Applications
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -27,3 +27,4 @@ jobs:
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: |
           ./setupOrgsAndApps.sh apps
+        

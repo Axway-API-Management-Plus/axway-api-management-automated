@@ -1,11 +1,11 @@
-name: Deploy Client Apps
+name: Deploy Organizations
 
 on:
   push:
     branches:
       - main
     paths:
-      - setup/ClientApps/**
+      - setup/Organizations/**
 
 defaults:
   run:
@@ -14,7 +14,7 @@ defaults:
 jobs:
   deploy-client-apps:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    name: Deploy Client Applications
+    name: Deploy Organizations
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v2
