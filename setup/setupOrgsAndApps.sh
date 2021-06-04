@@ -25,7 +25,7 @@ if [ "$TYPE" == "org" -o "$TYPE" == "all" ]; then
     for orgDirectory in `find . -mindepth 1 -type d`
     do
         echo "Import organization from config: $orgDirectory"
-        $CLI org import -c ${cliData}/Organizations/$orgDirectory/org-config.json
+        $CLI org import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c ${cliData}/Organizations/$orgDirectory/org-config.json
     done
 fi
 
@@ -35,7 +35,7 @@ if [ "$TYPE" == "apps" -o "$TYPE" == "all" ]; then
     for appDirectory in `find . -mindepth 1 -type d`
     do
         echo "Import applicaton from config directory: $appDirectory"
-        $CLI app import -c ${cliData}/ClientApps/$appDirectory/application-config.json
+        $CLI app import -h $APIM_HOST -port $APIM_PORT -u $APIM_USER -p $APIM_PASS -c ${cliData}/ClientApps/$appDirectory/application-config.json
     done
 fi
 
