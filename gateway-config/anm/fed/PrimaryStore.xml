@@ -14313,7 +14313,12 @@
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ConnectToURLFilter" entityPK="5757167639308200879" parentPK="8738720299439200645">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="body"><value>${content.body}</value></fval>
-	<fval name="caCerts"></fval>
+	<fval name="caCerts">
+		<value contentType="reference">
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=apim4elastic'/></key></key>	</value>
+		<value contentType="reference">
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=elastic-apim-ca'/></key></key>	</value>
+	</fval>
 	<fval name="category"><value contentType="reference">3469427337568264841</value></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL:!TLSv1:!kRSA</value></fval>
 	<fval name="closePreviousConnection"><value>0</value></fval>
@@ -14358,7 +14363,7 @@
 	<fval name="successNode"><value contentType="reference">-699485521426593451</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
 	<fval name="url"><value>${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}${regionFilter}</value></fval>
-	<fval name="useRootCerts"><value>1</value></fval>
+	<fval name="useRootCerts"><value>0</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-2692583695723910506" parentPK="5757167639308200879">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
