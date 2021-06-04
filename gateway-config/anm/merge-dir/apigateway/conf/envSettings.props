@@ -1,0 +1,32 @@
+# This file is read when the server starts up. If a server configuration contains a value in the format
+# ${env.X}, where X is any string (for example, MyCustomSetting), this file MUST contain an equivalent
+# name-value pair of env.MyCustomSetting=MyCustomValue.
+# When the server starts up, every occurrence of env.MyCustomSetting is expanded to the value of MyCustomValue.
+# For example, by default the port in the server configuration is set to ${env.PORT.TRAFFIC}, specifying a name-value
+# pair of env.PORT.TRAFFIC=8080 results in the server opening up port 8080 at start up.
+
+# the default port which the Node Manager listens on for HTTP traffic
+env.PORT.TRAFFIC=8090
+
+# the default port which the Node Manager listens on for management/configuration HTTP traffic
+env.PORT.MANAGEMENT=8090
+
+# the default port which the Node Manager listens on for sample messages
+env.PORT.SAMPLE.SERVICES=8090
+
+# An example of how you might bind a reference to a host-specific certificate to a given deployment. The
+# SSL X509 Certificate in the 'SSL Interface' configuration item can then reference it using the binding
+# variable '${env.serverCertificate}'
+#env.serverCertificate=${system.prefix.cert}CN=MYHOST
+
+# the timeout for web manager user sessions, 12 hours
+env.WEBMANAGER.SESSION.TIMEOUT=43200000
+
+# the idle timout for web manager user session, 30 minutes
+# number of seconds of inactivity for session to be invalidated
+env.WEBMANAGER.SESSION.IDLE.TIMEOUT=1800
+
+# Content Security Policy Header value for Gateway/Node Manager
+env.MANAGEMENT.CONTENTSECURITYPOLICY=script-src 'self' https://*.axway.com 'unsafe-eval'; img-src 'self' https://*.axway.com data: blob:; style-src 'self' 'unsafe-inline' https://*.axway.com; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self';frame-ancestors 'none'; upgrade-insecure-requests
+
+env.API_BUILDER_URL=https://axway-elk-apim4elastic-apibuilder4elastic:8443
