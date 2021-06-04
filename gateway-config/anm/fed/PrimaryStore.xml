@@ -14181,7 +14181,7 @@
 	<fval name="sessionCacheSize"><value>32</value></fval>
 	<fval name="sunLdapConnectTimeout"><value>20000</value></fval>
 	<fval name="tokenDriftTimeSecs"><value>300</value></fval>
-	<fval name="tracelevel"><value>DEBUG</value></fval>
+	<fval name="tracelevel"><value>INFO</value></fval>
 	<fval name="verifyServerHostname"><value>1</value></fval>
 	<fval name="xpathAllowedNodeOpsNum"><value>4096</value></fval>
 </entity>
