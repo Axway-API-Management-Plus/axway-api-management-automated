@@ -1,0 +1,25 @@
+name: Deploy Client Apps
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - setup/ClientApps/**
+
+defaults:
+  run:
+    working-directory: setup
+
+jobs:
+  deploy-client-apps:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Deploy Client Applications
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v2
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: All apps
+        run: |
+          setupOrgsAndApps.sh apps
