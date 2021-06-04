@@ -21,6 +21,12 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Deploy client apps
+        env:
+          APIM_HOST: ${{ env.APIM_HOST }}
+          APIM_PORT: ${{ env.APIM_PORT }}
+          APIM_USER: ${{ env.APIM_USER }}
+          APIM_PASS: ${{ env.APIM_PASS }}
         run: |
           printenv
           ./setupOrgsAndApps.sh apps
+        
