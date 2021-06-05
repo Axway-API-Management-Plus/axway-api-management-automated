@@ -3,7 +3,6 @@ name: Bulk Payments API
 on:
   push:
     branches:
-      - main
       - use-case-tests-1
     paths:
       - api.bulk-payments/**

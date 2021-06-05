@@ -1,5 +1,5 @@
 {
-  "name" : "Bulk Payments",
+  "name" : "Bulk Payments ",
   "path" : "/api/v1/payments",
   "state" : "published",
   "version" : "0.5.2",
