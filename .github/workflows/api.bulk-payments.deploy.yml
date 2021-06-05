@@ -1,15 +1,15 @@
-name: Deploy EMR-Catalog API
+name: Bulk Payments API
 
 on:
   push:
     branches:
       - main
     paths:
-      - api.emr-catalog/**
+      - api.bulk-payments/**
 
 defaults:
   run:
-    working-directory: api.emr-catalog
+    working-directory: api.bulk-payments
 
 jobs:
   API-Deployment:
