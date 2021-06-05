@@ -3,7 +3,7 @@
   "path" : "/api/v1/payments",
   "state" : "published",
   "version" : "0.5.2",
-  "organization" : "Development",
+  "organization" : "API Development",
   "apiDefinition" : "bulk-payments.yaml",
   "summary" : "Processes health data for patient symptom recommendation",
   "backendBasepath" : "http://some-host/api/api/emr/catalog/"
