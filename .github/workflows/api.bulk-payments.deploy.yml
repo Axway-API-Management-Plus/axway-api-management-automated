@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - use-case-test*
     paths:
       - api.bulk-payments/**
 
