@@ -2,6 +2,8 @@ name: EMR-Diagnotics API
 
 env:
   apiId: api-emr-diagnostic
+  dockerRegistry: docker.pkg.github.com
+  dockerRepository: cwiechmann/axway-api-management-automated
 
 on:
   push:
@@ -55,7 +57,7 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
+        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/axway-api-management-automated/api-emr-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
