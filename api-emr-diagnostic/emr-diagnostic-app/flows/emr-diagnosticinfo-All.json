@@ -68,7 +68,7 @@
 				{
 					"name": "value",
 					"type": "object",
-					"value": "{\"message\":\"Hello another world 2\"}",
+					"value": "{\"message\":\"Hello world\"}",
 					"metaName": "Value"
 				}
 			],
