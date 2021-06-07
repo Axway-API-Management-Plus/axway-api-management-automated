@@ -41,6 +41,8 @@ Then, the API service provider opens the checked-out repository in its desired d
 
 ## Use-Cases
 
+This repository simulates how the Axway API management platform can be fully automated based on version management and DevOps pipelines. This includes a number of use cases that are presented here.
+
 ### APIs as Code
 
 The API as Code approach means that instead of manually configuring their APIs in the system, they define them in the version management system of their choice and register and keep them in sync through a DevOps pipeline in the API management platform.
