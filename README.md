@@ -28,6 +28,7 @@ The following requirements
 - npm and Nodes.js installed
 - apim-cli installed
 - Access to npm repositories
+- an API-Design Tool for instance Stoplight
 
 ### Check-Out
 
