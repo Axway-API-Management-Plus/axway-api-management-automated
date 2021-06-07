@@ -21,12 +21,12 @@ Some of the use cases, like API builder or API gateway updates, require the API 
 The steps listed here are necessary for the API service provider if they want to use all or some of the use cases. For example, if you want to register or modify APIs or change policies.
 
 The following requirements
-- Windows or Linux environment
-- Git client
+- Windows or Linux environment (Learn more [System requirements](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/system_requirements/index.html#operating-systems-and-hardware))
+- Git client for instance GitHub Desktop
 - GitHub account
-- Axway Policy Studio installed
-- npm and Nodes.js installed
-- apim-cli installed
+- Axway Policy Studio installed (Learn more [Install Policy Studio](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/install_policy_studio/index.html))
+- npm and Nodes.js installed (Learn more [API Builder Getting Started Guide](https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/api_builder_getting_started_guide.html))
+- [apim-cli](https://github.com/Axway-API-Management-Plus/apim-cli/wiki/1.-How-to-get-started) installed
 - Access to npm repositories
 - an API-Design Tool for instance Stoplight
 
@@ -34,25 +34,38 @@ The following requirements
 
 As a first step, the API service provider must check out the repository. The following example:
 ```
-git clone https://github.com/cwiechmann/api-project-examples.git
+git clone https://github.com/Axway-API-Management-Plus/axway-api-management-automated.git
 ```
 
 Then, the API service provider opens the checked-out repository in its desired development tool, such as Visual Studio Code.
 
 ## Use-Cases
 
-### API-Design
+This repository simulates how the Axway API management platform can be fully automated based on version management and DevOps pipelines. This includes a number of use cases that are presented here.
 
 ### APIs as Code
 
+The API as Code approach means that instead of manually configuring their APIs in the system, they define them in the version management system of their choice and register and keep them in sync through a DevOps pipeline in the API management platform.
+
+### API-Design
+
+This use case is about creating a completely new API based on an API-first approach. To do this, you use an API design editor of your choice, design the first version of your API and then register it in the API management platform.
+
 ### API Mockup with API-Builder
+
+After you have designed an API, it is a convenient way of the API builder to quickly and easily mock APIs, separating the process between API service and API consumption. 
 
 ### API Integration with API-Builder
 
+Of course, the real strength of the API Builder is not mocking APIs, but various integration scenarios, customizing and optimizing APIs. 
+
 ### API Gateway Configuration
+
+The API gateways are controlled by policies, which are configured in Policy Studio and then deployed to the API gateways completely automatically through the DevOps pipelines set up here without any downtime.
 
 ### API Gateway Updates
 
+Using DevOps pipelines and a Kubernetes cluster, updating the API management platform is done by a rolling exchange of the corresponding Docker images, which are built by the pipeline and registered with the Kubernetes cluster.
 
 ## Base-Setup
 
@@ -68,9 +81,3 @@ You are welcome to fork this repository and customize it according to your own n
 | AWS_ACCESS_KEY_ID      | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
 | AWS_SECRET_ACCESS_KEY  | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
 | KUBE_CONFIG_DATA       | The Base64 encoded Kubectl configuration. cat $HOME/.kube/config | base64              |
-
-
-| API-Name                                             | Description                                                                                           | Last update  |
-| :---                                                 | :---:                                                                                                 | :---         |
-| [EMR-Catalog](api-emr-catalog)                       | An API just deployed without anything special. It has no backend configured.                          | 2021/05/31   |
-| [EMR-Diagnostic Mocked](api-emr-diagnostic)          | This API is mocked based on an API-Builder container running on the K8S-Cluster.                      | 2021/05/31   |
