@@ -2,7 +2,7 @@
   "name" : "Bulk Payments API",
   "path" : "/api/v1/payments/bulk",
   "state" : "published",
-  "version" : "3.7",
+  "version" : "0.5.2",
   "organization" : "API Development",
   "apiDefinition" : "bulk-payments.yaml",
   "summary" : "This API is used to initiate and get summary of bulk payments.",

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - payments-api2
     paths:
       - api-bulk-payments/**
 
