@@ -21,12 +21,12 @@ Some of the use cases, like API builder or API gateway updates, require the API 
 The steps listed here are necessary for the API service provider if they want to use all or some of the use cases. For example, if you want to register or modify APIs or change policies.
 
 The following requirements
-- Windows or Linux environment
-- Git client
+- Windows or Linux environment (Learn more [System requirements](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/system_requirements/index.html#operating-systems-and-hardware))
+- Git client for instance GitHub Desktop
 - GitHub account
-- Axway Policy Studio installed
-- npm and Nodes.js installed
-- apim-cli installed
+- Axway Policy Studio installed (Learn more [Install Policy Studio](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/install_policy_studio/index.html))
+- npm and Nodes.js installed (Learn more [API Builder Getting Started Guide](https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/api_builder_getting_started_guide.html))
+- [apim-cli](https://github.com/Axway-API-Management-Plus/apim-cli/wiki/1.-How-to-get-started) installed
 - Access to npm repositories
 - an API-Design Tool for instance Stoplight
 
