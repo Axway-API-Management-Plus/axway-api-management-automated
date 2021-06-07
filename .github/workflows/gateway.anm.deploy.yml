@@ -2,7 +2,7 @@ name: Deploy Admin-Node-Manager
 
 env:
   dockerRegistry: docker.pkg.github.com
-  dockerRepository: cwiechmann/api-project-examples
+  dockerRepository: cwiechmann/axway-api-management-automated
   baseImage: "base:77-20210330"
   outImage: "anm:77-20210330-v1"
 
