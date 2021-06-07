@@ -59,7 +59,7 @@ Then, the API service provider opens the checked-out repository in its desired d
 You are welcome to fork this repository and customize it according to your own needs. In the default setup with a Kubernetes cluster (EKS) on AWS and using GitPackages as the repository, the following environment variables are required. These must be created accordingly in your fork. 
 
 | Secret/Variable        | Description                                                                            |
-| :---                   | :---:                                                                                  |
+| :---                   | :---                                                                                   |
 | APIGATEWAY_LICENSE     | The Axway API-Gateway License Base64 encode                                            |
 | APIM_HOST              | The host of the API-Manager used by the APIM-CLI                                       |
 | APIM_PORT              | The port of the API-Manager used by the APIM-CLI                                       |
