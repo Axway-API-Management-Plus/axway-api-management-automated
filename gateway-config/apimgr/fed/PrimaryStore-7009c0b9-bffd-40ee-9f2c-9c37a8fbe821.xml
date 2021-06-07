@@ -11814,8 +11814,6 @@
 <key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Request Policy 1'/></key></key>	</value>
 		<value contentType="reference">
 <key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Request Policy 2'/></key></key>	</value>
-		<value contentType="reference">
-<key type='CircuitContainer'><id field='name' value='Keycloak client oAuth'/><key type='FilterCircuit'><id field='name' value='External Keycloak v2'/></key></key>	</value>
 	</fval>
 	<fval name="apiregResponsePolicies"><value contentType="reference">
 <key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Response Policy 1'/></key></key>	</value></fval>
