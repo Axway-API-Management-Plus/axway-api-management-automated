@@ -53,6 +53,9 @@ Watch this video to see an illustration how to register an API base on version c
 
 [![Register API as Code](https://img.youtube.com/vi/mxM1nwaJqiI/0.jpg)](https://youtu.be/mxM1nwaJqiI)
 
+Another apporach is to use the API-Manager Web-UI, configure an API and then use the APIM-CLI to export the configuration:  
+[![Register API as Code using the Web-UI](https://img.youtube.com/vi/Sw53sHwzrTA/0.jpg)](https://youtu.be/Sw53sHwzrTA)
+
 ### API-Design
 
 This use case is about creating a completely new API based on an API-first approach. To do this, you use an API design editor of your choice, design the first version of your API and then register it in the API management platform.
