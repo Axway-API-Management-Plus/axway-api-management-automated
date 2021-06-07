@@ -56,17 +56,18 @@ Then, the API service provider opens the checked-out repository in its desired d
 
 ## Base-Setup
 
-APIGATEWAY_LICENSE
-APIM_HOST
-APIM_PASS
-APIM_PORT
-APIM_USER
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AXWAY_DOCKER_REG_PASS
-AXWAY_DOCKER_REG_USER
-BACKEND_HOST
-KUBE_CONFIG_DATA
+You are welcome to fork this repository and customize it according to your own needs. In the default setup with a Kubernetes cluster (EKS) on AWS and using GitPackages as the repository, the following environment variables are required. These must be created accordingly in your fork. 
+
+| Secret/Variable        | Description                                                                            |
+| :---                   | :---:                                                                                  |
+| APIGATEWAY_LICENSE     | The Axway API-Gateway License Base64 encode                                            |
+| APIM_HOST              | The host of the API-Manager used by the APIM-CLI                                       |
+| APIM_PORT              | The port of the API-Manager used by the APIM-CLI                                       |
+| APIM_USER              | System Account for the API-Manager System Account used by the APIM-CLI                 |
+| APIM_PASS              | Password for the API-Manager System Account used by the APIM-CLI                       |
+| AWS_ACCESS_KEY_ID      | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
+| AWS_SECRET_ACCESS_KEY  | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
+| KUBE_CONFIG_DATA       | Kubectl configuration                                                                  |
 
 
 | API-Name                                             | Description                                                                                           | Last update  |
