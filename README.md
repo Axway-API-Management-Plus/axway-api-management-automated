@@ -47,7 +47,11 @@ This repository represents how the Axway API management platform can be fully au
 
 ### APIs as Code
 
-The API as Code approach means that instead of manually configuring their APIs in the system, they define them in the version management system of their choice and register and keep them in sync through a DevOps pipeline in the API management platform.
+The API as Code approach means that instead of manually configuring their APIs in the system, they define them in the version management system of their choice and register and keep them in sync through a DevOps pipeline in the API management platform.  
+
+Watch this video to see an illustration how to register an API base on version control:  
+
+[![Register API as Code](https://img.youtube.com/vi/mxM1nwaJqiI/0.jpg)](https://youtu.be/mxM1nwaJqiI)
 
 ### API-Design
 
