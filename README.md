@@ -41,7 +41,7 @@ Then, the API service provider opens the checked-out repository in its desired d
 
 ## Use-Cases
 
-This repository simulates how the Axway API management platform can be fully automated based on version management and DevOps pipelines. This includes a number of use cases that are presented here.
+This repository represents how the Axway API management platform can be fully automated based on version management and DevOps pipelines. This includes a number of use cases that are presented here.
 
 ### APIs as Code
 
