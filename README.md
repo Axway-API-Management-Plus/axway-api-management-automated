@@ -26,8 +26,10 @@ The following requirements
 - GitHub account
 - Axway Policy Studio installed (Learn more [Install Policy Studio](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/install_policy_studio/index.html))
 - npm and Nodes.js installed (Learn more [API Builder Getting Started Guide](https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/api_builder_getting_started_guide.html))
+- [axway cli](https://docs.axway.com/bundle/Axway_CLI_allOS_en/page/axway_cli.html)
 - [apim-cli](https://github.com/Axway-API-Management-Plus/apim-cli/wiki/1.-How-to-get-started) installed
 - Access to npm repositories
+  - You may try to create an API-Builder project with `axway builder init my-project`, which will try to download required packages
 - an API-Design Tool for instance Stoplight
 
 ### Check-Out
