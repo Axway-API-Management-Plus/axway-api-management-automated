@@ -1,6 +1,6 @@
 {
 	"name": "emr-diagnostic-app",
-	"description": "An API Builder service that mocks the EMR-Diagnostic API.",
+	"description": "An API Builder service that mocks the EMR-Diagnostic API. ",
 	"main": "app.js",
 	"version": "1.0.0",
 	"license": "",
