@@ -1,0 +1,28 @@
+{
+  "name" : "Bulk Payments API",
+  "path" : "/api/v1/payments/bulk",
+  "state" : "published",
+  "version" : "3.7",
+  "organization" : "API Development",
+  "apiDefinition" : "bulk-payments.yaml",
+  "summary" : "This API is used to initiate and get summary of bulk payments.",
+  "backendBasepath" : "http://any.host.com/api/api/emr/catalog/",
+  "securityProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "devices" : [ {
+      "name" : "API Key",
+      "type" : "apiKey",
+      "order" : 1,
+      "properties" : {
+        "apiKeyFieldName" : "KeyId",
+        "takeFrom" : "HEADER",
+        "removeCredentialsOnSuccess" : "true"
+      }
+    } ]
+  } ],
+  "clientOrganizations" : [ "Plexus Health" ],
+  "applications" : [ {
+    "name" : "Plexus Suite - Appointment Management"
+  }]
+}
