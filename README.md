@@ -67,7 +67,7 @@ You are welcome to fork this repository and customize it according to your own n
 | APIM_PASS              | Password for the API-Manager System Account used by the APIM-CLI                       |
 | AWS_ACCESS_KEY_ID      | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
 | AWS_SECRET_ACCESS_KEY  | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
-| KUBE_CONFIG_DATA       | Kubectl configuration                                                                  |
+| KUBE_CONFIG_DATA       | The Base64 encoded Kubectl configuration. cat $HOME/.kube/config | base64              |
 
 
 | API-Name                                             | Description                                                                                           | Last update  |
