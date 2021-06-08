@@ -4,7 +4,7 @@ env:
   appId: api-emr-diagnostic
   working-directory: api-emr-diagnostic
   dockerRegistry: docker.pkg.github.com
-  dockerRepository: cwiechmann/axway-api-management-automated
+  dockerRepository: Axway-API-Management-Plus/axway-api-management-automated
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           context: ./${{ env.appId }}/emr-diagnostic-app
           file: ./${{ env.appId }}/emr-diagnostic-app/Dockerfile
           push: true
-          tags: ${{ env.dockerRegistry }}/${{ env.repository }}/${{ env.appId }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.appId }}:${{ env.IMAGE_TAG }}
 
   deploy-api-builder:
     name: Deploy API-Builder application
