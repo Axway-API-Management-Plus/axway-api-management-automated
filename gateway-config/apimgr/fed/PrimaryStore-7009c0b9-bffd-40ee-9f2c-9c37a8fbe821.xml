@@ -14356,7 +14356,7 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ChangeMessageFilter" entityPK="-4988224724667227336" parentPK="2399686979471092325">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="body"><value>&lt;status&gt;ok&lt;/status&gt;</value></fval>
+	<fval name="body"><value>&lt;status&gt;ok - I am healthy&lt;/status&gt;</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="logFailure"><value>Failed in setting the message</value></fval>
 	<fval name="logFatal"><value>Error in setting the message. Error: ${circuit.exception}</value></fval>
