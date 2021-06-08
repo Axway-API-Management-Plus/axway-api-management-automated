@@ -1,55 +1,71 @@
 {
-    "productVersion" : "7.7.0",
-    "version" : 1,
-    "timestamp" : 0,
-    "adminUsers" : [ {
-      "id" : "user-1",
-      "name" : "admin",
-      "roles" : [ "role-1", "role-6", "role-7" ]
+  "productVersion": "7.7.0",
+  "version": 1,
+  "timestamp": 0,
+  "adminUsers": [
+    {
+      "id": "user-1",
+      "name": "admin",
+      "roles": ["role-1", "role-6", "role-7"]
     },
     {
-      "id" : "user-2",
-      "name" : "adamzareba",
-      "roles" : [ "role-1", "role-6", "role-7" ]
-   }
-   ],
-    "adminUserCredentials" : {
-      "user-1" : {
-        "passwordHistory" : [ "$AAGQAAAAAQAC$egXx1g4yfAzB76dLV7LULQ==$3i8S870xDk4TqssFNN56hnNXnKVQIAGkIOc7FkZOiWw=" ],
-        "passwordTimestamp" : 1618421507978
-      },
-      "user-2" : {
-        "passwordHistory" : [ "$AAGQAAAAAQAC$egXx1g4yfAzB76dLV7LULQ==$3i8S870xDk4TqssFNN56hnNXnKVQIAGkIOc7FkZOiWw=" ],
-        "passwordTimestamp" : 1618421507978
-      }
+      "id": "user-2",
+      "name": "adamzareba",
+      "roles": ["role-1", "role-6", "role-7"]
     },
-    "adminUserRoles" : [ {
-      "id" : "role-1",
-      "name" : "API Server Administrator",
-      "displayName" : "API Gateway Administrator"
-    }, {
-      "id" : "role-2",
-      "name" : "API Server Operator",
-      "displayName" : "API Gateway Operator"
-    }, {
-      "id" : "role-5",
-      "name" : "Deployer",
-      "displayName" : "Deployer"
-    }, {
-      "id" : "role-6",
-      "name" : "KPS Administrator",
-      "displayName" : "KPS Administrator"
-    }, {
-      "id" : "role-7",
-      "name" : "Policy Developer",
-      "displayName" : "Policy Developer"
-    } ],
-    "uniqueIdCounters" : {
-      "Role" : 8,
-      "User" : 2
-    },
-    "adminUsersVersion" : {
-      "version" : 1,
-      "timestamp" : 0
+    {
+      "id": "user-3",
+      "name": "ChristianPacifici",
+      "roles": ["role-1", "role-6", "role-7"]
     }
+  ],
+  "adminUserCredentials": {
+    "user-1": {
+      "passwordHistory": [
+        "$AAGQAAAAAQAC$egXx1g4yfAzB76dLV7LULQ==$3i8S870xDk4TqssFNN56hnNXnKVQIAGkIOc7FkZOiWw="
+      ],
+      "passwordTimestamp": 1618421507978
+    },
+    "user-2": {
+      "passwordHistory": [
+        "$AAGQAAAAAQAC$egXx1g4yfAzB76dLV7LULQ==$3i8S870xDk4TqssFNN56hnNXnKVQIAGkIOc7FkZOiWw="
+      ],
+      "passwordTimestamp": 1618421507978
+    }
+  },
+  "adminUserRoles": [
+    {
+      "id": "role-1",
+      "name": "API Server Administrator",
+      "displayName": "API Gateway Administrator"
+    },
+    {
+      "id": "role-2",
+      "name": "API Server Operator",
+      "displayName": "API Gateway Operator"
+    },
+    {
+      "id": "role-5",
+      "name": "Deployer",
+      "displayName": "Deployer"
+    },
+    {
+      "id": "role-6",
+      "name": "KPS Administrator",
+      "displayName": "KPS Administrator"
+    },
+    {
+      "id": "role-7",
+      "name": "Policy Developer",
+      "displayName": "Policy Developer"
+    }
+  ],
+  "uniqueIdCounters": {
+    "Role": 8,
+    "User": 2
+  },
+  "adminUsersVersion": {
+    "version": 1,
+    "timestamp": 0
   }
+}
