@@ -58,7 +58,9 @@ Another apporach is to use the API-Manager Web-UI, configure an API and then use
 
 ### API-Design
 
-This use case is about creating a completely new API based on an API-first approach. To do this, you use an API design editor of your choice, design the first version of your API and then register it in the API management platform.
+This use case is about creating a completely new API based on an API-first approach. To do this, you use an API design editor of your choice, design the first version of your API and then register it in the API management platform.  
+
+[![Create and update your API-Design](https://img.youtube.com/vi/T9_-TQVJYkc/0.jpg)](https://youtu.be/T9_-TQVJYkc)
 
 ### API Mockup with API-Builder
 
