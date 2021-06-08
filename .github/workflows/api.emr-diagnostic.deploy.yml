@@ -43,8 +43,8 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'skip builder')"
         uses: docker/build-push-action@v2
         with:
-          context: ./${{ env.appId }}/emr-diagnostic-app
-          file: ./${{ env.appId }}/emr-diagnostic-app/Dockerfile
+          context: ./${{ env.working-directory }}/${{ env.appId }}
+          file: ./${{ env.working-directory }}/${{ env.appId }}/Dockerfile
           push: true
           tags: ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.appId }}:${{ env.IMAGE_TAG }}
 
