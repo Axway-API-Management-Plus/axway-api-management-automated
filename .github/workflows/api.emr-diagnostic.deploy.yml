@@ -1,7 +1,10 @@
 name: EMR-Diagnotics API
 
 env:
-  apiId: api-emr-diagnostic
+  appId: api-emr-diagnostic
+  working-directory: api-emr-diagnostic
+  dockerRegistry: docker.pkg.github.com
+  dockerRepository: Axway-API-Management-Plus/axway-api-management-automated
 
 on:
   push:
@@ -40,10 +43,10 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'skip builder')"
         uses: docker/build-push-action@v2
         with:
-          context: ./${{ env.apiId }}/emr-diagnostic-app
-          file: ./${{ env.apiId }}/emr-diagnostic-app/Dockerfile
+          context: ./${{ env.appId }}/emr-diagnostic-app
+          file: ./${{ env.appId }}/emr-diagnostic-app/Dockerfile
           push: true
-          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
+          tags: ${{ env.dockerRegistry }}/${{ env.repository }}/${{ env.appId }}:${{ env.IMAGE_TAG }}
 
   deploy-api-builder:
     name: Deploy API-Builder application
@@ -55,7 +58,7 @@ jobs:
       - name: List current directory
         run: ls -l
       - name: Update deployment file
-        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/api-project-examples/api-emr-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
+        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.appId }}:'${IMAGE_TAG}'|' config/api-deployment.yaml
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -68,9 +71,11 @@ jobs:
           mkdir  $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
           kubectl apply -n apim -f config/api-deployment.yaml
+        timeout-minutes: 2
       - name: Verify deployment
         if: "!contains(github.event.head_commit.message, 'skip builder')"
         run: kubectl -n apim rollout status deployment/${{ env.apiId }}
+        timeout-minutes: 2
 
   deploy-api:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
