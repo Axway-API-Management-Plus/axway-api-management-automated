@@ -74,7 +74,7 @@ jobs:
         timeout-minutes: 2
       - name: Verify deployment
         if: "!contains(github.event.head_commit.message, 'skip builder')"
-        run: kubectl -n apim rollout status deployment/${{ env.apiId }}
+        run: kubectl -n apim rollout status deployment/${{ env.appId }}
         timeout-minutes: 2
 
   deploy-api:
