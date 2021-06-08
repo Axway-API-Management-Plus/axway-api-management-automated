@@ -66,6 +66,10 @@ This use case is about creating a completely new API based on an API-first appro
 
 After you have designed an API, it is a convenient way of the API builder to quickly and easily mock APIs, separating the process between API service and API consumption. 
 
+Before using the API-Builder this video explains how to install and create a first API-Builder project:
+[![Create and update your API-Design](https://img.youtube.com/vi/ncU6qz1zf2g/0.jpg)](https://youtu.be/ncU6qz1zf2g)  
+
+
 ### API Integration with API-Builder
 
 Of course, the real strength of the API Builder is not mocking APIs, but various integration scenarios, customizing and optimizing APIs. 
