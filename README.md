@@ -54,7 +54,7 @@ Watch this video to see an illustration how to register an API base on version c
 [![Register API as Code](https://img.youtube.com/vi/mxM1nwaJqiI/0.jpg)](https://youtu.be/mxM1nwaJqiI)
 
 Another apporach is to use the API-Manager Web-UI, configure an API and then use the APIM-CLI to export the configuration:  
-[![Register API as Code using the Web-UI](https://img.youtube.com/vi/Sw53sHwzrTA/0.jpg)](https://youtu.be/Sw53sHwzrTA)
+[![Register API as Code using the Web-UI](https://img.youtube.com/vi/QWMTJpXB7QE/0.jpg)](https://youtu.be/QWMTJpXB7QE)
 
 ### API-Design
 
