@@ -51,7 +51,7 @@ The API as Code approach means that instead of manually configuring their APIs i
 
 Watch this video to see an illustration how to register an API base on version control:  
 
-[![Register API as Code](https://img.youtube.com/vi/mxM1nwaJqiI/0.jpg)](https://youtu.be/mxM1nwaJqiI)
+[![Register API as Code](https://img.youtube.com/vi/zlFDsXnTRyY/0.jpg)](https://youtu.be/zlFDsXnTRyY)
 
 Another apporach is to use the API-Manager Web-UI, configure an API and then use the APIM-CLI to export the configuration:  
 [![Register API as Code using the Web-UI](https://img.youtube.com/vi/QWMTJpXB7QE/0.jpg)](https://youtu.be/QWMTJpXB7QE)
