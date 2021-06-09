@@ -1,12 +1,12 @@
 {
-  "name" : "SinglePayments-DiagnosticInfo",
-  "path" : "/payments/diagnostic",
+  "name" : "SinglePayments-MockAPI",
+  "path" : "/single-payments",
   "state" : "published",
   "version" : "3.7",
   "organization" : "RBI",
-  "apiDefinition" : "single-payments.yaml",
+  "apiDefinition" : "../api-single-payments-mock/endpoints/payments.yaml",
   "summary" : "Processes submitted patient diagnostics data",
-  "backendBasepath" : "http://api-single-payments-diagnostic:8080/payments/diagnostic/",
+  "backendBasepath" : "http://api-single-payments-diagnostic:8080/api/api",
   "authenticationProfiles" : [ {
     "name" : "_default",
     "isDefault" : true,

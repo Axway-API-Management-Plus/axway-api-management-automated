@@ -22,7 +22,7 @@ module.exports = {
 	// default configuration.
 
 	// API key
-	apikey: 'I5EzU12evm+8Bx1+i/L91CV18LADkuoJ',
+	apikey: 'TAtjMvYm9V60inUQtM//n8AnktwILcqC',
 
 	// This is the base url the service will be reachable at not including the
 	// port
@@ -104,7 +104,7 @@ module.exports = {
 	// without authentication, then you can explicitly add them to `public`
 	// paths.
 	accessControl: {
-		apiPrefixSecurity: 'basic', // none | basic | apikey | ldap | plugin
+		apiPrefixSecurity: 'none', // none | basic | apikey | ldap | plugin
 		public: []
 	},
 
@@ -163,11 +163,11 @@ module.exports = {
 	// service you created.
 	session: {
 		encryptionAlgorithm: 'aes256',
-		encryptionKey: 'epUl2APXqBo8+GYlZ8MXjKi8vKz9eOkP5OiSH1LK/I8=',
+		encryptionKey: 'Z0rblfaK8x49+1BcKwFAkT7qCUtbGdHownAnUU2Ywew=',
 		signatureAlgorithm: 'sha512-drop256',
-		signatureKey: 'hGq/08WvMlJVNHlcSfxBCB+CtBrVdBWT480HTbZ/vdzyTjusbxE+QKqLJ8dwiwNReseVrBHeXZ6QM1tWvUbU6g==',
+		signatureKey: 'HuTjLw7C9Y7KGAPQO1nDixp6KlZPzjggaAYpXEAp3/kZ1ADRuGSyhW9oNfe0alr9wDh9XdGJgaalNzs9z6GkJQ==',
 		// should be a large unguessable string
-		secret: 'uqb7M1hEB1bovTLURc5v44hZo6SnCAfN',
+		secret: 'zglk59Du8LktXhGoI0EDTcE4EZEqozBy',
 		// how long the session will stay valid in ms
 		duration: 86400000,
 		// if expiresIn < activeDuration, the session will be extended by
@@ -177,7 +177,7 @@ module.exports = {
 
 	// If you want signed cookies, you can set this value. if you don't want
 	// signed cookies, remove or make null
-	cookieSecret: 'uwTwliACA1JiJxhL/zZnH37BO3uzHUHY',
+	cookieSecret: '0dy1VrlZppisd2zvtHa8To/JP9MJKgVd',
 
 	// Your connector configuration goes here
 	connectors: {

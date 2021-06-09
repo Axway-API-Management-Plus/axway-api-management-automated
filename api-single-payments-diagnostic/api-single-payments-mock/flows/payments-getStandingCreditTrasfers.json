@@ -44,7 +44,7 @@
 				},
 				{
 					"name": "body",
-					"value": "{\n    \"metadata\": {\n        \"limit\": 34620960,\n        \"nextOffset\": 38360937,\n        \"offset\": -15424722,\n        \"previousOffset\": -54827395,\n        \"size\": 22379425\n    },\n    \"transfers\": [\n        null\n    ]\n}",
+					"value": "{\n    \"metadata\": {\n        \"limit\": 51187647,\n        \"nextOffset\": -37845111,\n        \"offset\": -88740642,\n        \"previousOffset\": -51051806,\n        \"size\": 10700523\n    },\n    \"transfers\": [\n        null\n    ]\n}",
 					"type": "object"
 				}
 			],

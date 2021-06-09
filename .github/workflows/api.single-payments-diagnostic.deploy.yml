@@ -1,7 +1,8 @@
-name: SinglePayments-Diagnotics API
+name: SinglePayments-Diagnostics API
 
 env:
   apiId: api-single-payments-diagnostic
+  working-directory: api-single-payments-diagnostic
   dockerRegistry: docker.pkg.github.com
   dockerRepository: cwiechmann/axway-api-management-automated
 
