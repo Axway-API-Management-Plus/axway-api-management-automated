@@ -1,18 +1,12 @@
 {
-  "name" : "EMR-DiagnosticInfo",
-  "path" : "/api/emr/diagnostic",
+  "name" : "SinglePayments-DiagnosticInfo",
+  "path" : "/payments/diagnostic",
   "state" : "published",
   "version" : "3.7",
-  "organization" : "Plexus Health",
-  "apiDefinition" : "EMR-DiagnosticInfo.json",
+  "organization" : "RBI",
+  "apiDefinition" : "single-payments.yaml",
   "summary" : "Processes submitted patient diagnostics data",
-  "backendBasepath" : "http://api-emr-diagnostic:8080/api/api/emr/diagnostic/",
-  "image" : "api-image.jpg",
-  "tags" : {
-    "Industry" : [ "Healthcare" ],
-    "Type" : [ "Demo_Amplify_PlexusHealth" ],
-    "Category" : [ "Diagnostic" ]
-  },
+  "backendBasepath" : "http://api-single-payments-diagnostic:8080/payments/diagnostic/",
   "authenticationProfiles" : [ {
     "name" : "_default",
     "isDefault" : true,
@@ -22,14 +16,10 @@
     },
     "type" : "http_basic"
   } ],
-  "clientOrganizations" : [ "Plexus Health" ],
+  "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
-    "name" : "Plexus Suite - Appointment Management"
-  }, {
-    "name" : "Plexus Health Center"
-  }, {
-    "name" : "Plexus Suite - Surgery Center"
-  }, {
-    "name" : "Plexus Suite - Patient Monitoring"
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
   } ]
 }
