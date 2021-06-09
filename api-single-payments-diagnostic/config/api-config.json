@@ -1,0 +1,35 @@
+{
+  "name" : "EMR-DiagnosticInfo",
+  "path" : "/api/emr/diagnostic",
+  "state" : "published",
+  "version" : "3.7",
+  "organization" : "Plexus Health",
+  "apiDefinition" : "EMR-DiagnosticInfo.json",
+  "summary" : "Processes submitted patient diagnostics data",
+  "backendBasepath" : "http://api-emr-diagnostic:8080/api/api/emr/diagnostic/",
+  "image" : "api-image.jpg",
+  "tags" : {
+    "Industry" : [ "Healthcare" ],
+    "Type" : [ "Demo_Amplify_PlexusHealth" ],
+    "Category" : [ "Diagnostic" ]
+  },
+  "authenticationProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "parameters" : {
+      "username" : "CAF9ySY0ZOAyi2T04lJ1ojyDBFr/sj9t",
+      "password" : ""
+    },
+    "type" : "http_basic"
+  } ],
+  "clientOrganizations" : [ "Plexus Health" ],
+  "applications" : [ {
+    "name" : "Plexus Suite - Appointment Management"
+  }, {
+    "name" : "Plexus Health Center"
+  }, {
+    "name" : "Plexus Suite - Surgery Center"
+  }, {
+    "name" : "Plexus Suite - Patient Monitoring"
+  } ]
+}

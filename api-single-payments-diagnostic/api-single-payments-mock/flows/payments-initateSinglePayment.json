@@ -1,0 +1,62 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "initateSinglePayment"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "http.setresponse.1",
+	"nodes": {
+		"http.setresponse.1": {
+			"type": "nodehandler://axway-flow/http",
+			"method": "setresponse",
+			"name": "Set Custom HTTP Response",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "201",
+					"type": "number",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\n  \"authorizationRequest\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoicGF5bWVudF9pbml0aWF0aW9uIiwiaW5zdHJ1Y3RlZEFtb3VudCI6eyJjdXJyZW5jeSI6IkVVUiIsImFtb3VudCI6IjEyMy41MCJ9LC JjcmVkaXRvck5hbWUiOiJNZXJjaGFudDEyMyIsImNyZWRpdG9yQWNjb3VudCI6eyJpYmFuIjoiREUwMjEwMDEwMDEwOTMwNzExODYwMyJ9LCJyZW1pdHRhbmNlSW5mb3JtYXRpb25VbnN0cnVjdHVyZWQ iOiJSZWYgTnVtYmVyIE1lcmNoYW50In0.MUBNsl45jdiRr8URcq6otexrmzgkY27kPkvDedC_wDI\",\n  \"paymentType\": \"DOMESTIC\",\n  \"serviceLevel\": \"SDVA\",\n  \"externalPaymentId\": \"PAY-21765-AF\",\n  \"endToEndId\": \"RI-123456789\",\n  \"amount\": {\n    \"type\": \"INSTRUCTED\",\n    \"amount\": 123.45,\n    \"currency\": \"EUR\"\n  },\n  \"exchangeRateInformation\": {\n    \"exchangeRate\": \"1.54\",\n    \"rateType\": \"AGRD\",\n    \"contractId\": \"MCCT1306251365420971215\"\n  },\n  \"debtor\": {\n    \"name\": \"string\",\n    \"address\": {\n      \"addressLine1\": \"Rue blue 89\",\n      \"addressLine2\": \"75000 Paris\",\n      \"country\": \"FR\"\n    }\n  },\n  \"debtorAccount\": {\n    \"currency\": \"EUR\",\n    \"iban\": \"AT611904300234573201\",\n    \"accountReferenceType\": \"IBAN\"\n  },\n  \"creditorAccount\": {\n    \"currency\": \"EUR\",\n    \"iban\": \"AT611904300234573201\",\n    \"accountReferenceType\": \"IBAN\"\n  },\n  \"creditor\": {\n    \"name\": \"string\",\n    \"address\": {\n      \"addressLine1\": \"Rue blue 89\",\n      \"addressLine2\": \"75000 Paris\",\n      \"country\": \"FR\"\n    }\n  },\n  \"creditorAgent\": \"AAAADEBBXXX\",\n  \"creditorAgentName\": \"Merchant123\",\n  \"remittanceInformationStructured\": [\n    {\n      \"structureType\": \"CREDITOR_REFERENCE\",\n      \"reference\": \"string\",\n      \"referenceType\": \"string\",\n      \"referenceIssuer\": \"string\"\n    },\n    {\n      \"structureType\": \"REFERRED_DOCUMENT\",\n      \"code\": \"MSIN or CNFA etc\",\n      \"proprietary\": \"Proprietary\",\n      \"issuer\": \"referenceIssuer\",\n      \"number\": \"LON124546\",\n      \"relatedDate\": \"2019-09-21\"\n    },\n    {\n      \"structureType\": \"BG_BUDGETARY_PAYMENT\",\n      \"regulatoryReportType\": \"string\",\n      \"documentNumber\": \"string\",\n      \"documentDate\": \"2021-06-09\",\n      \"taxPayerId\": \"stringstr\",\n      \"taxPayerType\": \"EGN\",\n      \"taxPayerName\": \"string\",\n      \"paymentCategory\": \"string\",\n      \"debtorPaymentCategory\": \"string\",\n      \"fromDate\": \"2021-06-09\",\n      \"endDate\": \"2021-06-09\"\n    },\n    {\n      \"structureType\": \"BG_BUDGETARY_MULTILINE_PAYMENT\",\n      \"taxPayerId\": \"stringstr\",\n      \"taxPayerType\": \"EGN\",\n      \"taxPayerName\": \"string\",\n      \"debtorPaymentCategory\": \"string\",\n      \"multiLineDetails\": [\n        {\n          \"paymentCategory\": \"string\",\n          \"itemAmount\": {\n            \"type\": \"INSTRUCTED\",\n            \"amount\": 123.45,\n            \"currency\": \"EUR\"\n          },\n          \"regulatoryReportType\": \"string\",\n          \"documentNumber\": \"string\",\n          \"documentDate\": \"2021-06-09\",\n          \"fromDate\": \"2021-06-09\",\n          \"endDate\": \"2021-06-09\",\n          \"instructedInformation\": \"string\"\n        }\n      ]\n    },\n    {\n      \"structureType\": \"BG_SEBRA_PAYMENT\",\n      \"paymentCategory\": \"string\",\n      \"debtorPaymentCategory\": \"string\",\n      \"regulatoryReportType\": \"string\",\n      \"documentNumber\": \"string\",\n      \"documentDate\": \"2021-06-09\",\n      \"fromDate\": \"2021-06-09\",\n      \"endDate\": \"2021-06-09\",\n      \"activityCode\": \"stri\"\n    }\n  ],\n  \"remittanceInformationUnstructured\": \"Ref Number Merchant\",\n  \"purposeCode\": \"BKDF\",\n  \"categoryPurpose\": \"LOAN\",\n  \"instructionPriority\": \"NORMAL\",\n  \"chargeBearer\": \"CRED\",\n  \"intermediary\": [\n    {\n      \"account\": {\n        \"identification\": {\n          \"iban\": \"AT913225000000420018\",\n          \"otherIdentification\": {\n            \"id\": \"MCCT1306251365420971215\",\n            \"issuer\": \"string\",\n            \"scheme\": {\n              \"code\": \"stri\",\n              \"proprietary\": \"string\"\n            }\n          }\n        },\n        \"currency\": \"EUR\"\n      },\n      \"agent\": {\n        \"financialInstitutionIdentification\": {\n          \"bic\": \"AAAADEBBXXX\",\n          \"name\": \"EXAMPLE BANK\",\n          \"otherIdentification\": {\n            \"id\": \"MCCT1306251365420971215\",\n            \"issuer\": \"string\",\n            \"scheme\": {\n              \"code\": \"stri\",\n              \"proprietary\": \"string\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"ultimateDebtor\": {\n    \"name\": \"string\",\n    \"identification\": {\n      \"id\": \"8941272226\",\n      \"schemaCode\": \"TXID\"\n    }\n  },\n  \"ultimateCreditor\": {\n    \"name\": \"string\",\n    \"identification\": {\n      \"id\": \"8941272226\",\n      \"schemaCode\": \"TXID\"\n    }\n  },\n  \"paymentId\": \"1234-wertiq-983\",\n  \"status\": \"ACCP\",\n  \"statusDescription\": \"payment init accepted\",\n  \"isoStatusReasonCode\": \"AM06\",\n  \"transactionFees\": {\n    \"amount\": 0,\n    \"currency\": \"EUR\",\n    \"amountInAccountCurrency\": 0\n  },\n  \"maxSCA\": 1,\n  \"requestedExecutionDate\": \"2018-05-05\"\n}"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}
