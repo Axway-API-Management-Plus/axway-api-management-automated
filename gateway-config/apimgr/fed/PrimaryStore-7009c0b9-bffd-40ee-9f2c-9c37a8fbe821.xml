@@ -17447,6 +17447,18 @@
 	<fval name="name"><value>Request Policy 1</value></fval>
 	<fval name="start"><value contentType="reference">-3656407173390996773</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CircuitDelegateFilter" entityPK="-5301879606133809842" parentPK="4021023740886714549">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="circuitPK"><value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='TranslateHeader'/></key></key>	</value></fval>
+	<fval name="logFailure"><value>Failed in calling policy shortcut</value></fval>
+	<fval name="logFatal"><value>Error in calling policy shortcut circuit. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in calling policy shortcut</value></fval>
+	<fval name="name"><value>Call &apos;TranslateHeader&apos;</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="-3656407173390996773" parentPK="4021023740886714549">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
@@ -17457,10 +17469,61 @@
 	<fval name="logMaskType"><value>SERVICE</value></fval>
 	<fval name="logSuccess"><value>Traced the message properties</value></fval>
 	<fval name="name"><value>Trace Filter</value></fval>
+	<fval name="successNode"><value contentType="reference">-5301879606133809842</value></fval>
 	<fval name="traceAttributes"><value>1</value></fval>
 	<fval name="traceBody"><value>0</value></fval>
 	<fval name="traceLevel"><value>3</value></fval>
 	<fval name="traceMsg"><value>XXX</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="4855846277903166512" parentPK="1494605159343373361">
+	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
+	<fval name="description"><value></value></fval>
+	<fval name="logMask"><value>3</value></fval>
+	<fval name="name"><value>TranslateHeader</value></fval>
+	<fval name="start"><value contentType="reference">-3298631759112261232</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="-3298631759112261232" parentPK="4855846277903166512">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeName"><value>X-Test-HValue</value></fval>
+	<fval name="base64Decode"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">3493121942376065588</value></fval>
+	<fval name="headerName"><value>X-Test</value></fval>
+	<fval name="logFailure"><value>Failed to extract attribute HTTP header</value></fval>
+	<fval name="logFatal"><value>Error occurred while extracting attributes from HTTP header. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Extracted attribute from HTTP header</value></fval>
+	<fval name="name"><value>Retrieve from HTTP header</value></fval>
+	<fval name="successNode"><value contentType="reference">3653631876105068952</value></fval>
+	<fval name="useQueryParameter"><value>0</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AddHTTPHeaderFilter" entityPK="3653631876105068952" parentPK="4855846277903166512">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="addWhere"><value>httpheaders</value></fval>
+	<fval name="base64Encode"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="headerName"><value>Y-Test</value></fval>
+	<fval name="headerValue"><value>${X-Test-HValue}</value></fval>
+	<fval name="logFailure"><value>Failed in adding the HTTP header to the message</value></fval>
+	<fval name="logFatal"><value>Error in adding the HTTP header to the message. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in adding the HTTP header to the message</value></fval>
+	<fval name="name"><value>Translate X-Test header</value></fval>
+	<fval name="overwriteExistingHeader"><value>1</value></fval>
+	<fval name="successNode"><value contentType="reference">4678633038562575984</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="RemoveHTTPHeaderFilter" entityPK="4678633038562575984" parentPK="4855846277903166512">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="errorNoHeader"><value>0</value></fval>
+	<fval name="headerName"><value>X-Test</value></fval>
+	<fval name="logFailure"><value>Failed in removing the HTTP header from the message</value></fval>
+	<fval name="logFatal"><value>Error in removing the HTTP header from the message. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in removing the HTTP header from the message</value></fval>
+	<fval name="name"><value>Remove HTTP Header</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="8086304639307381545" parentPK="1494605159343373361">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
