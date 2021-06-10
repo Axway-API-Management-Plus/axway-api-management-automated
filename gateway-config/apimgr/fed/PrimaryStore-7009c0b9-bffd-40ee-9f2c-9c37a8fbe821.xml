@@ -17482,6 +17482,22 @@
 	<fval name="name"><value>TranslateHeader</value></fval>
 	<fval name="start"><value contentType="reference">-3298631759112261232</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="-5024075969495376843" parentPK="4855846277903166512">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="doIndent"><value>0</value></fval>
+	<fval name="logFailure"><value>Failed to trace the message properties</value></fval>
+	<fval name="logFatal"><value>Error while tracing the message properties. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Traced the message properties</value></fval>
+	<fval name="name"><value>Trace Filter</value></fval>
+	<fval name="successNode"><value contentType="reference">3653631876105068952</value></fval>
+	<fval name="traceAttributes"><value>1</value></fval>
+	<fval name="traceBody"><value>0</value></fval>
+	<fval name="traceLevel"><value>3</value></fval>
+	<fval name="traceMsg"><value></value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="-3298631759112261232" parentPK="4855846277903166512">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="attributeName"><value>X-Test-HValue</value></fval>
@@ -17494,7 +17510,7 @@
 	<fval name="logMaskType"><value>SERVICE</value></fval>
 	<fval name="logSuccess"><value>Extracted attribute from HTTP header</value></fval>
 	<fval name="name"><value>Retrieve from HTTP header</value></fval>
-	<fval name="successNode"><value contentType="reference">3653631876105068952</value></fval>
+	<fval name="successNode"><value contentType="reference">-5024075969495376843</value></fval>
 	<fval name="useQueryParameter"><value>0</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AddHTTPHeaderFilter" entityPK="3653631876105068952" parentPK="4855846277903166512">
