@@ -6,7 +6,7 @@
   "organization" : "RBI",
   "apiDefinition" : "../api-single-payments-mock/endpoints/payments.yaml",
   "summary" : "Processes submitted patient diagnostics data",
-  "backendBasepath" : "http://api-single-payments-diagnostic:8080/api",
+  "backendBasepath" : "http://api-single-payments-diagnostic:8080/api/",
   "authenticationProfiles" : [ {
     "name" : "_default",
     "isDefault" : true,
