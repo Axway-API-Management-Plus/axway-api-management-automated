@@ -49,7 +49,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{host}}/single-payments/api/v1/single-credit-transfers",
+					"raw": "https://{{host}}/payments-mock/api/v1/single-credit-transfers",
 					"protocol": "https",
 					"host": [
 						"{{host}}"

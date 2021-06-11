@@ -1,6 +1,6 @@
 {
   "name" : "SinglePayments-API - v.2.0 Mock for Diagnosis",
-  "path" : "/single-payments",
+  "path" : "/payments-mock",
   "state" : "published",
   "version" : "1.0",
   "organization" : "RBI",
