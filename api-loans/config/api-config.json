@@ -6,7 +6,7 @@
   "organization" : "RBI",
   "apiDefinition" : "loans_rtl.yaml",
   "summary" : "This API is used to initiate, submit and get summary of loan",
-  "backendBasepath" : "https://any.host.com/loans",
+  "backendBasepath" : "http://any.host.com/loans",
   "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
     "name" : "RBI client app - Test",

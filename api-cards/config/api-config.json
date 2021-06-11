@@ -6,7 +6,7 @@
   "organization" : "RBI",
   "apiDefinition" : "cards.yaml",
   "summary" : "This API is used to initiate, submit and get summary of card",
-  "backendBasepath" : "https://any.host.com/cards",
+  "backendBasepath" : "http://any.host.com/cards",
   "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
     "name" : "RBI client app - Test",

@@ -6,7 +6,7 @@
   "organization" : "RBI",
   "apiDefinition" : "transactions.yaml",
   "summary" : "This API is used to initiate, submit and get summary of account transaction",
-  "backendBasepath" : "https://any.host.com/account-transactions",
+  "backendBasepath" : "http://any.host.com/account-transactions",
   "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
     "name" : "RBI client app - Test",

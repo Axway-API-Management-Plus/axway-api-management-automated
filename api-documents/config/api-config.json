@@ -6,7 +6,7 @@
   "organization" : "RBI",
   "apiDefinition" : "documents.yaml",
   "summary" : "This API is used to initiate, submit and get summary of document",
-  "backendBasepath" : "https://any.host.com/documents",
+  "backendBasepath" : "http://any.host.com/documents",
   "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
     "name" : "RBI client app - Test",
