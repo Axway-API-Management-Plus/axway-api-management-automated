@@ -1,0 +1,30 @@
+{
+  "name" : "Bulk Payments API",
+  "path" : "/bulk-payments",
+  "state" : "published",
+  "version" : "3.7",
+  "organization" : "RBI",
+  "apiDefinition" : "bulk-payments.yaml",
+  "summary" : "This API is used to initiate, submit and get summary of bulk payment",
+  "backendBasepath" : "https://any.host.com/bulk-payments",
+  "securityProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "devices" : [ {
+      "name" : "API Key",
+      "type" : "apiKey",
+      "order" : 1,
+      "properties" : {
+        "apiKeyFieldName" : "KeyId",
+        "takeFrom" : "HEADER",
+        "removeCredentialsOnSuccess" : "true"
+      }
+    } ]
+  } ],
+  "clientOrganizations" : [ "RBI" ],
+  "applications" : [ {
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}

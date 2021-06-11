@@ -1,0 +1,1067 @@
+openapi: 3.0.1
+info:
+  title: Documents API
+  version: 0.2.0
+  description: |
+        Documents Group API.
+        This API allows you to generate, retrieve, upload and sign documents.
+  # TODO - security.
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Generation
+    description: This is for operations such as generateDocuments.
+  - name: Management
+    description: This is for storage and retrieval of documents.
+  - name: Signing
+    description: This is for operations such as signDocuments, getSignedDocuments.
+
+paths:
+  /api/v1/documents:
+    get:
+      tags:
+        - Management
+      summary: This method is used to retrieve all documents that match filters.
+      description: |
+        Allows to retrieve documents. Only a documentBrief object is returned due to service performance - many
+        documents in the response may highly affect the response time.
+      operationId: getDocuments
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        # common query parameters
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/DocumentIds'
+        - $ref: '#/components/parameters/ContentType'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Tags'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetDocumentsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+    post:
+      tags:
+        - Management
+      summary: This method is used to store document.
+      description: |
+        Allows to upload a document to the documents management system. All mandatory checks
+        (e.g. malware/virus checks) should be done in local DMS system.
+      operationId: uploadDocument
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/UploadDocumentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UploadDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/sign-documents-requests:
+    post:
+      tags:
+        - Signing
+      summary: This method is used to sign a document.
+      description: Allows to sign a document by the exteral component.
+      operationId: signDocument
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/SignDocumentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/SignDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/sign-documents-requests/{requestId}:
+    get:
+      tags:
+        - Signing
+      summary: This method is used to retrieve signing document request data.
+      description: Allows to retrieve a request for signing a document.
+      operationId: getSigningDocumentRequest
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          $ref: '#/components/responses/SignedDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/documents/{documentId}:
+    get:
+      tags:
+        - Management
+      summary: This method is used to retrieve one document.
+      description: Allows to retrieve a document by document id from the documents management system.
+      operationId: getDocument
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/DocumentId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+    delete:
+      tags:
+        - Management
+      summary: This method is used to delete one document.
+      description: Allows to delete a document by document id from the documents management system.
+      operationId: deleteDocument
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/DocumentId'
+      responses:
+        '204':
+          $ref: '#/components/responses/DeleteDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+    put:
+      tags:
+        - Management
+      summary: This method is used to update stored document.
+      description: Allows to upload an existing document by document id to the documents management system.
+      operationId: updateDocument
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/DocumentId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateDocumentRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateDocumentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/generate-documents-requests:
+    post:
+      tags:
+        - Generation
+      summary: This method is used to generate documents in a PDF format.
+      description: |
+        Allows to generate PDF documents. This method is used to create a request for documents generation.
+        A requestId from the response message can be used in /api/v1/document-generation-requests/{requestId} endpoint
+        to retrieve a status of documents generation process. Possible templates which can be generated
+        are defined as a templateId attribute. Possible content types: application/pdf.
+        All mandatory fields for the given template ID can be retrieved using /api/v1/document-templates endpoint.
+        Documents generation flow can be found on the RICE confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/Documents+-+reference+API.
+
+      operationId: generateDocuments
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/GenerateDocumentsRequest'
+      responses:
+        '202':
+          $ref: '#/components/responses/GenerateDocumentsRequestResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/generate-documents-requests/{requestId}:
+    get:
+      tags:
+        - Generation
+      summary: This method is used to get documents generation request data.
+      description: |
+        Allows to get a status of documents generation process. One request can be used to generate more than one
+        document.
+      operationId: getGeneratingDocumentsRequest
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenerateDocumentsRequestResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/documents-templates:
+    get:
+      tags:
+        - Generation
+      summary: This method is used to retrieve a list of documents fields.
+      description: Allows to retrieve a list of document templates and document fields required to generate documents.
+      operationId: getDocumentTemplates
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # common query parameters
+        - $ref: '#/components/parameters/TemplateId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetDocumentsTemplatesResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+
+  parameters:
+    # common header parameters
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows,
+        map how services contribute to response times, identify bottle necks, etc.
+        The X-Correlation-ID must be propagated unchanged in all downstream service calls (e.g. NWU services).
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Idempotency-Key:
+      name: X-Idempotency-Key
+      in: header
+      description: The unique request identifier to support idempotency.
+      required: false
+      example: 'e457b5a2e4d86bd1198ee56343ba864fe8b2'
+      schema:
+        type: string
+        maxLength: 40
+    # common query parameters
+    CustomerId:
+      name: customerId
+      in: query
+      description: A unique ID of a customer to be retrieved.
+      example: '123456'
+      schema:
+        $ref: '#/components/schemas/CustomerId'
+    DocumentId:
+      name: documentId
+      in: path
+      required: true
+      description: A unique ID of a document to be retrieved.
+      example: '4637567'
+      schema:
+        $ref: '#/components/schemas/DocumentId'
+    TemplateId:
+      name: templateId
+      in: query
+      description: A document's template ID to be generated.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/TemplateId'
+    ContentType:
+      name: contentType
+      in: query
+      description: A document type to be generated.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ContentType'
+    RequestId:
+      name: requestId
+      in: path
+      required: true
+      description: A request id of documents process.
+      schema:
+        $ref: '#/components/schemas/RequestId'
+    OffsetPaginationOffset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set.
+      example: 20
+      schema:
+        type: integer
+    OffsetPaginationLimit:
+      name: limit
+      in: query
+      description: The numbers of items to return.
+      example: 20
+      schema:
+        type: integer
+    Sort:
+      in: query
+      name: sort
+      description: |
+        Comma-separated list of fields to define the sort order.
+        To indicate sorting direction, fields may be suffixed with asc: or desc:
+        e.g. /documents?sort=documentType:asc.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(documentType):(asc|desc)$'
+          example: 'documentType:asc'
+    Tags:
+      in: query
+      name: tags
+      description: Comma-seperated list of tags. Used to query documents only with specific tags.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          example: 'tag1,tag2'
+
+    DocumentIds:
+      in: query
+      name: documentIds
+      description: Comma-seperated list of document IDs. Used to query documents only with specific identifiers.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+
+  requestBodies:
+    GenerateDocumentsRequest:
+      description: Request for creating documents generation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateDocumentsRequest'
+    UploadDocumentRequest:
+      description: A request for creating documents upload request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UploadDocumentRequest'
+    UpdateDocumentRequest:
+      description: A request for creating document update request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateDocumentRequest'
+    SignDocumentRequest:
+      description: A request for creating documents signature request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignDocumentRequest'
+
+  responses:
+    GetDocumentResponse:
+      description: A document has been retrieved.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Document'
+    GetDocumentsResponse:
+      description: A document list has been retrieved.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetDocumentsResponse'
+      links:
+        GetDocumentsListOffsetPaginationPreviousPage:
+          $ref: '#/components/links/GetDocumentsListOffsetPaginationPreviousPage'
+        GetDocumentsListOffsetPaginationNextPage:
+          $ref: '#/components/links/GetDocumentsListOffsetPaginationNextPage'
+        GetDocument:
+          $ref: '#/components/links/GetDocument'
+    GenerateDocumentsRequestResponse:
+      description: Documents generation request has been accepted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateDocumentsRequestResponse'
+      links:
+        GetDocumentStatusByRequestId:
+          description: |
+            The 'requestId' value returned in the response can be used as a 'requestId' value parameter
+            in GET /api/v1/generate-documents-requests/{requestId}.
+          operationId: getGenerateDocumentsRequest
+          parameters:
+            requestId: '$response.body#/documents/requestId'
+        GetDocumentByDocumentId:
+          description: |
+            The 'documentId' value returned in the response can be used as a 'documentId' value parameter
+            in GET /api/v1/documents/{documentId}.
+          operationId: getDocument
+          parameters:
+            requestId: '$response.body#/documents/documentId'
+    UploadDocumentResponse:
+      description: Document upload request has been accepted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UploadDocumentResponse'
+      links:
+        GetDocumentByDocumentId:
+          description: |
+            The 'documentId' value returned in the response can be used as a 'documentId' value parameter
+            in GET /api/v1/documents/{documentId}.
+          operationId: getDocument
+          parameters:
+            requestId: '$response.body#/documentId'
+    SignDocumentResponse:
+      description: Documents has been confirmed by a signature.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignDocumentResponse'
+      links:
+        GetDocumentSigningStatusByRequestId:
+          description: |
+            The 'requestId' value returned in the response can be used as a 'requestId' value parameter
+            in GET /api/v1/sign-documents-requests/{requestId}.
+          operationId: signDocuments
+          parameters:
+            requestId: '$response.body#/requestId'
+    GetDocumentsTemplatesResponse:
+      description: Documents templates have been retrieved.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetDocumentTemplatesResponse'
+    DeleteDocumentResponse:
+      description: A document has been deleted.
+    UpdateDocumentResponse:
+      description: A document has been updated.
+    SignedDocumentResponse:
+      description: Signing documents process has finished.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignedDocumentResponse'
+    DefaultErrorResponse:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    CustomerId:
+      description: Unique identifier of a customer in bank's record.
+      type: string
+      minLength: 5
+      maxLength: 20
+      example: '123456'
+
+    DocumentId:
+      description: Unique identifier of a document.
+      type: string
+      example: '4637567'
+
+    TemplateId:
+      description: |
+        An identifier of the document's template.
+        All document templates can be retrieved using /api/v1/document-templates API.
+      type: string
+      example: 'LOAN_CONTRACT_SME_LENDING_V1'
+
+    ContentType:
+      description: |
+        All types of possible documents content types. If given content type is not supported, HTTP 415 should be
+        returned. All possible values should be compliant with the RFC2046 MIME Media Types
+        https://www.iana.org/assignments/media-types/media-types.xhtml.
+      type: string
+      example: 'application/pdf'
+
+    Content:
+      description: The base64 encoded contents of the file.
+      type: string
+      format: byte
+      example: 'U3dhZ2dlciByb2Nrcw=='
+
+    Document:
+      required:
+        - documentId
+        - content
+        - contentType
+      properties:
+        documentId:
+          $ref: '#/components/schemas/DocumentId'
+        content:
+          $ref: '#/components/schemas/Content'
+        contentType:
+          $ref: '#/components/schemas/ContentType'
+        creationDate:
+          $ref: '#/components/schemas/DateScheme'
+        lastModificationDate:
+          $ref: '#/components/schemas/DateTimeScheme'
+        notes:
+          $ref: '#/components/schemas/Notes'
+        tags:
+          $ref: '#/components/schemas/Tags'
+        status:
+          $ref: '#/components/schemas/DocumentStatus'
+
+    DocumentBrief:
+      required:
+        - documentId
+        - contentType
+      properties:
+        documentId:
+          $ref: '#/components/schemas/DocumentId'
+        contentType:
+          $ref: '#/components/schemas/ContentType'
+        creationDate:
+          $ref: '#/components/schemas/DateScheme'
+        lastModificationDate:
+          $ref: '#/components/schemas/DateTimeScheme'
+        notes:
+          $ref: '#/components/schemas/Notes'
+        tags:
+          $ref: '#/components/schemas/Tags'
+        status:
+          $ref: '#/components/schemas/DocumentStatus'
+
+    FirstName:
+      description: Part of a full name that identifies a person.
+      type: string
+
+    LastName:
+      description: Part of full name that indicates person family.
+      type: string
+
+    Email:
+      description: An e-mail definition.
+      type: string
+      minLength: 1
+      maxLength: 140
+      pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+
+    Signer:
+      properties:
+        firstName:
+          $ref: '#/components/schemas/FirstName'
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        email:
+          $ref: '#/components/schemas/Email'
+
+    SignatureMethod:
+      description: |
+        Possible signature methods. Possible values:
+        ** ESIGN ** Electronic signature.
+      type: string
+      enum:
+        - ESIGN
+
+    Signature:
+      description: If a signature is not embedded in the content, then it is a definition of a signature.
+      type: string
+
+
+    SignDocument:
+      description: A document to be signed.
+      required:
+        - content
+      properties:
+        content:
+          $ref: '#/components/schemas/Content'
+        contentType:
+          $ref: '#/components/schemas/ContentType'
+
+    SignedDocument:
+      description: A signed document.
+      required:
+        - signedContent
+      properties:
+        signedContent:
+          $ref: '#/components/schemas/Content'
+        contentType:
+          $ref: '#/components/schemas/ContentType'
+
+    SignedDocumentResponse:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/SignedDocument'
+        status:
+          $ref: '#/components/schemas/SignDocumentStatus'
+        signature:
+          $ref: '#/components/schemas/Signature'
+
+    SignDocumentStatus:
+      description: |
+        Defines the status of a request to sign documents. Possible values:
+        ** RECEIVED ** Signing documents request has been received.
+        ** PENDING ** Signing documents process is in progress.
+        ** SIGNED ** Documents have been signed.
+        ** REJECTED ** Documents signature request has been rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - SIGNED
+        - REJECTED
+
+    UploadDocument:
+      required:
+        - contentType
+        - content
+        - customerId
+      properties:
+        content:
+          $ref: '#/components/schemas/Content'
+        contentType:
+          $ref: '#/components/schemas/ContentType'
+        customerId:
+          $ref: '#/components/schemas/CustomerId'
+        notes:
+          $ref: '#/components/schemas/Notes'
+        tags:
+          $ref: '#/components/schemas/Tags'
+
+    DocumentsGenerationRequest:
+      type: object
+      required:
+        - requestId
+        - status
+      properties:
+        documentId:
+          $ref: '#/components/schemas/DocumentId'
+        status:
+          $ref: '#/components/schemas/DocumentsGenerationStatus'
+
+    RequestId:
+      description: |
+        Immutable request id. This identifier is used to identify a request id
+        to get a status of documents process.
+      example: '1234567890'
+      maxLength: 50
+      type: string
+
+    DocumentsGenerationStatus:
+      description: |
+        Documents generation status:
+          ** RECEIVED ** Documents generation request has been received.
+          ** PENDING ** Documents generation process is in progress.
+          ** GENERATED ** Documents generation process has been processed.
+          ** REJECTED ** Documents generation process has been rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+        -
+    DocumentsUploadStatus:
+      description: |
+        Documents upload status:
+          ** DRAFT ** Document is a draft.
+          ** ACTIVE ** Document is active.
+          ** DELETED ** Document is deleted.
+          ** ARCHIVED ** Document is archived.
+      type: string
+      enum:
+        - DRAFT
+        - ACTIVE
+        - DELETED
+        - ARCHIVED
+
+    DocumentStatus:
+      description: |
+        Document status:
+          ** RECEIVED ** Documents upload request has been received.
+          ** PENDING ** Documents upload process is in progress.
+          ** UPLOADED ** Documents upload process has been processed.
+          ** REJECTED ** Documents upload process has been rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+
+    DocumentTemplate:
+      description: An object for storing a document template.
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/TemplateId'
+        fields:
+          $ref: '#/components/schemas/TemplateFields'
+
+    GenerateDocuments:
+      description: An object for generating documents.
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/TemplateId'
+        fields:
+          $ref: '#/components/schemas/Fields'
+
+    FieldName:
+      description: A name of the field, which indicates a certain place on a document.
+      type: string
+
+    FieldValue:
+      description: A value of the field, which will be visible on a document.
+      type: string
+
+    MaximumLength:
+      description: A maximum length of the value, which can be send to generate a document correctly.
+      type: integer
+
+    Fields:
+      description: Field names and values, which are required to send to generate a document correctly.
+      type: array
+      items:
+        type: object
+        properties:
+          fieldName:
+            $ref: '#/components/schemas/FieldName'
+          fieldValue:
+            $ref: '#/components/schemas/FieldValue'
+
+    TemplateFields:
+      description: Field names and values, which are required to send to generate a document correctly.
+      type: array
+      items:
+        type: object
+        properties:
+          fieldName:
+            $ref: '#/components/schemas/FieldName'
+          maxLength:
+            $ref: '#/components/schemas/MaximumLength'
+
+    DateScheme:
+      description: A date definition.
+      type: string
+      format: date
+
+    DateTimeScheme:
+      description: A date-time definition.
+      type: string
+      format: date-time
+
+    Notes:
+      description: Extra notes.
+      type: string
+
+    Tags:
+      description: Specifies set of tags used to categorize/group documents. Each tag is a key-value pair.
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            description: A tag's key.
+          value:
+            type: string
+            description: A tag's value.
+
+    GenerateDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateDocuments'
+
+    UploadDocumentRequest:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/UploadDocument'
+
+    GetDocumentsResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentBrief'
+
+    SignDocumentRequest:
+      type: object
+      properties:
+        signer:
+          $ref: '#/components/schemas/Signer'
+        signatureMethod:
+          $ref: '#/components/schemas/SignatureMethod'
+        document:
+          $ref: '#/components/schemas/SignDocument'
+
+    SignDocumentResponse:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        status:
+          $ref: '#/components/schemas/SignDocumentStatus'
+
+    GenerateDocumentsRequestResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentsGenerationRequest'
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+
+    UploadDocumentResponse:
+      type: object
+      properties:
+        documentId:
+          $ref: '#/components/schemas/DocumentId'
+        status:
+          $ref: '#/components/schemas/DocumentsUploadStatus'
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+
+    GetDocumentTemplatesResponse:
+      type: object
+      properties:
+        documentTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentTemplate'
+
+    UpdateDocumentRequest:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/UploadDocument'
+
+    OffsetPaginationMetadata:
+      description: Offset pagination data.
+      type: object
+      properties:
+        limit:
+          description: Limit parameter from the request or default.
+          type: number
+        offset:
+          description: Offset parameter from the request or 0.
+          type: number
+        nextOffset:
+          description: |
+            Offset of the next page if exists, otherwise <null>.
+            Calculated from query parameters. If sum of offset and limit is less then collection size, then we will
+            return summary result, if greater, then offset will be returned.
+          type: number
+        previousOffset:
+          description: |
+            Offset of the next page if exists, otherwise 0.
+            Calculated from query parameters by substracting limit from offset. If value is greater than zero, then
+            substraction result is returned, if less then 0, will be placed to previousOffset.
+          type: number
+        size:
+          description: Cardinality of loans list set.
+          type: number
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        The error model to hold data which hepls to identify error causes and provides additional tracking information.
+        Every API in RICE project is obliged to use the reference error model.
+        A more detailed description could be found on the RICE confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes.
+      required:
+        - requestId
+        - correlationId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: A unique UUID to identify specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: A unique UUID of specific request. This value should be obtained from X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: A unique UUID for batch of requests. This value should be obtained from X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            A HTTP status code. If there is in use different protocol than HTTP,
+            we should map the error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+    ErrorReason:
+      type: object
+      description: Additional information about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: Human-readable message in user-requested language.
+          example: 'Operation rejected. Missing parameter.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'documentId'
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just informative.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        ** COMMON_INVALID_PARAMETER **
+        ** COMMON_MISSING_PARAMETER **
+        ** COMMON_BAD_REQUEST **
+        ** COMMON_MISSING_CREDENTIALS **
+        ** COMMON_INVALID_CREDENTIALS **
+        ** COMMON_EXPIRED_ACCESS_TOKEN **
+        ** COMMON_ACCESS_DENIED **
+        ** COMMON_NOT_FOUND **
+        ** COMMON_METHOD_NOT_ALLOWED **
+        ** COMMON_RESOURCE_ALREADY_EXISTS **
+        ** COMMON_RATE_LIMIT_EXCEEDED **
+        ** COMMON_INTERNAL_ERROR **
+        ** COMMON_SERVICE_UNAVAILABLE **
+        ** COMMON_GATEWAY_TIMEOUT **
+      example: 'COMMON_BAD_REQUEST'
+
+  links:
+    GetDocumentsListOffsetPaginationNextPage:
+      description: Url to the next page in offset paging.
+      operationId: getDocuments
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetDocumentsListOffsetPaginationPreviousPage:
+      description: Url to the previous page in offset paging.
+      operationId: getDocuments
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+    GetDocument:
+      description: Url to retrieve the specific document.
+      operationId: getDocument
+      parameters:
+        documentId: '$response.body#/documents/documentId'

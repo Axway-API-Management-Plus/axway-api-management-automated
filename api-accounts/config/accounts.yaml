@@ -1,0 +1,1123 @@
+openapi: 3.0.1
+info:
+  title: Accounts
+  version: 0.5.0
+  description: |
+    Accounts API (Draft)
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Accounts
+    description: |
+      This resource represents the account to which credit and debit entries are made.
+      Each account resource will have a unique and immutable AccountId.
+  - name: Balances
+    description: |
+      This resource represents the net increases and decreases in an account (AccountId) at a specific point in time.
+
+paths:
+  /api/v1/account-creation-requests:
+    post:
+      summary: Create Account Request
+      description: |
+        Creates account request for customer. Create Account Request might have PENDING or DONE status.
+      tags:
+        - Accounts
+      operationId: createAccountCreationRequests
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: '#/components/parameters/Fields'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateAccountCreationRequestsRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateAccountCreationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/account-creation-requests/{requestId}:
+    get:
+      summary: Get Account Request
+      description: |
+        Returns account request
+      tags:
+        - Accounts
+      operationId: getAccountCreationRequests
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAccountCreationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/accounts:
+    get:
+      summary: Get Accounts
+      description: |
+        Returns list of accounts visible in the specified security context implicitly ordered by "order" field.
+      tags:
+        - Accounts
+      operationId: getAccountBriefs
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Iban'
+        - $ref: '#/components/parameters/Bban'
+        - $ref: '#/components/parameters/AccountIds'
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/HasBalances'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAccountBriefsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/accounts/{accountId}:
+    get:
+      summary: Get Single Account
+      description: |
+        Returns details of a specific account.
+      tags:
+        - Accounts
+      operationId: getAccount
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/HasBalances'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAccountDetailsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/accounts/{accountId}/balances:
+    get:
+      summary: Read balances
+      description: |
+        Returns account balance for a given accountId in specific security context.
+      tags:
+        - Balances
+      operationId: getAccountBalances
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAccountBalancesResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/accounts/{accountId}/status:
+    put:
+      summary: Put Accounts Status
+      description: |
+        Change account status.
+      tags:
+        - Accounts
+      operationId: putAccountStatus
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/Fields'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountStatusRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/AccountStatusResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      description: |
+        Persistent UUID for account derived from account atributes, provided by getAccounts.
+        This identifier has no meaning to the account owner.
+      required: true
+      example: '1234567890'
+      schema:
+        type: string
+        maxLength: 50
+    AccountIds:
+      name: accountIds
+      in: query
+      description: Persistent UUIDs for accounts.
+      schema:
+        type: array
+        items:
+          maxLength: 50
+          type: string
+        example: [ '1234567890' ]
+    RequestId:
+      name: requestId
+      in: path
+      description: Identifier of account request.
+      required: true
+      example: '1234567890'
+      schema:
+        type: string
+        maxLength: 50
+    OffsetPaginationOffset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set
+      example: 20
+      schema:
+        type: integer
+    OffsetPaginationLimit:
+      name: limit
+      in: query
+      description: The numbers of items to return
+      example: 20
+      schema:
+        type: integer
+
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph
+        request flows, map how services contribute to response times, identify bottle necks, etc.
+        The X-Correlation-ID must be propagated unchanged in any and all downstream service calls (e.g. NWU services).
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Idempotency-Key:
+      name: X-Idempotency-Key
+      in: header
+      description: Unique request identifier to support idempotency
+      required: false
+      example: e457b5a2e4d86bd1198ee56343ba864fe8b2
+      schema:
+        type: string
+        maxLength: 40
+    Iban:
+      in: query
+      name: iban
+      description: Account IBAN filter.
+      schema:
+        $ref: '#/components/schemas/Iban'
+      required: false
+    Bban:
+      in: query
+      name: bban
+      description: Use with BIC.
+      schema:
+        $ref: '#/components/schemas/Bban'
+      required: false
+    CustomerId:
+      in: query
+      name: customerId
+      description: Owner of the account. In some scenarios possibly obtained from security context token.
+      schema:
+        $ref: '#/components/schemas/CustomerId'
+      required: false
+    Sort:
+      in: query
+      name: sort
+      description: |
+        Comma-separated list of fields to define the sort order.
+        To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /accounts?sort=-iban.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(iban|bic|bban|customerId):(asc|desc)$'
+        example: [ 'iban:desc' ]
+    HasBalances:
+      in: query
+      name: hasBalances
+      description: Specify if we want to recive balances in response.
+      schema:
+        type: boolean
+      required: false
+    Fields:
+      in: query
+      name: fields
+      description: |
+        Partial response support.
+        A list of comma-separated fields that must be included in the response message. If a given query consist of
+        fields which don't exist in a data model, http 400 bad request should be returned.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+        example: 'accountNumber,accountName,balances'
+      required: false
+  requestBodies:
+    CreateAccountCreationRequestsRequest:
+      description: Request for create account request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountCreationRequest'
+    AccountStatusRequest:
+      description: Request for change account status
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountStatusRequest'
+  responses:
+    CreateAccountCreationRequestsResponse:
+      description: Successful response for account creation request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountCreationRequestResponse'
+    AccountStatusResponse:
+      description: The account has been activated successfully.
+    GetAccountBriefsResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBriefsResponse'
+      links:
+        GetAccountsOffsetPaginationNextPage:
+          $ref: '#/components/links/GetAccountsOffsetPaginationNextPage'
+        GetAccountsOffsetPaginationPreviousPage:
+          $ref: '#/components/links/GetAccountsOffsetPaginationPreviousPage'
+        GetAccountDetails:
+          $ref: '#/components/links/GetAccountDetails'
+    GetAccountBalancesResponse:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBalances'
+    GetAccountDetailsResponse:
+      description: Successful response for account details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountDetailsResponse'
+    GetAccountCreationRequestsResponse:
+      description: Successful response for account details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountCreationRequestResponse'
+    ErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    AccountIdentifications:
+      type: array
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/AccountIban'
+          - $ref: '#/components/schemas/AccountBban'
+          - $ref: '#/components/schemas/AccountPan'
+          - $ref: '#/components/schemas/AccountMaskedPan'
+          - $ref: '#/components/schemas/AccountMsisdn'
+          - $ref: '#/components/schemas/AccountEmail'
+        discriminator:
+          propertyName: accountIdentificationType
+          mapping:
+            IBAN: '#/components/schemas/AccountIban'
+            BBAN: '#/components/schemas/AccountBban'
+            PAN: '#/components/schemas/AccountPan'
+            MASKED_PAN: '#/components/schemas/AccountMaskedPan'
+            MSISDN: '#/components/schemas/AccountMsisdn'
+            EMAIL: '#/components/schemas/AccountEmail'
+      minItems: 1
+    AccountBrief:
+      required:
+        - accountId
+        - accountIdentification
+        - status
+        - currency
+        - type
+        - ownerId
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+        accountIdentifications:
+          $ref: '#/components/schemas/AccountIdentifications'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        updateDateTime:
+          $ref: '#/components/schemas/UpdateDateTime'
+        currency:
+          $ref: '#/components/schemas/AccountCurrency'
+        type:
+          $ref: '#/components/schemas/AccountType'
+        nickname:
+          $ref: '#/components/schemas/Nickname'
+        openingDate:
+          $ref: '#/components/schemas/OpeningDate'
+        closedDate:
+          $ref: '#/components/schemas/ClosedDate'
+        primaryOwner:
+          $ref: '#/components/schemas/Customer'
+        balances:
+          description: |
+            A list of balances in any currency regarding this account, e.g. the current balance, the last booked balance.
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+    AccountStatusRequest:
+      required:
+        - status
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/AccountStatusModification'
+    AccountCreationRequest:
+      required:
+        - currency
+        - type
+        - primaryOwner
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/AccountCurrency'
+        type:
+          $ref: '#/components/schemas/AccountType'
+        subtype:
+          $ref: '#/components/schemas/AccountSubtype'
+        nickName:
+          $ref: '#/components/schemas/Nickname'
+        requestOpeningDate:
+          type: string
+          description: Requested Account creation date
+          format: date
+        primaryOwner:
+          $ref: '#/components/schemas/Customer'
+        secondaryOwners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        numberOfSignatures:
+          $ref: '#/components/schemas/NumberOfSignatures'
+        restrictions:
+          $ref: '#/components/schemas/AccountRestrictions'
+        relatedProductId:
+          $ref: '#/components/schemas/ProductId'
+        branch:
+          $ref: '#/components/schemas/BranchId'
+        balances:
+          description: |
+            A list of balances in any currency regarding this account, e.g. the current balance, the last booked balance.
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+        raiffeisenOnlineRights:
+          $ref: '#/components/schemas/RaiffeisenOnlineRights'
+    AccountCreationRequestResponse:
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+        status:
+          $ref: '#/components/schemas/AccountRequestStatus'
+    Account:
+      required:
+        - accountId
+        - status
+        - currency
+        - type
+        - bankDetails
+        - accountIdentification
+      type: object
+      properties:
+        balances:
+          description: |
+            A list of balances in any currency regarding this account, e.g. the current balance, the last booked balance.
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        updateDateTime:
+          $ref: '#/components/schemas/UpdateDateTime'
+        currency:
+          $ref: '#/components/schemas/AccountCurrency'
+        type:
+          $ref: '#/components/schemas/AccountType'
+        subtype:
+          $ref: '#/components/schemas/AccountSubtype'
+        nickname:
+          $ref: '#/components/schemas/Nickname'
+        openingDate:
+          $ref: '#/components/schemas/OpeningDate'
+        closedDate:
+          $ref: '#/components/schemas/ClosedDate'
+        bankDetails:
+          $ref: '#/components/schemas/BankDetails'
+        accountIdentifications:
+          $ref: '#/components/schemas/AccountIdentifications'
+        primaryOwner:
+          $ref: '#/components/schemas/Customer'
+        secondaryOwners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        connectedCustomers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedCustomer'
+        numberOfSignatures:
+          $ref: '#/components/schemas/NumberOfSignatures'
+        restrictions:
+          $ref: '#/components/schemas/AccountRestrictions'
+        relatedProductId:
+          $ref: '#/components/schemas/ProductId'
+        raiffeisenOnlineRights:
+          $ref: '#/components/schemas/RaiffeisenOnlineRights'
+    ConnectedCustomer:
+      description: An entity owning certain part of the company property.
+      type: object
+      required:
+        - roles
+        - person
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerConnectionType'
+        customer:
+          $ref: '#/components/schemas/Customer'
+    CustomerConnectionType:
+      description: A role of the connected person.
+      type: string
+      example: AUTHORIZED_PERSON
+      enum:
+        - AUTHORIZED_PERSON
+
+    Nickname:
+      type: string
+      maxLength: 70
+      description: Account nickname given by the customer.
+    OpeningDate:
+      type: string
+      description: Account opening date
+      format: date
+    ClosedDate:
+      type: string
+      description: Account closed date
+      format: date
+    UpdateDateTime:
+      description: Date and time of setting account's status
+      type: string
+      format: date-time
+    AccountRestrictions:
+      type: string
+      enum:
+        - NONE
+        - CREDIT
+        - DEBIT
+        - FULL
+    AccountId:
+      type: string
+      maxLength: 50
+      description: Immutable account id. This identifier has no meaning to the account owner.
+      example: '1234567890'
+    RequestId:
+      type: string
+      maxLength: 50
+      description: |
+        Immutable request id. This identifier is used to identify creation request id to get status of account
+        creation proces.
+      example: '1234567890'
+    ProductId:
+      type: string
+      maxLength: 50
+      description: This identifier is used to identify product related to create account request.
+      example: '1234567890'
+    BranchId:
+      type: string
+      maxLength: 50
+      description: This identifier is used to identify banks branch
+      example: '1234567890'
+    NumberOfSignatures:
+      type: string
+      description: number of signatures
+    Customer:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomerId'
+        name:
+          type: string
+          maxLength: 70
+          description: Owner customer name
+    BankDetails:
+      type: object
+      properties:
+        bankCode:
+          $ref: '#/components/schemas/Bicfi'
+        bankName:
+          type: string
+          description: bank's name
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country-code of the bank.
+          minLength: 2
+          maxLength: 2
+          pattern: '^[A-Z]{2,2}$'
+        branch:
+          $ref: '#/components/schemas/BranchId'
+      description: Counterparty bank details
+    OffsetPaginationMetadata:
+      type: object
+      description: Offset pagination data.
+      properties:
+        limit:
+          type: number
+          description: Limit parameter from the request or default.
+        offset:
+          type: number
+          description: Offset parameter from the request or 0.
+        nextOffset:
+          type: number
+          description: |
+            Offset of the next page if exists, otherwise <null>.
+            Calculated from query parameters. If sum of offset and limit is less then collection size then we will
+            return summary result if greater then offset will be returned.
+        previousOffset:
+          type: number
+          description: |
+            Offset of the previous page if exists, otherwise 0.
+            Calculated from query parameters by substracting limit from offset.
+            If value is grater than zero then substraction result is returned if less then 0 will be placed to previousOffset.
+        size:
+          type: number
+          description: Cardinality of accounts list set
+    AccountBriefsResponse:
+      type: object
+      description: Response grouping object for getAccounts.
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountBrief'
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+    AccountDetailsResponse:
+      type: object
+      description: Response grouping object for getAccount.
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+    AccountBalances:
+      type: object
+      properties:
+        balances:
+          description: |
+            A list of balances in any currency regarding this account, e.g. the current balance, the last booked balance.
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+        accountIdentification:
+          $ref: '#/components/schemas/AccountIdentifications'
+    Balance:
+      description: |
+        A single balance element.
+      type:
+        object
+      required:
+        - amount
+        - type
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        type:
+          $ref: '#/components/schemas/BalanceType'
+        lastChangeDateTime:
+          description: |
+            This data element might be used to indicate e.g. with the expected or booked balance that no action is
+            known on the account, which is not yet booked.
+          type: string
+          format: date-time
+        lastCommittedTransactionReference:
+          description: transactionReference from transactions api of the last commited transaction.
+          type: string
+          maxLength: 35
+    BalanceType:
+      description: |
+        Account status
+      type: string
+      enum:
+        - BOOKED
+        - AVAILABLE
+    Amount:
+      type: object
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+        amount:
+          $ref: '#/components/schemas/AmountValue'
+      example:
+        {
+          "currency": "EUR",
+          "amount": "123"
+        }
+    CurrencyCode:
+      description: |
+        ISO 4217 Alpha 3 currency code.
+      type: string
+      pattern: '[A-Z]{3}'
+      example: 'EUR'
+    AmountValue:
+      description: |
+        The amount given with fractional digits, where fractions must be compliant to the currency definition.
+        Up to 14 significant figures. Negative amounts are signed by minus. The decimal separator is a dot.
+      type: string
+      pattern: '-?[0-9]{1,14}(\\.[0-9]{1,3})?'
+      example: '5877.78'
+    AccountRequestStatus:
+      description: |
+        Account Request status
+          - PENDING: account creation request is in progress
+          - DONE: account creation request was processed
+          - REJECTED: account creation request was rejected
+      type: string
+      enum:
+        - PENDING
+        - DONE
+        - REJECTED
+    AccountStatus:
+      description: |
+        Account status:
+          ** ACTIVE ** account is fully operational.
+          ** CLOSED ** account is marked as closed.
+          ** PENDING_ACTIVATION ** account activation is in progress.
+          ** BLOCKED ** account is blocked.
+      type: string
+      enum:
+        - PENDING_ACTIVATION
+        - ACTIVE
+        - CLOSED
+        - BLOCKED
+    AccountStatusModification:
+      description: |
+        Account status
+          ** ACTIVE ** account is fully operational.
+          ** CLOSED ** account is marked as closed.
+          ** BLOCKED ** account is blocked.
+      type: string
+      enum:
+        - ACTIVE
+        - CLOSED
+        - BLOCKED
+    AccountSingleCurrency:
+      description: |
+        ISO 4217 Alpha 3 currency code (connected with account subtype).
+      required:
+        - currencyType
+        - currency
+      type: object
+      properties:
+        currencyType:
+          description: Available single currency types
+          type: string
+          enum:
+            - SCA
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+    AccountMultiCurrency:
+      description: |
+        List of available currencies for multicurrency account.
+      required:
+        - currencyType
+        - currencies
+      type: object
+      properties:
+        currencyType:
+          description: Available single currency types
+          type: string
+          enum:
+            - MCA
+        currencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyCode'
+          minItems: 1
+    AccountCurrency:
+      oneOf:
+        - $ref: '#/components/schemas/AccountSingleCurrency'
+        - $ref: '#/components/schemas/AccountMultiCurrency'
+      discriminator:
+        propertyName: currencyType
+        mapping:
+          SCA: '#/components/schemas/AccountSingleCurrency'
+          MCA: '#/components/schemas/AccountMultiCurrency'
+    AccountType:
+      description: |
+        - **TERM**  Fixed-term investment that includes the deposit of money into an account. Usually carry short-term
+        maturities ranging from one month to a few years and will have varying levels of required minimum deposits.
+        - **CACC**	Current	Account used to post debits and credits when no specific account has been nominated.
+        - **CARD**	CardAccount	Account used for credit card payments.
+        - **CASH**	CashPayment	Account used for the payment of cash.
+        - **CHAR**	Charges	Account used for charges if different from the account for payment.
+        - **CISH**	CashIncome	Account used for payment of income if different from the current cash account
+        - **COMM**	Commission	Account used for commission if different from the account for payment.
+        - **CPAC**	ClearingParticipantSettlementAccount	Account used to post settlement debit and credit entries on
+        behalf of a designated Clearing Participant.
+        - **LLSV**	LimitedLiquiditySavingsAccount	Account used for savings with special interest and withdrawal terms.
+        - **LOAN**	Loan	Account used for loans.
+        - **MGLD**	MarginalLending	Account used for a marginal lending facility.
+        - **MOMA**	MoneyMarket	Account used for money markets if different from the cash account.
+        - **NREX**	NonResidentExternal	Account used for non-resident external.
+        - **ODFT**	Overdraft	Account is used for overdrafts.
+        - **ONDP**	OverNightDeposit	Account used for overnight deposits.
+        - **OTHR**	OtherAccount	Account not otherwise specified.
+        - **SACC**	Settlement	Account used to post debit and credit entries, as a result of transactions cleared and
+        settled through a specific clearing and settlement system.
+        - **SLRY**	Salary	Accounts used for salary payments.
+        - **SVGS**	Savings	Account used for savings.
+        - **TAXE**	Tax	Account used for taxes if different from the account for payment.
+        - **TRAN**	TransactingAccount	A transacting account is the most basic type of bank account that you can get.
+        The main difference between transaction and cheque accounts is that you usually do not get a cheque book with
+        your transacting account and neither are you offered an overdraft facility.
+        - **TRAS**	CashTrading	Account used for trading if different from the current cash account.
+      type: string
+      enum:
+        - TERM
+        - CACC
+        - CARD
+        - CASH
+        - CHAR
+        - CISH
+        - COMM
+        - CPAC
+        - LLSV
+        - LOAN
+        - MGLD
+        - MOMA
+        - NREX
+        - ODFT
+        - ONDP
+        - OTHR
+        - SACC
+        - SLRY
+        - SVGS
+        - TAXE
+        - TRAN
+        - TRAS
+    AccountSubtype:
+      description: |
+        Proprietary account type
+      type: string
+      example: CURRENT_ACCOUNT
+    Iban:
+      type: string
+      pattern: '^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
+      description: |
+        Account IBAN
+    Bban:
+      description: |
+        Basic Bank Account Number (BBAN) Identifier
+
+        This data element can be used in the body of the Consent Request
+          Message for retrieving Account access Consent from this Account. This
+          data elements is used for payment Accounts which have no IBAN.
+          ISO20022: Basic Bank Account Number (BBAN).
+
+          Identifier used nationally by financial institutions, i.e., in individual countries,
+          generally as part of a National Account Numbering Scheme(s),
+          which uniquely identifies the account of a customer.
+      type: string
+      pattern: '[a-zA-Z0-9]{1,30}'
+      example: 'BARC12345612345678'
+    Bicfi:
+      description: |
+        BICFI
+      type: string
+      pattern: '[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}'
+      example: 'AAAADEBBXXX'
+    Msisdn:
+      type: string
+      maxLength: 35
+      description: Mobile phone number.
+      example: '+491701234567'
+    Pan:
+      description: Primary Account Number according to ISO/IEC 7812.
+      type: string
+      maxLength: 35
+      example: '5409050000000000'
+    MaskedPan:
+      description: Masked Primary Account Number.
+      type: string
+      maxLength: 35
+      example: '123456xxxxxx1234'
+    CustomerId:
+      description: |
+        Customer information file (CIF) id.
+      type: string
+      minLength: 5
+      maxLength: 20
+      example: '123456'
+    AccountIban:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          example: 'IBAN'
+          enum:
+            - IBAN
+        iban:
+          $ref: '#/components/schemas/Iban'
+    AccountBban:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          example: 'BBAN'
+          enum:
+            - BBAN
+        bban:
+          $ref: '#/components/schemas/Bban'
+    AccountPan:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          example: 'PAN'
+          enum:
+            - PAN
+        pan:
+          $ref: '#/components/schemas/Pan'
+    AccountMaskedPan:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          example: MASKED_PAN
+          enum:
+            - MASKED_PAN
+        maskedPan:
+          $ref: '#/components/schemas/MaskedPan'
+    AccountMsisdn:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          example: 'MSISDN'
+          enum:
+            - MSISDN
+        msisdn:
+          $ref: '#/components/schemas/Msisdn'
+    AccountEmail:
+      type: object
+      required:
+        - accountIdentificationType      
+      properties:
+        accountIdentificationType:
+          type: string
+          example: 'EMAIL'
+          enum:
+            - EMAIL
+        email:
+          type: string
+          format: email
+          example: 'customer@gmail.com'
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        Error model to hold data which hepls to identify error cause and provide additional tracking informations.
+        Every API in RICE project are obligated to use reference error model.
+        More detailed description could be find on confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes
+      required:
+        - requestId
+        - correlationIdId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: Unique UUID to identify specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: Unique UUID of specific request. Value shoud be obtained from X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: Unique UUID for batch of requests. Value shoud be obtained from X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            HTTP status code. If there is in use different protocol than HTTP we should map error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: Additional info about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: Human-readable message in user-requested language.
+          example: 'Payment rejected. Missing creditor iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'creditorAccount.iban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just information.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        - COMMON_INVALID_PARAMETER
+        - COMMON_MISSING_PARAMETER
+        - COMMON_BAD_REQUEST
+        - COMMON_MISSING_CREDENTIALS
+        - COMMON_INVALID_CREDENTIALS
+        - COMMON_EXPIRED_ACCESS_TOKEN
+        - COMMON_ACCESS_DENIED
+        - COMMON_NOT_FOUND
+        - COMMON_METHOD_NOT_ALLOWED
+        - COMMON_RESOURCE_ALREADY_EXISTS
+        - COMMON_RATE_LIMIT_EXCEED
+        - COMMON_INTERNAL_ERROR
+        - COMMON_SERVICE_UNAVAIAVLE
+        - COMMON_GATEWAY_TIMEOUT
+      example: 'COMMON_BAD_REQUEST'
+    RaiffeisenOnlineRights:
+      type: string
+      description: Raiffesisen online rights is about making the account available for Internet Banking.
+        - **ACTIVE** means actively use the account and make transactions.
+        - **PASSIVE** will be just auditing the account but no rights for transactions.
+      enum:
+        - ACTIVE
+        - PASSIVE
+      example: 'ACTIVE'
+
+  links:
+    GetAccountsOffsetPaginationNextPage:
+      description: Url to the next page in offset paging.
+      operationId: getAccounts
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetAccountsOffsetPaginationPreviousPage:
+      description: Url to the previous page in offset paging.
+      operationId: getAccounts
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+    GetAccountDetails:
+      description: Url to details of the specific account
+      operationId: getAccount
+      parameters:
+        accountId: '$response.body#/id'

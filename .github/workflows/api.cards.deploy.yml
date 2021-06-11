@@ -1,4 +1,4 @@
-name: Deploy Single Payments API
+name: Deploy Cards API
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
       - feature/api-rbi
     paths:
-      - api-single-payments/**
+      - api-cards/**
 
 defaults:
   run:
-    working-directory: api-single-payments
+    working-directory: api-cards
 
 jobs:
   API-Deployment:

@@ -1,0 +1,571 @@
+openapi: 3.0.1
+info:
+  title: Risk API
+  version: 0.0.9
+  description: |
+    Risk API (Draft)
+    The API to support processes involving customer financial status analyses and risk assement.
+    The API definition is still under construction and can be changed.
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Credit bureau check
+    description: Operations for getting data from credit bureau.
+  - name: Risk assessment
+    description: Operations for getting customer financial status analyses and risk assement.
+
+paths:
+  /api/v1/credit-bureau-report-requests:
+    post:
+      tags:
+        - Credit bureau check
+      summary: Initiate credit bureau check
+      description: |
+        Request the preparation of credit bureau report for specified party which can be both private individual
+        or legal entity. It is assumed that the report is prepared in asynchronous manner so the response provides
+        the request identifier to be used for polling status of the request.
+      operationId: createCreditBureauReportRequest
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCreditBureauReportRequestBody'
+      responses:
+        "201":
+          $ref: '#/components/responses/CreateCreditBureauReportRequestResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/credit-bureau-report-requests/{requestId}:
+    get:
+      tags:
+        - Credit bureau check
+      summary: Get status and result of credit bureau check
+      description: |
+        Operation used for polling status and results of credit bureau check. It must be invoked by requesting party
+        until status of the request is set to REPORT_READY or REPORT_FAILED.
+      operationId: getCreditBureauReportRequest
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        "200":
+          $ref: '#/components/responses/CreateCreditBureauReportRequestResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+  parameters:
+    # common header parameters
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows,
+        map how services contribute to response times, identify bottle necks, etc.
+        The X-Correlation-ID must be propagated unchanged in all downstream service calls (e.g. NWU services).
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    RequestId:
+      name: requestId
+      in: path
+      description: Unique Identification of the request.
+      required: true
+      schema:
+        type: string
+        maxLength: 35
+
+  requestBodies:
+    CreateCreditBureauReportRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCreditBureauReportRequest'
+
+  responses:
+    CreateCreditBureauReportRequestResponse:
+      description: Response body with created credit bureau report request details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreditBureauReportRequest'
+
+    ErrorResponse:
+      description: An Unexpected Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    PartyIdentifierType:
+      type: string
+      description: Party identifier type.
+        **TAX_NUMBER** - tax payer identification number
+      enum:
+        - TAX_NUMBER
+
+    PartyIdentification:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PartyIdentifierType'
+        identifier:
+          type: string
+          description: Party identifier value.
+
+    PartyIdentifications:
+      type: array
+      description: An array of party identifications.
+      items:
+        $ref: '#/components/schemas/PartyIdentification'
+
+    CreditBureauReportRequestStatus:
+      type: string
+      description: Credit bureau check processing status.
+      enum:
+        - RECEIVED
+        - IN_PROGRESS
+        - REPORT_READY
+        - REPORT_FAILED
+
+    CreateCreditBureauReportRequest:
+      oneOf:
+        - $ref: '#/components/schemas/CreatePersonCreditBureauReportRequest'
+        - $ref: '#/components/schemas/CreateOrganizationCreditBureauReportRequest'
+      discriminator:
+        propertyName: partyType
+        mapping:
+          PERSON: '#/components/schemas/CreatePersonCreditBureauReportRequest'
+          ORGANIZATION: '#/components/schemas/CreateOrganizationCreditBureauReportRequest'
+
+    CreatePersonCreditBureauReportRequest:
+      type: object
+      required:
+        - partyType
+      properties:
+        identifications:
+          $ref: '#/components/schemas/PartyIdentifications'
+        firstName:
+          type: string
+          description: The person's first name.
+          example: 'John'
+        lastName:
+          type: string
+          description: The person's last name.
+          example: 'Wayne'
+        partyType:
+          type: string
+          enum:
+            - PERSON
+
+    CreateOrganizationCreditBureauReportRequest:
+      type: object
+      required:
+        - partyType
+      properties:
+        identifications:
+          $ref: '#/components/schemas/PartyIdentifications'
+        name:
+          type: string
+          description: The organization's name.
+          example: 'ACME Corp.'
+        partyType:
+          type: string
+          enum:
+            - ORGANIZATION
+
+
+    CreditBureauReportRequest:
+      type: object
+      description: |
+        The request to provide report about specified party obligations according to information stored in credit bureau.
+      required:
+        - requestId
+        - status
+      properties:
+        requestId:
+          type: string
+          description: Unique identifier of the request.
+        processingStatus:
+          $ref: '#/components/schemas/CreditBureauReportRequestStatus'
+        report:
+          $ref: '#/components/schemas/CreditBureauReport'
+        errors:
+          $ref: '#/components/schemas/CreditBureauReportErrorsArray'
+
+    CreditBureauReport:
+      type: object
+      description: Content of the credit bureau report.
+      properties:
+        inquiryRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/InquiryRecord'
+        obligations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Obligation'
+
+    InquiryRecord:
+      type: object
+      description: The record of party obligation inquiry.
+      properties:
+        institutionName:
+          type: string
+          description: The name of the inquired institution.
+          example: 'Equifax'
+        recordDate:
+          type: string
+          format: date
+          description: The date of record.
+          example: '2021-04-02'
+
+    Obligation:
+      type: object
+      description: Party obligation record.
+      properties:
+        contractedAmount:
+          description: Contracted amount of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 40000.00,
+              "currency": "EUR"
+            }
+        contractDate:
+          description: The date when an obligation was contracted.
+          type: string
+          format: date
+          example: '2020-04-02'
+        balanceAmount:
+          description: Current balance of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 28010.00,
+              "currency": "EUR"
+            }
+        balanceDate:
+          type: string
+          format: date
+          description: Date of obligation balance.
+          example: '2021-04-02'
+        lastThreeMonthsAvgAmount:
+          description: Average for the last three months balance of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 31010.00,
+              "currency": "EUR"
+            }
+        lastSixMonthsAvgAmount:
+          description: Average for the last six months balance of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 32010.00,
+              "currency": "EUR"
+            }
+        lastTwelveMonthsAvgAmount:
+          description: Average for the last twelve months balance of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 34010.00,
+              "currency": "EUR"
+            }
+        dueDebtAmount:
+          description: Due debt amount.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 1010.00,
+              "currency": "EUR"
+            }
+        dueDebtPrincipalAmount:
+          description: Due debt principal amount.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 810.00,
+              "currency": "EUR"
+            }
+        dueDebtInterestAmount:
+          description: Due debt interest amount.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 200.00,
+              "currency": "EUR"
+            }
+        isPledgeOnRealEstate:
+          description: Information whether there is a pledge on real estate to secure the obligation.
+          type: boolean
+          example: false
+        roleType:
+          $ref: '#/components/schemas/ObligationRoleType'
+        provider:
+          $ref: '#/components/schemas/ObligationProvider'
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObligationHistory'
+
+
+
+    ObligationHistory:
+      type: object
+      description: Obligation records from the past.
+      properties:
+        balanceAmount:
+          description: Current balance of the obligation.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 28010.00,
+              "currency": "EUR"
+            }
+        balanceDate:
+          type: string
+          format: date
+          description: Date of obligation balance.
+          example: '2021-04-02'
+        dueDebtAmount:
+          description: Due debt amount.
+          allOf:
+            - $ref: '#/components/schemas/ObligationAmount'
+          example:
+            {
+              "amount": 1010.00,
+              "currency": "EUR"
+            }
+
+    ObligationAmount:
+      type: object
+      description: Obligation amount with currency.
+      properties:
+        amount:
+          description: The amount given with fractional digits.
+          type: number
+          example: 123.45
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+
+
+    CurrencyCode:
+      type: string
+      description: ISO 4217 Alpha 3 currency code.
+      maxLength: 3
+      pattern: '[A-Z]{3}'
+      example: 'EUR'
+
+    ObligationRoleType:
+      type: string
+      description: The role of a party in regards to obligation.
+      enum:
+        - DEBTOR
+        - CO_DEBTOR
+        - GUARANTOR
+        - DEBTOR_RECOURSE
+
+
+    ObligationProvider:
+      description: Obligation provider, i.e. loan holder.
+      oneOf:
+        - $ref: '#/components/schemas/Organization'
+        - $ref: '#/components/schemas/Person'
+      discriminator:
+        propertyName: partyType
+        mapping:
+          PERSON: '#/components/schemas/Person'
+          ORGANIZATION: '#/components/schemas/Organization'
+
+    Person:
+      type: object
+      required:
+        - partyType
+      properties:
+        identifications:
+          $ref: '#/components/schemas/PartyIdentifications'
+        firstName:
+          type: string
+          description: The person's first name.
+          example: 'John'
+        lastName:
+          type: string
+          description: The person's last name.
+          example: 'Wayne'
+        partyType:
+          type: string
+          enum:
+            - PERSON
+
+    Organization:
+      type: object
+      required:
+        - partyType
+      properties:
+        identifications:
+          $ref: '#/components/schemas/PartyIdentifications'
+        name:
+          type: string
+          description: The organization's name.
+          example: 'ACME Corp.'
+        partyType:
+          type: string
+          enum:
+            - ORGANIZATION
+    CreditBureauReportErrorsArray:
+      type: array
+      description: An array of credit bureau report preparartion errors.
+      items:
+        $ref: '#/components/schemas/CreditBureauReportError'
+
+
+    CreditBureauReportError:
+      type: object
+      description: An error encountered while preparation of credit bureau report.
+      properties:
+        type:
+          type: string
+          description: Error type.
+        description:
+          type: string
+          description: Error description.
+
+
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        Error model to hold data which helps to identify error causes and provides additional tracking information.
+        Every API in RICE project is obligated to use the reference error model.
+        A more detailed description could be found on a confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes
+      required:
+        - requestId
+        - correlationId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: A unique UUID to identify specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: A unique UUID of specific request. This value should be obtained from X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: A unique UUID for batch of requests. This value should be obtained from X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            A HTTP status code. If there is in use different protocol than HTTP,
+            we should map the error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: Additional info about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: Human-readable message in user-requested language.
+          example: 'Disbursement rejected. Missing account iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'accountIban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just informative.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        ** COMMON_INVALID_PARAMETER **
+        ** COMMON_MISSING_PARAMETER **
+        ** COMMON_BAD_REQUEST **
+        ** COMMON_MISSING_CREDENTIALS **
+        ** COMMON_INVALID_CREDENTIALS **
+        ** COMMON_EXPIRED_ACCESS_TOKEN **
+        ** COMMON_ACCESS_DENIED **
+        ** COMMON_NOT_FOUND **
+        ** COMMON_METHOD_NOT_ALLOWED **
+        ** COMMON_RESOURCE_ALREADY_EXISTS **
+        ** COMMON_RATE_LIMIT_EXCEEDED **
+        ** COMMON_INTERNAL_ERROR **
+        ** COMMON_SERVICE_UNAVAILABLE **
+        ** COMMON_GATEWAY_TIMEOUT **
+      example: 'COMMON_BAD_REQUEST'

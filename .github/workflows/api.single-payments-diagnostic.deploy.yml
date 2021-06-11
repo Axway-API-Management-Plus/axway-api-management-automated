@@ -10,7 +10,7 @@ on:
   push:
     branches:
       - main
-      - feature/api-single-payments
+      - feature/api-rbi
     paths:
       - api-single-payments-diagnostic/**
   release:
