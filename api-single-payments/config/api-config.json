@@ -2,7 +2,7 @@
   "name" : "Single Payments API",
   "path" : "/payments",
   "state" : "published",
-  "version" : "3.7",
+  "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "single-payments.yaml",
   "summary" : "This API is used to initiate, submit and get summary of single payment",

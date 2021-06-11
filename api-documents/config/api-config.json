@@ -2,7 +2,7 @@
   "name" : "Documents API",
   "path" : "/documents",
   "state" : "published",
-  "version" : "3.7",
+  "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "documents.yaml",
   "summary" : "This API is used to initiate, submit and get summary of document",
