@@ -1,5 +1,11 @@
 name: Deploy Single Payments API
 
+env:
+  appId: api-single-payments-mock
+  working-directory: api-single-payments
+  dockerRegistry: docker.pkg.github.com
+  dockerRepository: cwiechmann/axway-api-management-automated
+
 on:
   push:
     branches:
@@ -28,9 +34,43 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: List current directory
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create image tag
+        run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+      - name: Build container image
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./${{ env.working-directory }}/${{ env.appId }}
+          file: ./${{ env.working-directory }}/${{ env.appId }}/Dockerfile
+          push: true
+          tags: ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.appId }}:${{ env.IMAGE_TAG }}
+
+      - name: Update deployment file
+        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.appId }}:'${IMAGE_TAG}'|' config/api-deployment.yaml
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+      - name: Deploy to Kubernetes
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
         run: |
-          ls -la
+          mkdir  $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          kubectl apply -n apim -f config/api-deployment.yaml
+        timeout-minutes: 2
+      - name: Verify deployment
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
+        run: kubectl -n apim rollout status deployment/${{ env.appId }}
+        timeout-minutes: 2
+
       - name: Deploy API
         env:
           APIM_USER: ${{ secrets.APIM_USER }}

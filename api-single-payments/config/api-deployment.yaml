@@ -1,32 +1,32 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-single-payments-diagnostic
+  name: api-single-payments-mock
 spec:
   type: ClusterIP
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: api-single-payments-diagnostic
+    app: api-single-payments-mock
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-single-payments-diagnostic
+  name: api-single-payments-mock
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-single-payments-diagnostic
+      app: api-single-payments-mock
   template:
     metadata:
       labels:
-        app: api-single-payments-diagnostic
+        app: api-single-payments-mock
     spec:
       containers:
-        - name: api-single-payments-diagnostic
-          #image: docker.pkg.github.com/cwiechmann/api-project-examples/api-single-payments-diagnostic:latest
+        - name: api-single-payments-mock
+          #image: docker.pkg.github.com/cwiechmann/api-project-examples/api-single-payments-mock:latest
           image: <IMAGE>
           resources:
             requests:
