@@ -17500,7 +17500,7 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="-3298631759112261232" parentPK="4855846277903166512">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeName"><value>X-Test-HValue</value></fval>
+	<fval name="attributeName"><value>XTestHeaderValue</value></fval>
 	<fval name="base64Decode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">3493121942376065588</value></fval>
 	<fval name="headerName"><value>X-Test</value></fval>
@@ -17519,7 +17519,7 @@
 	<fval name="base64Encode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="headerName"><value>Y-Test</value></fval>
-	<fval name="headerValue"><value>${X-Test-HValue}</value></fval>
+	<fval name="headerValue"><value>${XTestHeaderValue}</value></fval>
 	<fval name="logFailure"><value>Failed in adding the HTTP header to the message</value></fval>
 	<fval name="logFatal"><value>Error in adding the HTTP header to the message. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
