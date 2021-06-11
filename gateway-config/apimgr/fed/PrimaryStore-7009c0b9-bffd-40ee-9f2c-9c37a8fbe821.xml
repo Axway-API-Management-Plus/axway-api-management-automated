@@ -17500,10 +17500,10 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="-3298631759112261232" parentPK="4855846277903166512">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeName"><value>XTestHeaderValue</value></fval>
+	<fval name="attributeName"><value>ClientIdentifier</value></fval>
 	<fval name="base64Decode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">3493121942376065588</value></fval>
-	<fval name="headerName"><value>X-Test</value></fval>
+	<fval name="headerName"><value>Client-ID</value></fval>
 	<fval name="logFailure"><value>Failed to extract attribute HTTP header</value></fval>
 	<fval name="logFatal"><value>Error occurred while extracting attributes from HTTP header. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
@@ -17518,14 +17518,14 @@
 	<fval name="addWhere"><value>httpheaders</value></fval>
 	<fval name="base64Encode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="headerName"><value>Y-Test</value></fval>
-	<fval name="headerValue"><value>${XTestHeaderValue}</value></fval>
+	<fval name="headerName"><value>Reply-To</value></fval>
+	<fval name="headerValue"><value>${ClientIdentifier}</value></fval>
 	<fval name="logFailure"><value>Failed in adding the HTTP header to the message</value></fval>
 	<fval name="logFatal"><value>Error in adding the HTTP header to the message. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
 	<fval name="logMaskType"><value>SERVICE</value></fval>
 	<fval name="logSuccess"><value>Success in adding the HTTP header to the message</value></fval>
-	<fval name="name"><value>Translate X-Test header</value></fval>
+	<fval name="name"><value>Translate Client-ID header</value></fval>
 	<fval name="overwriteExistingHeader"><value>1</value></fval>
 	<fval name="successNode"><value contentType="reference">4678633038562575984</value></fval>
 </entity>
@@ -17533,7 +17533,7 @@
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="errorNoHeader"><value>0</value></fval>
-	<fval name="headerName"><value>X-Test</value></fval>
+	<fval name="headerName"><value>Client-ID</value></fval>
 	<fval name="logFailure"><value>Failed in removing the HTTP header from the message</value></fval>
 	<fval name="logFatal"><value>Error in removing the HTTP header from the message. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
