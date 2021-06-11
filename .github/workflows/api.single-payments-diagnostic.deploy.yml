@@ -113,10 +113,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Install newman
         run: sudo npm -g install newman
-      # - name: Run API tests
-      #   run: |
-      #     sleep 1
-      #     newman run ./tests/DiagnosticAPI.postman_collection.json -e ../lib/Demo-Environment.postman_environment.json --reporter-json-export output.json --insecure
+      - name: Run API tests
+        run: |
+          sleep 1
+          newman run ./tests/DiagnosticAPI.postman_collection.json -e ../lib/Demo-Environment.postman_environment.json --reporter-json-export output.json --insecure
 
 #  Publish-API:
 #    runs-on: ubuntu-latest

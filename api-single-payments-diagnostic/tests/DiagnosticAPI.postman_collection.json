@@ -49,13 +49,13 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{host}}/api/api/v1/single-credit-transfers",
+					"raw": "https://{{host}}/single-payments/api/v1/single-credit-transfers",
 					"protocol": "https",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"api",
+						"single-payments",
 						"api",
 						"v1",
 						"single-credit-transfers"
