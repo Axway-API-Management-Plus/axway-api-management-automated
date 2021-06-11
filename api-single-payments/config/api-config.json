@@ -7,20 +7,6 @@
   "apiDefinition" : "single-payments.yaml",
   "summary" : "This API is used to initiate, submit and get summary of single payment",
   "backendBasepath" : "https://any.host.com/payments",
-  "securityProfiles" : [ {
-    "name" : "_default",
-    "isDefault" : true,
-    "devices" : [ {
-      "name" : "API Key",
-      "type" : "apiKey",
-      "order" : 1,
-      "properties" : {
-        "apiKeyFieldName" : "KeyId",
-        "takeFrom" : "HEADER",
-        "removeCredentialsOnSuccess" : "true"
-      }
-    } ]
-  } ],
   "clientOrganizations" : [ "RBI" ],
   "applications" : [ {
     "name" : "RBI client app - Test",
