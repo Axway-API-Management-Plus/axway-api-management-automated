@@ -17509,7 +17509,7 @@
 	<fval name="logMask"><value>2</value></fval>
 	<fval name="logMaskType"><value>SERVICE</value></fval>
 	<fval name="logSuccess"><value>Extracted attribute from HTTP header</value></fval>
-	<fval name="name"><value>Retrieve from HTTP header</value></fval>
+	<fval name="name"><value>Retrieve Client-ID from HTTP header</value></fval>
 	<fval name="successNode"><value contentType="reference">-5024075969495376843</value></fval>
 	<fval name="useQueryParameter"><value>0</value></fval>
 </entity>
