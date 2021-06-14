@@ -1,0 +1,16 @@
+{
+  "name" : "Cards API",
+  "path" : "/cards",
+  "state" : "published",
+  "version" : "1.0",
+  "organization" : "RBI",
+  "apiDefinition" : "cards.yaml",
+  "summary" : "This API is used to initiate, submit and get summary of card",
+  "backendBasepath" : "http://any.host.com/cards",
+  "clientOrganizations" : [ "RBI" ],
+  "applications" : [ {
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}

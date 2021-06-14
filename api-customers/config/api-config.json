@@ -1,0 +1,16 @@
+{
+  "name" : "Customers API",
+  "path" : "/customers",
+  "state" : "published",
+  "version" : "1.0",
+  "organization" : "RBI",
+  "apiDefinition" : "customers.yaml",
+  "summary" : "This API is used to initiate, submit and get summary of customer",
+  "backendBasepath" : "http://any.host.com/customers",
+  "clientOrganizations" : [ "RBI" ],
+  "applications" : [ {
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}

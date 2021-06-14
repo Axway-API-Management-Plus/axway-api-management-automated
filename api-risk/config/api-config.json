@@ -1,0 +1,16 @@
+{
+  "name" : "Risk API",
+  "path" : "/risk",
+  "state" : "published",
+  "version" : "1.0",
+  "organization" : "RBI",
+  "apiDefinition" : "risk.yaml",
+  "summary" : "This API is used to initiate, submit and get summary of risk",
+  "backendBasepath" : "http://any.host.com/risk",
+  "clientOrganizations" : [ "RBI" ],
+  "applications" : [ {
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}

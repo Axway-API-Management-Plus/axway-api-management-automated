@@ -1,0 +1,150 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Greet flow",
+		"description": "Greets a user",
+		"author": "support@axway.com",
+		"license": "ISC"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint.",
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "The username"
+					}
+				},
+				"additionalProperties": false,
+				"required": [
+					"username"
+				]
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "condition.1",
+	"nodes": {
+		"response.success": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Success (HTTP 200)",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "200",
+					"type": "number"
+				},
+				{
+					"name": "body",
+					"value": "$.greeting"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response"
+				}
+			}
+		},
+		"response.error": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Bad Request (HTTP 400)",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "400",
+					"type": "number"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response"
+				}
+			}
+		},
+		"mustache.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Format string",
+			"method": "format",
+			"parameters": [
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{{data.config.helloworld.salutation}} {{data.params.username}}\"",
+					"metaName": "template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.greeting",
+					"routes": [
+						"response.success"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"response.error"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Format string"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Check Username",
+			"method": "exists",
+			"parameters": [
+				{
+					"name": "source",
+					"value": "$.params.username"
+				}
+			],
+			"outputs": {
+				"true": {
+					"context": "$.exists",
+					"routes": [
+						"mustache.1"
+					]
+				},
+				"false": {
+					"context": "$.exists",
+					"routes": [
+						"response.error"
+					]
+				}
+			}
+		}
+	}
+}
