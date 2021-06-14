@@ -8,6 +8,7 @@
   "summary" : "This API is used to initiate, submit and get summary of customer",
   "backendBasepath" : "http://any.host.com/customers",
   "clientOrganizations" : [ "RBI" ],
+  "requestPolicy": "Request Policy 1",
   "applications" : [ {
     "name" : "RBI client app - Test",
     "enabled" : true,

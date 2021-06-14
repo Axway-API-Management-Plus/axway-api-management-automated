@@ -1,15 +1,15 @@
-name: Deploy Cards API
+name: Deploy Bulk Payments Status API
 
 on:
   push:
     branches:
       - main
     paths:
-      - api-cards/**
+      - api-bulk-payments-status/**
 
 defaults:
   run:
-    working-directory: api-cards
+    working-directory: api-bulk-payments-status
 
 jobs:
   API-Deployment:

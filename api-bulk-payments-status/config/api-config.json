@@ -1,0 +1,17 @@
+{
+  "name" : "Bulk Payments Status API",
+  "path" : "/bulk-payments-status",
+  "state" : "published",
+  "version" : "1.0",
+  "organization" : "RBI",
+  "apiDefinition" : "bulk-payments-status.yaml",
+  "summary" : "This API is used to initiate, submit and get summary of bulk payment status",
+  "backendBasepath" : "http://any.host.com/bulk-payments-status",
+  "clientOrganizations" : [ "RBI" ],
+  "requestPolicy": "Request Policy 1",
+  "applications" : [ {
+    "name" : "RBI client app - Test",
+    "enabled" : true,
+    "state" : "approved"
+  } ]
+}
