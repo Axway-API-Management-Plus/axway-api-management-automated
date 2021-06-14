@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "../api-single-payments-mock/endpoints/payments.yaml",
-  "summary" : "Processes submitted patient diagnostics data",
+  "summary" : "Processes submitted patient diagnostics data changed",
   "backendBasepath" : "http://api-single-payments-diagnostic:8080/api/",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

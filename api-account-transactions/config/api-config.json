@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "transactions.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of account transaction",
+  "summary" : "This API is used to initiate, submit and get summary of account transaction changed",
   "backendBasepath" : "http://any.host.com/account-transactions",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

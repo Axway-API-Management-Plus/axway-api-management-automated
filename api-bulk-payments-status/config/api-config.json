@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "bulk-payments-status.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of bulk payment status",
+  "summary" : "This API is used to initiate, submit and get summary of bulk payment status changed",
   "backendBasepath" : "http://any.host.com/bulk-payments-status",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "cards.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of card",
+  "summary" : "This API is used to initiate, submit and get summary of card changed",
   "backendBasepath" : "http://any.host.com/cards",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

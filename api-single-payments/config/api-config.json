@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "single-payments.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of single payment",
+  "summary" : "This API is used to initiate, submit and get summary of single payment changed",
   "backendBasepath" : "http://any.host.com/payments",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

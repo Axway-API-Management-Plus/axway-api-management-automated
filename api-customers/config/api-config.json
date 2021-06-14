@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "customers.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of customer",
+  "summary" : "This API is used to initiate, submit and get summary of customer changed",
   "backendBasepath" : "http://any.host.com/customers",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "documents.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of document",
+  "summary" : "This API is used to initiate, submit and get summary of document changed",
   "backendBasepath" : "http://any.host.com/documents",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {

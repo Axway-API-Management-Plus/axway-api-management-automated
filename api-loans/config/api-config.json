@@ -5,7 +5,7 @@
   "version" : "1.0",
   "organization" : "RBI",
   "apiDefinition" : "loans_rtl.yaml",
-  "summary" : "This API is used to initiate, submit and get summary of loan",
+  "summary" : "This API is used to initiate, submit and get summary of loan changed",
   "backendBasepath" : "http://any.host.com/loans",
   "clientOrganizations" : [ "RBI" ],
   "outboundProfiles": {
