@@ -17830,6 +17830,16 @@
 	<fval name="name"><value>TranslateHeader</value></fval>
 	<fval name="start"><value contentType="reference">-3298631759112261232</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter" entityPK="-7498080385571304798" parentPK="4855846277903166512">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value></value></fval>
+	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>No Client-ID value present filter passed</value></fval>
+	<fval name="name"><value>Continue</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="-5024075969495376843" parentPK="4855846277903166512">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
@@ -17851,6 +17861,7 @@
 	<fval name="attributeName"><value>ClientIdentifier</value></fval>
 	<fval name="base64Decode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">3493121942376065588</value></fval>
+	<fval name="failureNode"><value contentType="reference">-7498080385571304798</value></fval>
 	<fval name="headerName"><value>Client-ID</value></fval>
 	<fval name="logFailure"><value>Failed to extract attribute HTTP header</value></fval>
 	<fval name="logFatal"><value>Error occurred while extracting attributes from HTTP header. Error: ${circuit.exception}</value></fval>
