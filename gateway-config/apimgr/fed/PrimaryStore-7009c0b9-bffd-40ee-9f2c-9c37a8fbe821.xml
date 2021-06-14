@@ -17440,7 +17440,7 @@
 	<fval name="stickyness"><value>0</value></fval>
 	<fval name="successNode"><value contentType="reference">-7533052825722260420</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
-	<fval name="url"><value>https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_cZ4FABbNI/.well-known/jwks.json</value></fval>
+	<fval name="url"><value>https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C0ok9zRJq/.well-known/jwks.json</value></fval>
 	<fval name="useRootCerts"><value>1</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="4944388481585861152" parentPK="-1407640718812147736">
