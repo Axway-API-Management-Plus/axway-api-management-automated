@@ -8,7 +8,11 @@
   "summary" : "This API is used to initiate, submit and get summary of bulk payment status",
   "backendBasepath" : "http://any.host.com/bulk-payments-status",
   "clientOrganizations" : [ "RBI" ],
-  "requestPolicy": "Request Policy 1",
+  "outboundProfiles": {
+    "_default": {
+      "requestPolicy": "Request Policy 1"
+    }
+  },
   "applications" : [ {
     "name" : "RBI client app - Test",
     "enabled" : true,
