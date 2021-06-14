@@ -17307,6 +17307,21 @@
 	<fval name="name"><value>Get Cognito JWK</value></fval>
 	<fval name="start"><value contentType="reference">1596264042506371502</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CacheAttributeFilter" entityPK="-7533052825722260420" parentPK="-4634322293263860195">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeName"><value>content.body</value></fval>
+	<fval name="cacheToUse"><value contentType="reference">
+<key type='CacheManager'><id field='name' value='Cache Manager'/><key type='Cache'><id field='name' value='Cognito JWK-Cache'/></key></key>	</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="keyAttributeName"><value>cacheKey</value></fval>
+	<fval name="logFailure"><value>Failed to cache the message attribute.</value></fval>
+	<fval name="logFatal"><value>Error while caching the message attribute. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Cached the message attribute.</value></fval>
+	<fval name="name"><value>Cache Cognito JWK</value></fval>
+	<fval name="successNode"><value contentType="reference">7815729028414150941</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="IsCachedAttributeFilter" entityPK="-6788460642637889061" parentPK="-4634322293263860195">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="attributeName"><value>content.body</value></fval>
@@ -17368,7 +17383,7 @@
 	<fval name="stickyCookieName"><value>unnamed</value></fval>
 	<fval name="stickyCookiePath"><value></value></fval>
 	<fval name="stickyness"><value>0</value></fval>
-	<fval name="successNode"><value contentType="reference">7815729028414150941</value></fval>
+	<fval name="successNode"><value contentType="reference">-7533052825722260420</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
 	<fval name="url"><value>https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_cZ4FABbNI/.well-known/jwks.json</value></fval>
 	<fval name="useRootCerts"><value>1</value></fval>
