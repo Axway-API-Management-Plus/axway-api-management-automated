@@ -57,16 +57,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-      - name: Deploy Traffic-Gateway
+      - name: Setup kube config
         run: |
           mkdir  $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config          
+      - name: Deploy Traffic-Gateway
+        run: |
           kubectl set image -n apim deployment/traffic traffic=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
       - name: Deploy API-Manager
         if: "!contains(github.event.head_commit.message, 'skip manager')"
         run: |
-          mkdir  $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
           kubectl set image -n apim deployment/apimgr apimgr=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
       - name: Verify Traffic deployment
         run: kubectl -n apim rollout status deployment/traffic
