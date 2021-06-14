@@ -37,6 +37,11 @@
 						"key": "X-Idempotency-Key",
 						"value": "99391c7e-ad88-49ec-a2ad-99ddcb1f7721",
 						"type": "text"
+					},
+					{
+						"key": "Client-ID",
+						"value": "postman-test-client-id",
+						"type": "text"
 					}
 				],
 				"body": {
