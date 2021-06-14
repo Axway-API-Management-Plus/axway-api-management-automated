@@ -17315,11 +17315,11 @@
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="failureNode"><value contentType="reference">-1407640718812147736</value></fval>
 	<fval name="keyAttributeName"><value>cacheKey</value></fval>
-	<fval name="logFailure"><value>Failure while looking for key in the message attribute cache.</value></fval>
+	<fval name="logFailure"><value>JWK for Cognito is not cached</value></fval>
 	<fval name="logFatal"><value>Error while looking for key in the  message attribiute cache. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Found the key in the message attribute cache.</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Using cached JWK for Cognito</value></fval>
 	<fval name="name"><value>Is Cognito JWK cached?</value></fval>
 	<fval name="successNode"><value contentType="reference">7815729028414150941</value></fval>
 </entity>
@@ -17334,11 +17334,11 @@
 	<fval name="forwardClientHostHeader"><value>0</value></fval>
 	<fval name="handleRedirects"><value>1</value></fval>
 	<fval name="loadResponseBody"><value>0</value></fval>
-	<fval name="logFailure"><value>Failed to route request to endpoint.</value></fval>
+	<fval name="logFailure"><value>Failed to get JWK for Cognito</value></fval>
 	<fval name="logFatal"><value>Error occurred while routing request to endpoint. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Successfully routed request to endpoint</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Get JWK for Cognito</value></fval>
 	<fval name="method"><value>GET</value></fval>
 	<fval name="name"><value>Get Cognito JWK</value></fval>
 	<fval name="performRetries"><value>0</value></fval>
@@ -17425,9 +17425,9 @@
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
 	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Set the attribute value</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Set token is valid</value></fval>
 	<fval name="messageAttribute"><value>oauth.token.valid</value></fval>
 	<fval name="name"><value>Set Token valid</value></fval>
 </entity>
@@ -17530,11 +17530,11 @@
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="driftTime"><value>5000</value></fval>
-	<fval name="logFailure"><value>Invalid timestamp found in message</value></fval>
+	<fval name="logFailure"><value>Token has already expired</value></fval>
 	<fval name="logFatal"><value>Error during validation of timestamp. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Timestamp is valid</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Token has not yet expired</value></fval>
 	<fval name="name"><value>Check token not expired</value></fval>
 	<fval name="successNode"><value contentType="reference">-3799973036089801193</value></fval>
 	<fval name="timeFormat"><value>ssssssssss</value></fval>
@@ -17545,11 +17545,11 @@
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPathFilter" entityPK="7710765678553636617" parentPK="3292028595899059505">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value>Filter failed</value></fval>
+	<fval name="logFailure"><value>Error extracting token information</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Filter passed</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Successfully extracted token information</value></fval>
 	<fval name="name"><value>Extract client_id, scopes and expiration time</value></fval>
 	<fval name="successNode"><value contentType="reference">-66876941083743794</value></fval>
 </entity>
@@ -17566,7 +17566,7 @@
 	<fval name="unmarshalType"><value>java.lang.String</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="4801841957484265861" parentPK="7710765678553636617">
-	<fval name="attributeName"><value>oauth.token.sopes</value></fval>
+	<fval name="attributeName"><value>oauth.token.scopes</value></fval>
 	<fval name="expression"><value>$.scope</value></fval>
 	<fval name="failOnError"><value>1</value></fval>
 	<fval name="unmarshalType"><value>java.lang.String</value></fval>
