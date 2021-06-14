@@ -8,6 +8,7 @@
   "summary" : "This API is used to initiate, submit and get summary of risk",
   "backendBasepath" : "http://any.host.com/risk",
   "clientOrganizations" : [ "RBI" ],
+  "requestPolicy": "Request Policy 1",
   "applications" : [ {
     "name" : "RBI client app - Test",
     "enabled" : true,

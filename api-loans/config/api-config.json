@@ -8,6 +8,7 @@
   "summary" : "This API is used to initiate, submit and get summary of loan",
   "backendBasepath" : "http://any.host.com/loans",
   "clientOrganizations" : [ "RBI" ],
+  "requestPolicy": "Request Policy 1",
   "applications" : [ {
     "name" : "RBI client app - Test",
     "enabled" : true,
