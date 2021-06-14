@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d147d616-640e-4a44-9667-213e8044ac92",
+		"_postman_id": "a77327df-b734-4fac-8a0e-38beafd441e6",
 		"name": "DiagnosticAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -60,7 +60,7 @@
 						"{{host}}"
 					],
 					"path": [
-						"single-payments",
+						"payments-mock",
 						"api",
 						"v1",
 						"single-credit-transfers"
