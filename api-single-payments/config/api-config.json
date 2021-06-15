@@ -8,6 +8,39 @@
   "summary" : "This API is used to initiate, submit and get summary of single payment changed",
   "backendBasepath" : "http://any.host.com/payments",
   "clientOrganizations" : [ "RBI" ],
+  "securityProfiles":[
+    {
+      "name":"_default",
+      "isDefault":true,
+      "devices":[
+        {
+          "type":"oauthExternal",
+          "name":"OAuth (External)",
+          "order":1,
+          "properties":{
+            "tokenStore":"Validate RBI Cognito Token",
+            "accessTokenLocation":"HEADER",
+            "authorizationHeaderPrefix":"Bearer",
+            "accessTokenLocationQueryString":"",
+            "scopesMustMatch":"Any",
+            "scopes":"axway-evaluation.com/m2m",
+            "removeCredentialsOnSuccess":true,
+            "implicitGrantEnabled":true,
+            "useClientRegistry":true,
+            "subjectSelector":"${oauth.token.client_id}",
+            "implicitGrantLoginEndpointUrl":"https://localhost:8089/api/oauth/authorize",
+            "implicitGrantLoginTokenName":"access_token",
+            "authCodeGrantTypeEnabled":true,
+            "authCodeGrantTypeRequestEndpointUrl":"https://localhost:8089/api/oauth/authorize",
+            "authCodeGrantTypeRequestClientIdName":"client_id",
+            "authCodeGrantTypeRequestSecretName":"client_secret",
+            "authCodeGrantTypeTokenEndpointUrl":"https://localhost:8089/api/oauth/token",
+            "authCodeGrantTypeTokenEndpointTokenName":"access_code"
+          }
+        }
+      ]
+    }
+  ],
   "outboundProfiles": {
     "_default": {
       "requestPolicy": "Request Policy 1"
