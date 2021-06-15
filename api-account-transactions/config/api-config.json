@@ -8,11 +8,6 @@
   "summary" : "This API is used to initiate, submit and get summary of account transaction changed",
   "backendBasepath" : "http://any.host.com/account-transactions",
   "clientOrganizations" : [ "RBI" ],
-  "outboundProfiles": {
-    "_default": {
-      "requestPolicy": "Request Policy 1"
-    }
-  },
   "securityProfiles":[
     {
       "name":"_default",
@@ -46,6 +41,13 @@
       ]
     }
   ],
+  "outboundProfiles": {
+    "_default": {
+      "authenticationProfile": "_default",
+      "requestPolicy": "Request Policy 1",
+      "routePolicy": "API Proxy"
+    }
+  },
   "applications" : [ {
     "name" : "RBI client app - Test",
     "enabled" : true,
