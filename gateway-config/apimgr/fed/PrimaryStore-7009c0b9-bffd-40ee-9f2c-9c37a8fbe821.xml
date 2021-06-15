@@ -11863,6 +11863,8 @@
 <key type='CircuitContainer'><id field='name' value='Keycloak client oAuth'/><key type='FilterCircuit'><id field='name' value='External Keycloak v2'/></key></key>	</value>
 		<value contentType="reference">
 <key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='CircuitContainer'><id field='name' value='Token-Provider'/><key type='FilterCircuit'><id field='name' value='Validate Cognito Token'/></key></key></key>	</value>
+		<value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='CircuitContainer'><id field='name' value='Token-Provider'/><key type='FilterCircuit'><id field='name' value='Validate RBI Cognito Token'/></key></key></key>	</value>
 	</fval>
 	<fval name="apiregOAuthTokenStores"><value contentType="reference">
 <key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>	</value></fval>
