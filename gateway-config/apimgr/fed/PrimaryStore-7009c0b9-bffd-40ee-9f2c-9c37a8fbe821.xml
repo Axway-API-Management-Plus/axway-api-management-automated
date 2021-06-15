@@ -25718,7 +25718,7 @@
 	<fval name="logSuccess"><value>Set the attribute value</value></fval>
 	<fval name="messageAttribute"><value>var.object.blob</value></fval>
 	<fval name="name"><value>Set object.blob From KPS Lookup</value></fval>
-	<fval name="successNode"><value contentType="reference">8931601217575693568</value></fval>
+	<fval name="successNode"><value contentType="reference">-4366308053514115937</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="QuoteOftheDayFilter" entityPK="-6817803057313816769" parentPK="-8075814802788222119">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
@@ -25943,22 +25943,6 @@
 	<fval name="logSuccess"><value>Filter passed</value></fval>
 	<fval name="name"><value>Is swagger not empty ?</value></fval>
 	<fval name="successNode"><value contentType="reference">-4365563146075375742</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="8931601217575693568" parentPK="-8075814802788222119">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="doIndent"><value>0</value></fval>
-	<fval name="logFailure"><value>Failed to trace the message properties</value></fval>
-	<fval name="logFatal"><value>Error while tracing the message properties. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Traced the message properties</value></fval>
-	<fval name="name"><value>Trace Filter</value></fval>
-	<fval name="successNode"><value contentType="reference">-4366308053514115937</value></fval>
-	<fval name="traceAttributes"><value>1</value></fval>
-	<fval name="traceBody"><value>0</value></fval>
-	<fval name="traceLevel"><value>3</value></fval>
-	<fval name="traceMsg"><value>API-Blob</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="-5047445998566736185" parentPK="-5808742879638738402">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
@@ -26223,7 +26207,7 @@
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="consumedProperties"></fval>
 	<fval name="engineName"><value>groovy</value></fval>
-	<fval name="failureNode"><value contentType="reference">-2201788809927872168</value></fval>
+	<fval name="failureNode"><value contentType="reference">1912128986750833812</value></fval>
 	<fval name="generatedProperties"></fval>
 	<fval name="logFailure"><value>Failed script filter</value></fval>
 	<fval name="logFatal"><value>Error while attempt to run script filter. Error: ${circuit.exception}</value></fval>
@@ -26313,6 +26297,22 @@
 	<fval name="messageAttribute"><value>error_code</value></fval>
 	<fval name="name"><value>Set error code - 18008</value></fval>
 	<fval name="successNode"><value contentType="reference">-2162332118755649856</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="1912128986750833812" parentPK="-1484321626767381253">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="doIndent"><value>0</value></fval>
+	<fval name="logFailure"><value>Failed to trace the message properties</value></fval>
+	<fval name="logFatal"><value>Error while tracing the message properties. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Traced the message properties</value></fval>
+	<fval name="name"><value>Trace Filter</value></fval>
+	<fval name="successNode"><value contentType="reference">-2201788809927872168</value></fval>
+	<fval name="traceAttributes"><value>1</value></fval>
+	<fval name="traceBody"><value>0</value></fval>
+	<fval name="traceLevel"><value>3</value></fval>
+	<fval name="traceMsg"><value></value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="3426479430630927815" parentPK="-1484321626767381253">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
