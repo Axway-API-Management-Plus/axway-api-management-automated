@@ -45,7 +45,7 @@
     "_default": {
       "authenticationProfile": "_default",
       "requestPolicy": "Request Policy 1",
-      "routePolicy": "API Proxy"
+      "routePolicy": "_default"
     }
   },
   "applications" : [ {
