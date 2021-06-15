@@ -10241,7 +10241,7 @@
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="XPath" entityPK="-2522561734572869762" parentPK="-8807305921897592996">
 	<fval name="encryptNodeType"><value>element</value></fval>
 	<fval name="name"><value>SwaggerBLOB</value></fval>
-	<fval name="xpath"><value>/vordel_0:entityStoreData/vordel_0:entity[9]/vordel_0:fval[2]/vordel_0:value</value></fval>
+	<fval name="xpath"><value>/vordel_0:entityStoreData/vordel_0:entity[@type=&quot;ResourceBlob&quot;]/vordel_0:fval[2]/vordel_0:value/text()</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="XPathNamespace" entityPK="-9180416515070789078" parentPK="-2522561734572869762">
 	<fval name="URI"><value>http://www.w3.org/2001/XMLSchema-instance</value></fval>
