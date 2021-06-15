@@ -17482,68 +17482,158 @@
 	<fval name="logSuccess"><value>True filter passed</value></fval>
 	<fval name="name"><value>Return JWK</value></fval>
 </entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="-3971177583398399830" parentPK="1149556869825176277">
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="-2144724382345572625" parentPK="1149556869825176277">
+	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
+	<fval name="description"><value></value></fval>
+	<fval name="logMask"><value>3</value></fval>
+	<fval name="name"><value>Validate RBI Cognito Token</value></fval>
+	<fval name="start"><value contentType="reference">-7263621161008439967</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="-9129943803451337818" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeValue"><value>true</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
+	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Set token is valid</value></fval>
+	<fval name="messageAttribute"><value>oauth.token.valid</value></fval>
+	<fval name="name"><value>Set Token valid</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JWTVerifyFilter" entityPK="-7263621161008439967" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="contentTypes"></fval>
+	<fval name="critHeader"></fval>
+	<fval name="detachedSignature"><value>${content.body}</value></fval>
+	<fval name="headerClaimValidationPolicy"><value contentType="reference">-1</value></fval>
+	<fval name="isDetachedSignatureEnabled"><value>0</value></fval>
+	<fval name="jwkKey"><value>${jwk}</value></fval>
+	<fval name="jwsToken"><value>${access_token}</value></fval>
+	<fval name="keyDiscoveryCircuit"><value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='CircuitContainer'><id field='name' value='Token-Provider'/><key type='FilterCircuit'><id field='name' value='Get RBI Cognito JWK'/></key></key></key>	</value></fval>
+	<fval name="keyDiscoveryResultType"><value>JWK</value></fval>
+	<fval name="keyDiscoverySelection"><value>0</value></fval>
+	<fval name="logFailure"><value>Filter failed</value></fval>
+	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Filter passed</value></fval>
+	<fval name="name"><value>JWT Verify</value></fval>
+	<fval name="payloadClaimValidationPolicy"><value contentType="reference">-1</value></fval>
+	<fval name="publicKeyAlias"><value contentType="reference">
+<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=Chambers of Commerce Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU'/></key></key>	</value></fval>
+	<fval name="publicKeyLocation"><value>0</value></fval>
+	<fval name="publicKeyMsgAttribute"><value>${certificate}</value></fval>
+	<fval name="sharedKey"><value></value></fval>
+	<fval name="sharedKeyInMsgAttr"><value>${symmetric.key}</value></fval>
+	<fval name="sharedKeySelection"><value>1</value></fval>
+	<fval name="signAlgorithms">
+		<value>HS256</value>
+		<value>RS256</value>
+		<value>HS512</value>
+		<value>ES256</value>
+		<value>HS384</value>
+		<value>PS256</value>
+		<value>RS512</value>
+		<value>RS384</value>
+		<value>ES512</value>
+		<value>PS512</value>
+		<value>ES384</value>
+		<value>PS384</value>
+	</fval>
+	<fval name="successNode"><value contentType="reference">5906489987318941255</value></fval>
+	<fval name="types"></fval>
+	<fval name="useJwkKey"><value>1</value></fval>
+	<fval name="usePublicKey"><value>1</value></fval>
+	<fval name="useSharedKey"><value>0</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ValidateTimeStampFilter" entityPK="5252046827193396957" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="driftTime"><value>5000</value></fval>
+	<fval name="logFailure"><value>Token has already expired</value></fval>
+	<fval name="logFatal"><value>Error during validation of timestamp. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Token has not yet expired</value></fval>
+	<fval name="name"><value>Check token not expired</value></fval>
+	<fval name="successNode"><value contentType="reference">-9129943803451337818</value></fval>
+	<fval name="timeFormat"><value>ssssssssss</value></fval>
+	<fval name="timestampAttributeName"><value>${oauth.token.exp}</value></fval>
+	<fval name="timestampCheckType"><value>2</value></fval>
+	<fval name="timezone"><value>GMT</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ChangeMessageFilter" entityPK="5906489987318941255" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="body"><value>${jwt.body}</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value>Failed in setting the message</value></fval>
+	<fval name="logFatal"><value>Error in setting the message. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in setting the message</value></fval>
+	<fval name="name"><value>Set token info in content.body</value></fval>
+	<fval name="outputContentType"><value>application/json</value></fval>
+	<fval name="successNode"><value contentType="reference">7000629658396823078</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPathFilter" entityPK="7000629658396823078" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value>Error extracting token information</value></fval>
+	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Successfully extracted token information</value></fval>
+	<fval name="name"><value>Extract client_id, scopes and expiration time</value></fval>
+	<fval name="successNode"><value contentType="reference">7596235076832281431</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="-8020023490187107617" parentPK="7000629658396823078">
+	<fval name="attributeName"><value>oauth.token.scopes</value></fval>
+	<fval name="expression"><value>$.scope</value></fval>
+	<fval name="failOnError"><value>1</value></fval>
+	<fval name="unmarshalType"><value>java.lang.String</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="-7047571000616307176" parentPK="7000629658396823078">
+	<fval name="attributeName"><value>oauth.token.exp</value></fval>
+	<fval name="expression"><value>$.exp</value></fval>
+	<fval name="failOnError"><value>1</value></fval>
+	<fval name="unmarshalType"><value>java.lang.String</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="8189903877448899171" parentPK="7000629658396823078">
+	<fval name="attributeName"><value>oauth.token.client_id</value></fval>
+	<fval name="expression"><value>$.client_id</value></fval>
+	<fval name="failOnError"><value>1</value></fval>
+	<fval name="unmarshalType"><value>java.lang.String</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="StringReplaceFilter" entityPK="7596235076832281431" parentPK="-2144724382345572625">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="destAttribute"><value></value></fval>
+	<fval name="destAttributeOverride"><value>0</value></fval>
+	<fval name="logFailure"><value>Filter failed</value></fval>
+	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Filter passed</value></fval>
+	<fval name="matchBehaviour"><value>MATCH_ALL</value></fval>
+	<fval name="matchMode"><value>STRAIGHT_REPLACE</value></fval>
+	<fval name="name"><value>Format sopes</value></fval>
+	<fval name="regexMatchString"><value></value></fval>
+	<fval name="replacementString"><value>,</value></fval>
+	<fval name="sourceAttribute"><value>oauth.token.scopes</value></fval>
+	<fval name="straightMatchString"><value> </value></fval>
+	<fval name="successNode"><value contentType="reference">5252046827193396957</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="-743414499370279696" parentPK="1149556869825176277">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
 	<fval name="description"><value></value></fval>
 	<fval name="logMask"><value>3</value></fval>
 	<fval name="name"><value>Get RBI Cognito JWK</value></fval>
-	<fval name="start"><value contentType="reference">-6572869725941038942</value></fval>
+	<fval name="start"><value contentType="reference">-1013542194016706019</value></fval>
 </entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="-6572869725941038942" parentPK="-3971177583398399830">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeValue"><value>cognito</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
-	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Set the attribute value</value></fval>
-	<fval name="messageAttribute"><value>cacheKey</value></fval>
-	<fval name="name"><value>Create cache key</value></fval>
-	<fval name="successNode"><value contentType="reference">786398855180909441</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter" entityPK="-521016201323626263" parentPK="-3971177583398399830">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value></value></fval>
-	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>True filter passed</value></fval>
-	<fval name="name"><value>Return JWK</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="IsCachedAttributeFilter" entityPK="786398855180909441" parentPK="-3971177583398399830">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeName"><value>content.body</value></fval>
-	<fval name="cacheToUse"><value contentType="reference">
-<key type='CacheManager'><id field='name' value='Cache Manager'/><key type='Cache'><id field='name' value='Cognito JWK-Cache'/></key></key>	</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="failureNode"><value contentType="reference">5128755879461030383</value></fval>
-	<fval name="keyAttributeName"><value>cacheKey</value></fval>
-	<fval name="logFailure"><value>JWK for Cognito is not cached</value></fval>
-	<fval name="logFatal"><value>Error while looking for key in the  message attribiute cache. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>6</value></fval>
-	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>Using cached JWK for Cognito</value></fval>
-	<fval name="name"><value>Is Cognito JWK cached?</value></fval>
-	<fval name="successNode"><value contentType="reference">-521016201323626263</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CacheAttributeFilter" entityPK="4491616650571341435" parentPK="-3971177583398399830">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeName"><value>content.body</value></fval>
-	<fval name="cacheToUse"><value contentType="reference">
-<key type='CacheManager'><id field='name' value='Cache Manager'/><key type='Cache'><id field='name' value='Cognito JWK-Cache'/></key></key>	</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="keyAttributeName"><value>cacheKey</value></fval>
-	<fval name="logFailure"><value>Failed to cache the message attribute.</value></fval>
-	<fval name="logFatal"><value>Error while caching the message attribute. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Cached the message attribute.</value></fval>
-	<fval name="name"><value>Cache Cognito JWK</value></fval>
-	<fval name="successNode"><value contentType="reference">-521016201323626263</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ConnectToURLFilter" entityPK="5128755879461030383" parentPK="-3971177583398399830">
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ConnectToURLFilter" entityPK="-4465925514569592951" parentPK="-743414499370279696">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="body"><value>${content.body}</value></fval>
 	<fval name="caCerts"></fval>
@@ -17560,7 +17650,7 @@
 	<fval name="logMaskType"><value>FILTER</value></fval>
 	<fval name="logSuccess"><value>Get JWK for Cognito</value></fval>
 	<fval name="method"><value>GET</value></fval>
-	<fval name="name"><value>Get RBI Cognito JWK</value></fval>
+	<fval name="name"><value>Get Cognito JWK</value></fval>
 	<fval name="performRetries"><value>0</value></fval>
 	<fval name="profile"><value contentType="reference">-1</value></fval>
 	<fval name="profileInUse"><value>0</value></fval>
@@ -17588,12 +17678,12 @@
 	<fval name="stickyCookieName"><value>unnamed</value></fval>
 	<fval name="stickyCookiePath"><value></value></fval>
 	<fval name="stickyness"><value>0</value></fval>
-	<fval name="successNode"><value contentType="reference">4491616650571341435</value></fval>
+	<fval name="successNode"><value contentType="reference">-3177569366050681475</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
 	<fval name="url"><value>https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_C0ok9zRJq/.well-known/jwks.json</value></fval>
 	<fval name="useRootCerts"><value>1</value></fval>
 </entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-7919265923667778522" parentPK="5128755879461030383">
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SaveToFileFilter" entityPK="-4468204762219256502" parentPK="-4465925514569592951">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
 	<fval name="directory"><value>${environment.VINSTDIR}/message-archive</value></fval>
@@ -17608,6 +17698,60 @@
 	<fval name="maxFileSize"><value>1000</value></fval>
 	<fval name="maxNumberFiles"><value>500</value></fval>
 	<fval name="name"><value>Persistence Details</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CacheAttributeFilter" entityPK="-3177569366050681475" parentPK="-743414499370279696">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeName"><value>content.body</value></fval>
+	<fval name="cacheToUse"><value contentType="reference">
+<key type='CacheManager'><id field='name' value='Cache Manager'/><key type='Cache'><id field='name' value='Cognito JWK-Cache'/></key></key>	</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="keyAttributeName"><value>rbiTokenKey</value></fval>
+	<fval name="logFailure"><value>Failed to cache the message attribute.</value></fval>
+	<fval name="logFatal"><value>Error while caching the message attribute. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Cached the message attribute.</value></fval>
+	<fval name="name"><value>Cache Cognito JWK</value></fval>
+	<fval name="successNode"><value contentType="reference">3700946871746912745</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="-1013542194016706019" parentPK="-743414499370279696">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeValue"><value>cognito</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
+	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Set the attribute value</value></fval>
+	<fval name="messageAttribute"><value>rbiTokenKey</value></fval>
+	<fval name="name"><value>Create cache key</value></fval>
+	<fval name="successNode"><value contentType="reference">6921554203504730549</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter" entityPK="3700946871746912745" parentPK="-743414499370279696">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value></value></fval>
+	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>True filter passed</value></fval>
+	<fval name="name"><value>Return JWK</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="IsCachedAttributeFilter" entityPK="6921554203504730549" parentPK="-743414499370279696">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeName"><value>content.body</value></fval>
+	<fval name="cacheToUse"><value contentType="reference">
+<key type='CacheManager'><id field='name' value='Cache Manager'/><key type='Cache'><id field='name' value='Cognito JWK-Cache'/></key></key>	</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="failureNode"><value contentType="reference">-4465925514569592951</value></fval>
+	<fval name="keyAttributeName"><value>rbiTokenKey</value></fval>
+	<fval name="logFailure"><value>JWK for Cognito is not cached</value></fval>
+	<fval name="logFatal"><value>Error while looking for key in the  message attribiute cache. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Using cached JWK for Cognito</value></fval>
+	<fval name="name"><value>Is Cognito JWK cached?</value></fval>
+	<fval name="successNode"><value contentType="reference">3700946871746912745</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="3292028595899059505" parentPK="1149556869825176277">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
@@ -17767,150 +17911,6 @@
 	<fval name="expression"><value>$.scope</value></fval>
 	<fval name="failOnError"><value>1</value></fval>
 	<fval name="unmarshalType"><value>java.lang.String</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="4370305271059197660" parentPK="1149556869825176277">
-	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
-	<fval name="description"><value></value></fval>
-	<fval name="logMask"><value>3</value></fval>
-	<fval name="name"><value>Validate RBI Cognito Token</value></fval>
-	<fval name="start"><value contentType="reference">6450048097752410991</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ChangeMessageFilter" entityPK="-8793768425648162860" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="body"><value>${jwt.body}</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value>Failed in setting the message</value></fval>
-	<fval name="logFatal"><value>Error in setting the message. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Success in setting the message</value></fval>
-	<fval name="name"><value>Set token info in content.body</value></fval>
-	<fval name="outputContentType"><value>application/json</value></fval>
-	<fval name="successNode"><value contentType="reference">-5324047845609460091</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPathFilter" entityPK="-5324047845609460091" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value>Error extracting token information</value></fval>
-	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>6</value></fval>
-	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>Successfully extracted token information</value></fval>
-	<fval name="name"><value>Extract client_id, scopes and expiration time</value></fval>
-	<fval name="successNode"><value contentType="reference">-4899623402498451776</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="4811535306297190972" parentPK="-5324047845609460091">
-	<fval name="attributeName"><value>oauth.token.client_id</value></fval>
-	<fval name="expression"><value>$.client_id</value></fval>
-	<fval name="failOnError"><value>1</value></fval>
-	<fval name="unmarshalType"><value>java.lang.String</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="6267577977083917801" parentPK="-5324047845609460091">
-	<fval name="attributeName"><value>oauth.token.scopes</value></fval>
-	<fval name="expression"><value>$.scope</value></fval>
-	<fval name="failOnError"><value>1</value></fval>
-	<fval name="unmarshalType"><value>java.lang.String</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JSONPath" entityPK="6667306844347976573" parentPK="-5324047845609460091">
-	<fval name="attributeName"><value>oauth.token.exp</value></fval>
-	<fval name="expression"><value>$.exp</value></fval>
-	<fval name="failOnError"><value>1</value></fval>
-	<fval name="unmarshalType"><value>java.lang.String</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="StringReplaceFilter" entityPK="-4899623402498451776" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="destAttribute"><value></value></fval>
-	<fval name="destAttributeOverride"><value>0</value></fval>
-	<fval name="logFailure"><value>Filter failed</value></fval>
-	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Filter passed</value></fval>
-	<fval name="matchBehaviour"><value>MATCH_ALL</value></fval>
-	<fval name="matchMode"><value>STRAIGHT_REPLACE</value></fval>
-	<fval name="name"><value>Format sopes</value></fval>
-	<fval name="regexMatchString"><value></value></fval>
-	<fval name="replacementString"><value>,</value></fval>
-	<fval name="sourceAttribute"><value>oauth.token.scopes</value></fval>
-	<fval name="straightMatchString"><value> </value></fval>
-	<fval name="successNode"><value contentType="reference">202486795328518413</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ValidateTimeStampFilter" entityPK="202486795328518413" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="driftTime"><value>5000</value></fval>
-	<fval name="logFailure"><value>Token has already expired</value></fval>
-	<fval name="logFatal"><value>Error during validation of timestamp. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>6</value></fval>
-	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>Token has not yet expired</value></fval>
-	<fval name="name"><value>Check token not expired</value></fval>
-	<fval name="successNode"><value contentType="reference">2701620247955926664</value></fval>
-	<fval name="timeFormat"><value>ssssssssss</value></fval>
-	<fval name="timestampAttributeName"><value>${oauth.token.exp}</value></fval>
-	<fval name="timestampCheckType"><value>2</value></fval>
-	<fval name="timezone"><value>GMT</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SetAttributeFilter" entityPK="2701620247955926664" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="attributeValue"><value>true</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="logFailure"><value>Failed to set the attribute value</value></fval>
-	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>6</value></fval>
-	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>Set token is valid</value></fval>
-	<fval name="messageAttribute"><value>oauth.token.valid</value></fval>
-	<fval name="name"><value>Set Token valid</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JWTVerifyFilter" entityPK="6450048097752410991" parentPK="4370305271059197660">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="contentTypes"></fval>
-	<fval name="critHeader"></fval>
-	<fval name="detachedSignature"><value>${content.body}</value></fval>
-	<fval name="headerClaimValidationPolicy"><value contentType="reference">-1</value></fval>
-	<fval name="isDetachedSignatureEnabled"><value>0</value></fval>
-	<fval name="jwkKey"><value>${jwk}</value></fval>
-	<fval name="jwsToken"><value>${access_token}</value></fval>
-	<fval name="keyDiscoveryCircuit"><value contentType="reference">
-<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='CircuitContainer'><id field='name' value='Token-Provider'/><key type='FilterCircuit'><id field='name' value='Get RBI Cognito JWK'/></key></key></key>	</value></fval>
-	<fval name="keyDiscoveryResultType"><value>JWK</value></fval>
-	<fval name="keyDiscoverySelection"><value>0</value></fval>
-	<fval name="logFailure"><value>Filter failed</value></fval>
-	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Filter passed</value></fval>
-	<fval name="name"><value>JWT Verify</value></fval>
-	<fval name="payloadClaimValidationPolicy"><value contentType="reference">-1</value></fval>
-	<fval name="publicKeyAlias"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=Chambers of Commerce Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU'/></key></key>	</value></fval>
-	<fval name="publicKeyLocation"><value>0</value></fval>
-	<fval name="publicKeyMsgAttribute"><value>${certificate}</value></fval>
-	<fval name="sharedKey"><value></value></fval>
-	<fval name="sharedKeyInMsgAttr"><value>${symmetric.key}</value></fval>
-	<fval name="sharedKeySelection"><value>1</value></fval>
-	<fval name="signAlgorithms">
-		<value>HS256</value>
-		<value>RS256</value>
-		<value>HS512</value>
-		<value>ES256</value>
-		<value>HS384</value>
-		<value>PS256</value>
-		<value>RS512</value>
-		<value>RS384</value>
-		<value>ES512</value>
-		<value>PS512</value>
-		<value>ES384</value>
-		<value>PS384</value>
-	</fval>
-	<fval name="successNode"><value contentType="reference">-8793768425648162860</value></fval>
-	<fval name="types"></fval>
-	<fval name="useJwkKey"><value>1</value></fval>
-	<fval name="usePublicKey"><value>1</value></fval>
-	<fval name="useSharedKey"><value>0</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="1340951215563574888" parentPK="1494605159343373361">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
