@@ -44,8 +44,7 @@
   "outboundProfiles": {
     "_default": {
       "authenticationProfile": "_default",
-      "requestPolicy": "Request Policy 1",
-      "routePolicy": "_default"
+      "requestPolicy": "Request Policy 1"
     }
   },
   "applications" : [ {
