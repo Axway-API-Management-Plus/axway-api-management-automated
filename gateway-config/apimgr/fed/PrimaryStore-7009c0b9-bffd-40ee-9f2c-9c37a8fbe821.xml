@@ -5072,7 +5072,7 @@
 	<fval name="alias"><value></value></fval>
 	<fval name="cache"><value contentType="reference">-1</value></fval>
 	<fval name="dataSource"><value contentType="reference">
-<key type='KPSRoot'><id field='name' value='Key Property Stores'/><key type='KPSPackage'><id field='name' value='ClientSettings'/><key type='KPSDataSourceGroup'><id field='name' value='Data Sources'/><key type='KPSCassandraDataSource'><id field='name' value='Cassandra Storage'/></key></key></key></key>	</value></fval>
+<key type='KPSRoot'><id field='name' value='Key Property Stores'/><key type='KPSPackage'><id field='name' value='Settings'/><key type='KPSDataSourceGroup'><id field='name' value='Data Sources'/><key type='KPSCassandraDataSource'><id field='name' value='Cassandra Storage'/></key></key></key></key>	</value></fval>
 	<fval name="description"><value>Settings collection</value></fval>
 	<fval name="internal"><value>0</value></fval>
 	<fval name="name"><value>Settings</value></fval>
