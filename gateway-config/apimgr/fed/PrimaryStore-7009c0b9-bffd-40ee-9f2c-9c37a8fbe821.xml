@@ -26146,7 +26146,7 @@
 	<fval name="generatedProperties"></fval>
 	<fval name="logFailure"><value>Swagger-Validation failed</value></fval>
 	<fval name="logFatal"><value>Error while attempt to run script filter. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMask"><value>6</value></fval>
 	<fval name="logMaskType"><value>FILTER</value></fval>
 	<fval name="logSuccess"><value>Swagger-Validation passed</value></fval>
 	<fval name="name"><value>Swagger Validation</value></fval>
