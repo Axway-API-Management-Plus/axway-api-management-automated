@@ -5090,7 +5090,7 @@
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="-6141488543190499520" parentPK="4623639000525827">
 	<fval name="key"><value></value></fval>
-	<fval name="name"><value>key</value></fval>
+	<fval name="name"><value>clientId</value></fval>
 	<fval name="type"><value>java.lang.String</value></fval>
 	<fval name="value"><value></value></fval>
 </entity>
@@ -5126,7 +5126,7 @@
 	<fval name="dataSource"><value contentType="reference">-1</value></fval>
 	<fval name="description"><value>Client settings</value></fval>
 	<fval name="encrypted"><value>otherSetting</value></fval>
-	<fval name="key"><value>key</value></fval>
+	<fval name="key"><value>clientId</value></fval>
 	<fval name="name"><value>Client Settings</value></fval>
 	<fval name="readKey"><value></value></fval>
 	<fval name="type"><value contentType="reference">
