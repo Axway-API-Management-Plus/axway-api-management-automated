@@ -17316,23 +17316,7 @@
 	<fval name="logSuccess"><value>Backend is: ${backendHost}</value></fval>
 	<fval name="messageAttribute"><value>backendHost</value></fval>
 	<fval name="name"><value>Lookup backend</value></fval>
-	<fval name="successNode"><value contentType="reference">-2319070875675625530</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TraceFilter" entityPK="-2319070875675625530" parentPK="-1790054288135906506">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="doIndent"><value>0</value></fval>
-	<fval name="logFailure"><value>Failed to trace the message properties</value></fval>
-	<fval name="logFatal"><value>Error while tracing the message properties. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Traced the message properties</value></fval>
-	<fval name="name"><value>Trace Filter</value></fval>
 	<fval name="successNode"><value contentType="reference">-1030245804860333465</value></fval>
-	<fval name="traceAttributes"><value>1</value></fval>
-	<fval name="traceBody"><value>0</value></fval>
-	<fval name="traceLevel"><value>3</value></fval>
-	<fval name="traceMsg"><value></value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="JavaScriptFilter" entityPK="-1030245804860333465" parentPK="-1790054288135906506">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
