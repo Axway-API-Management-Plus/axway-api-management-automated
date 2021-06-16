@@ -5068,6 +5068,79 @@
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSRoot" entityPK="-8992566297148002036" parentPK="0">
 	<fval name="name"><value>Key Property Stores</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSPackage" entityPK="-9026631721382514187" parentPK="-8992566297148002036">
+	<fval name="alias"><value></value></fval>
+	<fval name="dataSource"><value contentType="reference">
+<key type='KPSRoot'><id field='name' value='Key Property Stores'/><key type='KPSPackage'><id field='name' value='Settings'/><key type='KPSDataSourceGroup'><id field='name' value='Data Sources'/><key type='KPSCassandraDataSource'><id field='name' value='Cassandra Storage'/></key></key></key></key>	</value></fval>
+	<fval name="description"><value>Settings to be used by policies at runtime</value></fval>
+	<fval name="internal"><value>0</value></fval>
+	<fval name="name"><value>Settings</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeGroup" entityPK="-7687548505434821636" parentPK="-9026631721382514187">
+	<fval name="name"><value>Type Group</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSType" entityPK="4623639000525827" parentPK="-7687548505434821636">
+	<fval name="name"><value>Client Settings</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="-8694400991855823837" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>anInteger</value></fval>
+	<fval name="type"><value>java.lang.Integer</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="-6141488543190499520" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>key</value></fval>
+	<fval name="type"><value>java.lang.String</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="-5241644313534981158" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>aToggle</value></fval>
+	<fval name="type"><value>java.lang.Boolean</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="-3812159137156925428" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>backendHost</value></fval>
+	<fval name="type"><value>java.lang.String</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="1028919464478773434" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>otherSetting</value></fval>
+	<fval name="type"><value>java.lang.String</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSTypeProperty" entityPK="4637762899567524334" parentPK="4623639000525827">
+	<fval name="key"><value></value></fval>
+	<fval name="name"><value>someEncrypted</value></fval>
+	<fval name="type"><value>java.lang.String</value></fval>
+	<fval name="value"><value></value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSStoreGroup" entityPK="3207796368009595450" parentPK="-9026631721382514187">
+	<fval name="name"><value>Store Group</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSReadWriteStore" entityPK="-5841653509612151487" parentPK="3207796368009595450">
+	<fval name="aliases"><value>clientSettings</value></fval>
+	<fval name="dataSource"><value contentType="reference">-1</value></fval>
+	<fval name="description"><value>Client settings</value></fval>
+	<fval name="encrypted"><value>otherSetting</value></fval>
+	<fval name="key"><value>key</value></fval>
+	<fval name="name"><value>Client Settings</value></fval>
+	<fval name="readKey"><value></value></fval>
+	<fval name="type"><value contentType="reference">
+<key type='KPSRoot'><id field='name' value='Key Property Stores'/><key type='KPSPackage'><id field='name' value='Settings'/><key type='KPSTypeGroup'><id field='name' value='Type Group'/><key type='KPSType'><id field='name' value='Client Settings'/></key></key></key></key>	</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSDataSourceGroup" entityPK="4497419346929461674" parentPK="-9026631721382514187">
+	<fval name="name"><value>Data Sources</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSCassandraDataSource" entityPK="-446751875240908303" parentPK="4497419346929461674">
+	<fval name="description"><value>Cassandra storage</value></fval>
+	<fval name="name"><value>Cassandra Storage</value></fval>
+	<fval name="readConsistencyLevel"><value>ONE</value></fval>
+	<fval name="writeConsistencyLevel"><value>ONE</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="KPSPackage" entityPK="-645907007743501109" parentPK="-8992566297148002036">
 	<fval name="dataSource"><value contentType="reference">
 <key type='KPSRoot'><id field='name' value='Key Property Stores'/><key type='KPSPackage'><id field='name' value='API Portal'/><key type='KPSDataSourceGroup'><id field='name' value='Data Sources'/><key type='KPSCassandraDataSource'><id field='name' value='Cassandra Storage'/></key></key></key></key>	</value></fval>
