@@ -26200,7 +26200,7 @@
 	<fval name="logFatal"><value>Error while setting the attribute value. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>6</value></fval>
 	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>API is public: ${api.publicAPI}</value></fval>
+	<fval name="logSuccess"><value>Validate request: ${api.validateRequest}</value></fval>
 	<fval name="messageAttribute"><value>api.validateRequest</value></fval>
 	<fval name="name"><value>Get validate request config</value></fval>
 	<fval name="successNode"><value contentType="reference">-4746094206129744241</value></fval>
