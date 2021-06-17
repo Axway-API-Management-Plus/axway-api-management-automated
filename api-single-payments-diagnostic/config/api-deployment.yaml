@@ -15,7 +15,7 @@ kind: Deployment
 metadata:
   name: api-single-payments-diagnostic
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: api-single-payments-diagnostic
