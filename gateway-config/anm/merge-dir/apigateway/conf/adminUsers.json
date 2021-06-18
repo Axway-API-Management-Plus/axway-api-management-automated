@@ -47,6 +47,11 @@
       "id": "user-8",
       "name": "alexPolisevschi",
       "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-9",
+      "name": "markus",
+      "roles": ["role-1", "role-6", "role-7"]
     }
   ],
   "adminUserCredentials": {
