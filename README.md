@@ -90,7 +90,7 @@ Using DevOps pipelines and a Kubernetes cluster, updating the API management pla
 
 ## Base-Setup
 
-You are welcome to fork this repository and customize it according to your own needs. In the default setup with a Kubernetes cluster (EKS) on AWS and using GitPackages as the repository, the following environment variables are required. These must be created accordingly in your fork. 
+You are welcome to  fork this repository and customize it according to your own needs. In the default setup with a Kubernetes cluster (EKS) on AWS and using GitPackages as the repository, the following [GitHub secretes](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) are required and must be created accordingly in your fork. 
 
 | Secret/Variable        | Description                                                                            |
 | :---                   | :---                                                                                   |
