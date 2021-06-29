@@ -4796,8 +4796,7 @@
 	<fval name="address"><value>*</value></fval>
 	<fval name="auditConn"><value>false</value></fval>
 	<fval name="backlog"><value>64</value></fval>
-	<fval name="caCert"><value contentType="reference">
-<key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=Partner-Root-Ca'/></key></key>	</value></fval>
+	<fval name="caCert"></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL:!TLSv1:!kRSA</value></fval>
 	<fval name="clientAuth"><value>optional</value></fval>
 	<fval name="depth"><value>1</value></fval>
