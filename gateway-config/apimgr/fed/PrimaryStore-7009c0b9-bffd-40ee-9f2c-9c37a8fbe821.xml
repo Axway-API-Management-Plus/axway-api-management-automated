@@ -17402,7 +17402,7 @@
 	<fval name="attributeName"><value>ClientIdentifier</value></fval>
 	<fval name="base64Decode"><value>0</value></fval>
 	<fval name="category"><value contentType="reference">3493121942376065588</value></fval>
-	<fval name="failureNode"><value contentType="reference">-1</value></fval>
+	<fval name="failureNode"><value contentType="reference">6516569803388510871</value></fval>
 	<fval name="headerName"><value>Client-ID</value></fval>
 	<fval name="logFailure"><value>Failed to extract attribute HTTP header</value></fval>
 	<fval name="logFatal"><value>Error occurred while extracting attributes from HTTP header. Error: ${circuit.exception}</value></fval>
@@ -17412,6 +17412,16 @@
 	<fval name="name"><value>Retrieve Client-ID from HTTP header</value></fval>
 	<fval name="successNode"><value contentType="reference">-3917715362850580355</value></fval>
 	<fval name="useQueryParameter"><value>0</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter" entityPK="6516569803388510871" parentPK="-1790054288135906506">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
+	<fval name="logFailure"><value></value></fval>
+	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>True filter passed</value></fval>
+	<fval name="name"><value>Header Client-ID not found</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="-488342462998082916" parentPK="1494605159343373361">
 	<fval name="category"><value contentType="reference">-4144189053504897366</value></fval>
