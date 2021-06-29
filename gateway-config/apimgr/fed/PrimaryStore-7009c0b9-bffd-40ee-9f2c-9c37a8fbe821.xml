@@ -18243,21 +18243,7 @@
 	<fval name="description"><value></value></fval>
 	<fval name="logMask"><value>3</value></fval>
 	<fval name="name"><value>Global request policy</value></fval>
-	<fval name="start"><value contentType="reference">-7186190446407721935</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ExtractCertAttributesFilter" entityPK="-7186190446407721935" parentPK="2852787342619692361">
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">851628988204668935</value></fval>
-	<fval name="certAttribute"><value>${authentication.cert}</value></fval>
-	<fval name="extractDistributionPoints"><value>0</value></fval>
-	<fval name="failureNode"><value contentType="reference">-4606847379465649949</value></fval>
-	<fval name="logFailure"><value>Failed to extract attributes from certificate</value></fval>
-	<fval name="logFatal"><value>Error occurred while extracting attributes from certificate. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>Extracted attributes from certificate</value></fval>
-	<fval name="name"><value>Extract Certificate Attributes</value></fval>
-	<fval name="successNode"><value contentType="reference">5341222366296380395</value></fval>
+	<fval name="start"><value contentType="reference">5341222366296380395</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CircuitDelegateFilter" entityPK="-4606847379465649949" parentPK="2852787342619692361">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
