@@ -40,5 +40,8 @@
     "name" : "Plexus Suite - Patient Monitoring",
     "enabled" : true,
     "state" : "approved"
-  } ]
+  } ],
+  "customProperties":{
+    "publicAPI": "true"
+  }
 }

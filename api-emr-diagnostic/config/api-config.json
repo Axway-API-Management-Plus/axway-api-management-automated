@@ -31,5 +31,8 @@
     "name" : "Plexus Suite - Surgery Center"
   }, {
     "name" : "Plexus Suite - Patient Monitoring"
-  } ]
+  } ],
+  "customProperties":{
+    "publicAPI": "true"
+  }
 }
