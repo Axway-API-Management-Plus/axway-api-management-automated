@@ -4798,11 +4798,12 @@
 	<fval name="backlog"><value>64</value></fval>
 	<fval name="caCert"></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL:!TLSv1:!kRSA</value></fval>
-	<fval name="clientAuth"><value>none</value></fval>
+	<fval name="clientAuth"><value>optional</value></fval>
 	<fval name="depth"><value>1</value></fval>
 	<fval name="dhParams"><value></value></fval>
 	<fval name="enabled"><value>1</value></fval>
 	<fval name="exportCorrelationId"><value>1</value></fval>
+	<fval name="hstsProfile"><value contentType="reference">-1</value></fval>
 	<fval name="idletimeout"><value>60000</value></fval>
 	<fval name="inputEncodings"><value>.inherit</value></fval>
 	<fval name="maxRequestMemory"><value>27262976</value></fval>
@@ -4822,12 +4823,10 @@
 	<fval name="serverCert"><value contentType="reference">
 <key type='Certificates'><id field='name' value='Certificate Store'/><key type='Certificate'><id field='dname' value='CN=Change this for production'/></key></key>	</value></fval>
 	<fval name="sessionCacheSize"><value>32</value></fval>
-	<fval name="ssloptions">
-		<value>nosslv3</value>
-		<value>nosslv2</value>
-	</fval>
+	<fval name="ssloptions"><value>nosslv3</value></fval>
 	<fval name="tracelevel"><value>INHERIT</value></fval>
 	<fval name="transparentProxy"><value>0</value></fval>
+	<fval name="wafProfile"><value contentType="reference">-1</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="PortalAPIBroker" entityPK="5497251117587357312" parentPK="4004391042157949769">
 	<fval name="corsUsage"><value>HTTP</value></fval>
