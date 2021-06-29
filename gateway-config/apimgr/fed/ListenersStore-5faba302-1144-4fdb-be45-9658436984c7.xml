@@ -4799,7 +4799,7 @@
 	<fval name="caCert"></fval>
 	<fval name="ciphers"><value>FIPS:!SSLv3:!aNULL:!TLSv1:!kRSA</value></fval>
 	<fval name="clientAuth"><value>optional</value></fval>
-	<fval name="depth"><value>2</value></fval>
+	<fval name="depth"><value>3</value></fval>
 	<fval name="dhParams"><value></value></fval>
 	<fval name="enabled"><value>1</value></fval>
 	<fval name="exportCorrelationId"><value>1</value></fval>
