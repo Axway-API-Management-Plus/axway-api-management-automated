@@ -4,12 +4,12 @@ This repository includes a set of sample APIs and API-Gateway policy configurati
 
 The following use cases/requirements are illustrated:
 
-API Design
-APIs as Code
-API Mockup with API-Builder
-API integration with API-Builder
-API Gateway Configuration
-API Gateway Updates
+- API Design
+- APIs as Code
+- API Mockup with API-Builder
+- API integration with API-Builder
+- API Gateway Configuration
+- API Gateway Updates
 
 The DevOps pipelines run on top of GitHub actions, but are also implementable with any other technology such as Jenkins or Azure pipelines, as only standard tools such as the APIM CLI, kubectl, etc. are used. 
 Some of the use cases, like API builder or API gateway updates, require the API management solution to run in a Kubernetes cluster.
