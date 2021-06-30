@@ -87,6 +87,11 @@ Using DevOps pipelines and a Kubernetes cluster, updating the API management pla
 
 [![Policy-Studio - Change Health-Check API](https://img.youtube.com/vi/35uEpu2Y8YU/0.jpg)](https://youtu.be/35uEpu2Y8YU)  
 
+### Mutual SSL
+
+This video explains how to configure and use Mutual-SSL with Axway's API Management solution based on an AWS EKS.  
+
+[![Axway API-Management - Mutual SSL](https://img.youtube.com/vi/IsAt9bE4aUk/0.jpg)](https://youtu.be/IsAt9bE4aUk)  
 
 ## Base-Setup
 
