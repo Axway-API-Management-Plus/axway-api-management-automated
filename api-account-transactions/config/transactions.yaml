@@ -1,0 +1,871 @@
+openapi: 3.0.1
+info:
+  title: Account's transactions
+  version: 0.5.0
+  description: |
+    Transaction API (Draft)
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Transactions
+    description: |
+      A resource that describes a posting to an account that results in an increase or decrease to a balance.
+      For a specific date range, an account (AccountId) may have no transactions booked, or may have multiple transactions booked.
+
+paths:
+  /api/v1/accounts/{accountId}/transactions:
+    get:
+      summary: Get list of account's transactions
+      description: |
+        Returns list of transactions sorted from newest to oldest.
+      tags:
+        - Transactions
+      operationId: getAccountTransactions
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/DateFromFilter'
+        - $ref: '#/components/parameters/DateToFilter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/DebitOrCreditFilter'
+        - $ref: '#/components/parameters/TxCountLimitFilter'
+        - $ref: '#/components/parameters/AmountFilter'
+        - $ref: '#/components/parameters/TransactionCodeFilter'
+        - $ref: '#/components/parameters/TransactionSubcodeFilter'
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAccountTransactionsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/transactions:
+    get:
+      summary: Get list of transactions visible to specific security context
+      description: |
+        Returns list of transactions sorted from newest to oldest.
+      tags:
+        - Transactions
+      operationId: getTransactions
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/DateFromFilter'
+        - $ref: '#/components/parameters/DateToFilter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/DebitOrCreditFilter'
+        - $ref: '#/components/parameters/TxCountLimitFilter'
+        - $ref: '#/components/parameters/AmountFilter'
+        - $ref: '#/components/parameters/TransactionCodeFilter'
+        - $ref: '#/components/parameters/TransactionSubcodeFilter'
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetTransactionsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /api/v1/transactions/{transactionId}:
+    get:
+      summary: Get list of transactions visible to specific security context
+      description: |
+        Returns list of transactions sorted from the newest to the oldest.
+      tags:
+        - Transactions
+      operationId: getTransactionById
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        - $ref: '#/components/parameters/TransactionId'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetTransactionResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+  responses:
+    GetAccountTransactionsResponse:
+      description: Successful response with content for specific account
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountTransactionsResponse'
+      links:
+        GetAccountTransactionsNextPage:
+          $ref: '#/components/links/GetAccountTransactionsNextPage'
+        GetAccountTransactionsPreviousPage:
+          $ref: '#/components/links/GetAccountTransactionsPreviousPage'
+    GetTransactionsResponse:
+      description: Successful response with content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionsResponse'
+      links:
+        GetTransactionNextPage:
+          $ref: '#/components/links/GetTransactionsNextPage'
+        GetTransactionPreviousPage:
+          $ref: '#/components/links/GetTransactionsPreviousPage'
+    GetTransactionResponse:
+      description: Successful response with content.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Transaction'
+    ErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      description: Immutual account id. This identifier has no meaning to the account owner.
+      required: true
+      example: '1234567890'
+      schema:
+        type: string
+    CustomerId:
+      name: customerId
+      in: query
+      description: Customer Information File id for "employee" security context.
+      required: false
+      example: '1234567890'
+      schema:
+        type: string
+    TransactionId:
+      name: transactionId
+      in: path
+      description: |
+        Unique identifier for the transaction within a servicing institution. This identifier is both unique
+        and immutable.
+      required: true
+      example: '1234567890'
+      schema:
+        type: string
+        maxLength: 50
+    TransactionCodeFilter:
+      name: code
+      in: query
+      description: Exact hit filter on transaction code
+      required: false
+      schema:
+        type: string
+    TransactionSubcodeFilter:
+      name: subcode
+      in: query
+      description: Exact hit filter on transaction subcode
+      required: false
+      schema:
+        type: string
+    DateFromFilter:
+      name: dateFrom
+      in: query
+      required: false
+      example: '2018-01-19'
+      description: Specify date from for filter.
+      schema:
+        type: string
+        format: date
+    DateToFilter:
+      name: dateTo
+      in: query
+      required: false
+      example: '2019-01-19'
+      description: Specify date to for filter.
+      schema:
+        type: string
+        format: date
+    Sort:
+      name: sort
+      in: query
+      description:  |
+        Comma-separated list of fields to define the sort order.
+        To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /tansactions?sort=-date.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(date|value):(asc|desc)$'
+        default: [ 'date:desc']
+    DebitOrCreditFilter:
+      name: DebitOrCredit
+      in: query
+      description: Select filter to get transactions by credit/debit indicator.
+      required: false
+      schema:
+        $ref: '#/components/schemas/CreditDebitIndicator'
+    TxCountLimitFilter:
+      name: txCountLimit
+      in: query
+      description: specify limit of transactions starting from the last one
+      example: 10
+      schema:
+        type: integer
+    AmountFilter:
+      name: amount
+      in: query
+      description: Single filter by key with RHS ":" syntax.
+      required: false
+      example: 'lte:1000'
+      schema:
+        type: string
+        maxLength: 25
+    OffsetPaginationLimit:
+      name: limit
+      in: query
+      description: The number of items to be returned
+      example: 20
+      schema:
+        type: integer
+    OffsetPaginationOffset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set
+      example: 20
+      schema:
+        type: integer
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows, map how services contribute to response times, identify bottle necks, etc. The X-Correlation-ID must be propagated unchanged in any and all downstream service calls (e.g. NWU services).
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    Fields:
+      in: query
+      name: fields
+      description: |
+        Partial response support.
+        A list of comma-separated fields that must be included in the response message. If a given query consist of
+        fields which don't exist in a data model, http 400 bad request should be returned.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+        example: 'accountNumber,accountName,balances'
+      required: false
+  schemas:
+    AccountIdentification:
+      type: array
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/AccountIban'
+          - $ref: '#/components/schemas/AccountBban'
+          - $ref: '#/components/schemas/AccountPan'
+          - $ref: '#/components/schemas/AccountMaskedPan'
+          - $ref: '#/components/schemas/AccountMsisdn'
+          - $ref: '#/components/schemas/AccountEmail'
+        discriminator:
+          propertyName: accountIdentificationType
+          mapping:
+            IBAN: '#/components/schemas/AccountIban'
+            BBAN: '#/components/schemas/AccountBban'
+            PAN: '#/components/schemas/AccountPan'
+            MASKED_PAN: '#/components/schemas/AccountMaskedPan'
+            MSISDN: '#/components/schemas/AccountMsisdn'
+            EMAIL: '#/components/schemas/AccountEmail'
+      minItems: 1
+    OffsetPaginationMetadata:
+      type: object
+      description: Keyset pagination data.
+      properties:
+        limit:
+          type: number
+          description: Limit parameter from the request or default
+        offset:
+          type: number
+          description: Offset parameter from the request or 0
+        nextOffset:
+          type: number
+          description: |
+            Key for the last element returned by request.
+            Calculated from query parameters. If sum of offset and limit is less then collection size then we will
+            return summary result if greater then offset will be returned.
+        previousOffset:
+          type: number
+          description: |
+            Offset of the previous page if exists, otherwise 0.
+            Calculated from query parameters by substracting limit from offset.
+            If value is grater than zero then substraction result is returned if less then 0 will be placed to previousOffset.
+        size:
+          type: number
+          description: Cardinality of account transactions list set
+    AccountTransactionsResponse:
+      type: object
+      description: Response grouping object for getTransactions.
+      required:
+        - metadata
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+    TransactionsResponse:
+      type: object
+      description: Response grouping object for getTransactions.
+      required:
+        - metadata
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+    Transaction:
+      description: Account Transaction details.
+      type: object
+      required:
+        - transactionId
+        - amount
+      properties:
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
+        transactionReference:
+          $ref: '#/components/schemas/TransactionReference'
+        statementReferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatementReference'
+        creditDebitIndicator:
+          $ref: '#/components/schemas/CreditDebitIndicator'
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        mutability:
+          $ref: '#/components/schemas/TransactionMutability'
+        bookingDateTime:
+          $ref: '#/components/schemas/BookingDateTime'
+        valueDateTime:
+          $ref: '#/components/schemas/ValueDateTime'
+        transactionInformation:
+          description: |
+            Further details of the transaction. This is the transaction narrative, which is unstructured text.
+          type: string
+          maxLength: 500
+        addressLine:
+          description: |
+            Information that locates and identifies a specific address for a transaction entry,
+            that is presented in free format text.
+          type: string
+          maxLength: 70
+        amount:
+          $ref: '#/components/schemas/Amount'
+        chargeAmounts:
+          $ref: '#/components/schemas/ChargeAmounts'
+        currencyExchange:
+          $ref: '#/components/schemas/ReportExchangeRateList'
+        creditorName:
+          description: Creditor name.
+          type: string
+          maxLength: 70
+        creditorAccount:
+          $ref: '#/components/schemas/AccountIdentification'
+        debtorName:
+          description: Deptor name.
+          type: string
+          maxLength: 70
+        debtorAccount:
+          $ref: '#/components/schemas/AccountIdentification'
+        bankTransactionCode:
+          $ref: '#/components/schemas/BankTransactionCode'
+        proprietaryBankTransactionCode:
+          $ref: '#/components/schemas/ProprietaryBankTransactionCode'
+        balanceAfterTransaction:
+          $ref: '#/components/schemas/Amount'
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+    AccountId:
+      type: string
+      description: Immutable account id. This identifier has no meaning to the account owner.
+      example: '1234567890'
+    TransactionId:
+      description: |
+        Unique identifier for the transaction within an servicing institution. This identifier is both unique and immutable.
+      type: string
+      maxLength: 50
+    TransactionReference:
+      description: Unique reference within some payment system domain (e.g. BLIK in Poland) for the transaction.
+      type: string
+      maxLength: 100
+    StatementReference:
+      description: Unique reference for the statement. This reference may be optionally populated if available.
+      type: string
+      maxLength: 35
+    CreditDebitIndicator:
+      description: Indicates whether the transaction is a credit or a debit entry.
+      type: string
+      enum:
+        - CREDIT
+        - DEBIT
+    TransactionStatus:
+      description: |
+        Status of a transaction entry on the books of the account servicer.
+      type: string
+      enum:
+        - PENDING
+        - BOOKED
+    TransactionMutability:
+      description: |
+        Specifies the Mutability of the Transaction record.
+        Some of the fields in a transaction may change for a short period of time before it settles into an eventual immutable state.
+      type: string
+      enum:
+        - MUTABLE
+        - IMMUTABLE
+    BookingDateTime:
+      description: |
+        The date and time when an entry is posted to an account on the bank's books.
+      type: 'string'
+      format: date-time
+    ValueDateTime:
+      description: |
+        Date and time at which assets become available to the account owner in case of a credit entry,
+        or cease to be available to the account owner in case of a debit transaction entry.
+        Usage: If transaction entry status is pending and value date is present, then the value date refers to an expected/requested value date.
+        For transaction entries subject to availability/float and for which availability information is provided, the value date must not be used.
+        In this case the availability component identifies the number of availability days.
+      type: string
+      format: date-time
+    ReportExchangeRateList:
+      description: Array of exchange rates.
+      type: array
+      items:
+        $ref: '#/components/schemas/ReportExchangeRate'
+    ReportExchangeRate:
+      description: Exchange Rate.
+      type: object
+      required:
+        - sourceCurrency
+        - exchangeRate
+        - unitCurrency
+        - targetCurrency
+        - quotationDate
+      properties:
+        sourceCurrency:
+          $ref: '#/components/schemas/CurrencyCode'
+        exchangeRate:
+          description: Decimal number for specific currency exchange
+          type: string
+        targetCurrency:
+          $ref: '#/components/schemas/CurrencyCode'
+        quotationDate:
+          type: string
+          format: date
+        contractIdentification:
+          type: string
+          maxLength: 100
+    Amount:
+      type: object
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+        amount:
+          $ref: '#/components/schemas/AmountValue'
+      example:
+        {
+          "currency": "EUR",
+          "amount": "123"
+        }
+    ChargeAmounts:
+      type: object
+      required:
+        - sum
+        - chargeAmounts
+      properties:
+        sum:
+          $ref: '#/components/schemas/AmountValue'
+        chargeAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChargeAmount'
+      example:
+        {
+          "sum": "100",
+          "chargeAmounts":
+            [
+              {
+                "chargeType": "BRKF",
+                "currency": "EUR",
+                "amount": "40"
+              },
+              {
+                "chargeType": "COMM",
+                "currency": "EUR",
+                "amount": "60"
+              },
+            ]
+        }
+    ChargeAmount:
+      type: object
+      required:
+        - chargeType
+        - currency
+        - amount
+      properties:
+        chargeType:
+          $ref: '#/components/schemas/ChargeType'
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+        amount:
+          $ref: '#/components/schemas/AmountValue'
+      example:
+        {
+          "chargeType": "BRKF",
+          "currency": "EUR",
+          "amount": "123"
+        }
+    ChargeType:
+      description:  |
+        The same what ISO20022 standard offers in external code sets
+
+        BRKF | BrokerageFee | Fee paid to a broker for services provided.
+        BTCH | Batch        | Fee paid for processing a batch of transactions.
+        COMM | Commission   | Fee paid for services provided.
+        SUMM | Summation    | Summation of individual fees.
+      type: string
+      enum:
+        - BRKF
+        - BTCH
+        - COMM
+        - SUMM
+    CurrencyCode:
+      description: |
+        ISO 4217 Alpha 3 currency code.
+      type: string
+      pattern: '[A-Z]{3}'
+      example: 'EUR'
+    AmountValue:
+      description: |
+        The amount given with fractional digits, where fractions must be compliant to the currency definition.
+        Up to 14 significant figures. Negative amounts are signed by minus. The decimal separator is a dot.
+      type: string
+      pattern: '-?[0-9]{1,14}(\\.[0-9]{1,3})?'
+      example: '5877.78'
+    Iban:
+      type: string
+      pattern: '^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
+      description: |
+        Account IBAN
+    Bban:
+      description: |
+        Basic Bank Account Number (BBAN) Identifier
+
+        This data element can be used in the body of the Consent Request
+          Message for retrieving Account access Consent from this Account. This
+          data elements is used for payment Accounts which have no IBAN.
+          ISO20022: Basic Bank Account Number (BBAN).
+
+          Identifier used nationally by financial institutions, i.e., in individual countries,
+          generally as part of a National Account Numbering Scheme(s),
+          which uniquely identifies the account of a customer.
+      type: string
+      pattern: '[a-zA-Z0-9]{1,30}'
+      example: 'BARC12345612345678'
+    Msisdn:
+      type: string
+      maxLength: 35
+      description: Mobile phone number.
+      example: '+49 170 1234567'
+    Pan:
+      description: Primary Account Number according to ISO/IEC 7812.
+      type: string
+      maxLength: 35
+      example: '5409050000000000'
+    MaskedPan:
+      description: Masked Primary Account Number.
+      type: string
+      maxLength: 35
+      example: '123456xxxxxx1234'
+    AccountIban:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - IBAN
+        iban:
+          $ref: '#/components/schemas/Iban'
+      example:
+        {
+          "accountIdentificationType": "IBAN",
+          "iban": "AT483200000012345864"
+        }
+    AccountBban:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - BBAN
+        bban:
+          $ref: '#/components/schemas/Bban'
+      example:
+        {
+          "accountIdentificationType": "BBAN",
+          "bban": "1904300234573201"
+        }
+    AccountPan:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - PAN
+        pan:
+          $ref: '#/components/schemas/Pan'
+      example:
+        {
+          "accountIdentificationType": "PAN",
+          "pan": "5409050000000000"
+        }
+    AccountMaskedPan:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - MASKED_PAN
+        maskedPan:
+          $ref: '#/components/schemas/MaskedPan'
+      example:
+        {
+          "accountIdentificationType": "MASKED_PAN",
+          "maskedPan": "123456xxxxxx1234"
+        }
+    AccountMsisdn:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - MSISDN
+        msisdn:
+          $ref: '#/components/schemas/Msisdn'
+      example:
+        {
+          "accountIdentificationType": "MSISDN",
+          "msisdn": "+491701234567"
+        }
+    AccountEmail:
+      type: object
+      required:
+        - accountIdentificationType
+      properties:
+        accountIdentificationType:
+          type: string
+          enum:
+            - EMAIL
+        email:
+          type: string
+          format: email
+      example:
+        {
+          "accountIdentificationType": "EMAIL",
+          "email": "customer@gmail.com"
+        }
+
+    BankTransactionCode:
+      description: |
+        Set of elements used to fully identify the type of underlying transaction resulting in an entry.
+      type: object
+      properties:
+        code:
+          description: Specifies the family within a domain. https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets
+          type: string
+        subcode:
+          description: Specifies the sub-product family within a specific family. https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets
+          type: string
+    ProprietaryBankTransactionCode:
+      description: |
+        Set of elements to fully identify a proprietary bank transaction code.
+      type: object
+      properties:
+        code:
+          description: Proprietary bank transaction code to identify the underlying transaction.
+          type: string
+          maxLength: 35
+        issuer:
+          description: Identification of the issuer of the proprietary bank transaction code.
+          type: string
+          maxLength: 35
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        Error model to hold data which hepls to identify error cause and provide additional tracking informations.
+        Every API in RICE project are obligated to use reference error model.
+        More detailed description could be find on confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes
+      required:
+        - requestId
+        - correlationIdId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: Unique UUID to identify specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: Unique UUID of specific request. Value shoud be obtained from X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: Unique UUID for batch of requests. Value shoud be obtained from X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            HTTP status code. If there is in use different protocol than HTTP we should map error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: Additional info about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: Human-readable message in user-requested language.
+          example: 'Payment rejected. Missing creditor iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'creditorAccount.iban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just information.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        - COMMON_INVALID_PARAMETER
+        - COMMON_MISSING_PARAMETER
+        - COMMON_BAD_REQUEST
+        - COMMON_MISSING_CREDENTIALS
+        - COMMON_INVALID_CREDENTIALS
+        - COMMON_EXPIRED_ACCESS_TOKEN
+        - COMMON_ACCESS_DENIED
+        - COMMON_NOT_FOUND
+        - COMMON_METHOD_NOT_ALLOWED
+        - COMMON_RESOURCE_ALREADY_EXISTS
+        - COMMON_RATE_LIMIT_EXCEED
+        - COMMON_INTERNAL_ERROR
+        - COMMON_SERVICE_UNAVAIAVLE
+        - COMMON_GATEWAY_TIMEOUT
+      example: 'COMMON_BAD_REQUEST'
+
+  links:
+    GetAccountTransactionsNextPage:
+      description: Url to the next page in offset paging.
+      operationId: getAccountTransactions
+      parameters:
+        accountId: '$response.body#/accountId'
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetAccountTransactionsPreviousPage:
+      description: Url to the next page in offset paging.
+      operationId: getAccountTransactions
+      parameters:
+        accountId: '$response.body#/accountId'
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+    GetTransactionsNextPage:
+      description: Url to the next page in offset paging.
+      operationId: getTransactions
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetTransactionsPreviousPage:
+      description: Url to the next page in offset paging.
+      operationId: getTransactions
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+
+
+

@@ -1,0 +1,1291 @@
+openapi: 3.0.1
+info:
+  title: Retail Loans API
+  version: 0.2.0
+  description: |
+        Loans API - Retail business segment.
+        This API allows you to create and retrieve loans, make a loan disbursement, repayment
+        as well as retrieve a loan product definition.
+  # TODO - security.
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Disbursements
+    description: Loan disbursements Group API. This is for operations such as createLoanDisbursement.
+  - name: Loans
+    description: Loans group API. This is for operations such as getLoan(s), createLoan.
+  - name: Products
+    description: Loan products group API. This is for operations such as getLoanProductDefinition.
+  - name: Repayments
+    description: Loan repayments Group API. This is for operations such as createLoanRepayment, payOff.
+
+paths:
+  /api/v1/loans:
+    post:
+      tags:
+        - Loans
+      summary: Creates a new loan arrangement.
+      description: Creates a new loan arrangement.
+      operationId: createLoan
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLoanRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateLoanResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+    get:
+      tags:
+        - Loans
+      summary: Get all loans.
+      description: Response contains a list of all loans that match filters.
+      operationId: getLoans
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # custom query parameters
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/OriginationBranchCode'
+        - $ref: '#/components/parameters/ServicingBranchCode'
+        - $ref: '#/components/parameters/AgentCode'
+        - $ref: '#/components/parameters/ProductCode'
+        - $ref: '#/components/parameters/ProductFamilyCode'
+        - $ref: '#/components/parameters/Statuses'
+        - $ref: '#/components/parameters/CurrencyCode'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetLoansListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loans/{loanId}:
+    get:
+      tags:
+        - Loans
+      summary: Get details of a specific loan.
+      description: Retrieve all details of a loan using a loanId.
+      operationId: getLoan
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # custom query parameters
+        - $ref: '#/components/parameters/LoanId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetLoanResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loans/{loanId}/payOff:
+    post:
+      tags:
+        - Repayments
+      summary: Pay off a loan.
+      description: |
+        This operation allows to pay off a loan.
+        Duplicated loan pay off requests must have the same idempotency key (header 'X-Idempotency-Key').
+      operationId: payOffLoan
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        # custom query parameters
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        $ref: '#/components/requestBodies/LoanPayOffRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/LoanPayOffResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loans/{loanId}/disbursements:
+    post:
+      tags:
+        - Disbursements
+      summary: Make a loan disbursement.
+      description: |
+        Initiates a disbursment of funds from a loan technical account to a destination account.
+        A disbursement can be scheduled for a future date or immediately.
+      operationId: makeLoanDisbursement
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: "#/components/parameters/X-Reply-To"
+        # custom query parameters
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        $ref: '#/components/requestBodies/MakeDisbursementRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/MakeDisbursementResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loans/{loanId}/repayments:
+    post:
+      tags:
+        - Repayments
+      summary: Make a loan repayment.
+      description: |
+        Initiates a repayment of funds from a customer's account to the loan's account.
+        A repayment can be scheduled for a future date or immediately.
+      operationId: makeLoanRepayment
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: "#/components/parameters/X-Reply-To"
+        # custom query parameters
+        - $ref: '#/components/parameters/LoanId'
+      requestBody:
+        $ref: '#/components/requestBodies/MakeRepaymentRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/MakeRepaymentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loan-products/{loanProductId}:
+    get:
+      tags:
+        - Products
+      summary: Get details of a specific loan product definition.
+      description: |
+        Loan product is a template that stores some predefined information and constraints applied for
+        a loan.
+      operationId: getLoanProduct
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # custom query parameters
+        - $ref: '#/components/parameters/LoanProductId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetLoanProductResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+  /api/v1/loan-products:
+    get:
+      tags:
+        - Products
+      summary: Get all loan product definitions.
+      description: |
+        Loan product is a template that stores some predefined information and constraints applied for
+        a loan.
+      operationId: getLoanProducts
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetLoanProductsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+
+components:
+
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+
+  parameters:
+    # common header parameters
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows,
+        map how services contribute to response times, identify bottle necks, etc.
+        The X-Correlation-ID must be propagated unchanged in all downstream service calls (e.g. NWU services).
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Idempotency-Key:
+      name: X-Idempotency-Key
+      in: header
+      description: The unique request identifier to support idempotency.
+      required: false
+      example: 'e457b5a2e4d86bd1198ee56343ba864fe8b2'
+      schema:
+        type: string
+        maxLength: 40
+    X-Reply-To:
+      name: X-Reply-To
+      in: header
+      description: |
+        The identifier of requesting party that will be included in X-Replied-To header related to make disbursement API
+        so that status of disbursement can be routed to a proper client application.
+      schema:
+        type: string
+    # common query parameters
+    OffsetPaginationOffset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set.
+      example: 20
+      schema:
+        type: integer
+    OffsetPaginationLimit:
+      name: limit
+      in: query
+      description: The numbers of items to return.
+      example: 20
+      schema:
+        type: integer
+    Sort:
+      in: query
+      name: sort
+      description: |
+        Comma-separated list of fields to define the sort order.
+        To indicate sorting direction, fields may be suffixed with asc: or desc:
+        e.g. /loans?sort=startDate:asc or /loans?sort=customerId:desc.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(customerId|originationBranchCode|servicingBranchCode|agentCode|productCode|statuses|currencyCode|startDate):(asc|desc)$'
+          example: 'startDate:asc'
+    # custom query parameters
+    LoanId:
+      name: loanId
+      in: path
+      description: A unique ID of a loan.
+      example: '123456'
+      required: true
+      schema:
+        $ref: '#/components/schemas/LoanId'
+    LoanProductId:
+      name: loanProductId
+      in: path
+      description: A unique ID of a loan product.
+      example: '123456'
+      required: true
+      schema:
+        $ref: '#/components/schemas/LoanProductId'
+    CustomerId:
+      name: customerId
+      in: query
+      description: A unique ID of a customer.
+      example: '123456'
+      schema:
+        $ref: '#/components/schemas/CustomerId'
+    OriginationBranchCode:
+      name: originationBranchCode
+      in: query
+      description: A unique code of the organization's origination branch.
+      example: '016'
+      schema:
+        $ref: '#/components/schemas/BranchCode'
+    ServicingBranchCode:
+      name: servicingBranchCode
+      in: query
+      description: A unique code of the organization's servicing branch.
+      example: '016'
+      schema:
+        $ref: '#/components/schemas/BranchCode'
+    AgentCode:
+      name: agentCode
+      in: query
+      description: A unique code of the organization's agent.
+      example: '112233'
+      schema:
+        $ref: '#/components/schemas/AgentCode'
+    ProductCode:
+      name: productCode
+      in: query
+      description: A product unique identification code e.g. cash loans.
+      example: '654321'
+      schema:
+        $ref: '#/components/schemas/ProductCode'
+    ProductFamilyCode:
+      name: productFamilyCode
+      in: query
+      description: A product family unique identification code e.g. code for all loans.
+      example: '654321'
+      schema:
+        $ref: '#/components/schemas/ProductFamilyCode'
+    Statuses:
+      name: statuses
+      in: query
+      description: The desired loan statuses to filter on.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/LoanStatus'
+    CurrencyCode:
+      name: currencyCode
+      in: query
+      description: ISO 4217 Alpha 3 currency code.
+      example: 'EUR'
+      schema:
+        $ref: '#/components/schemas/CurrencyCode'
+    StartDate:
+      name: startDate
+      in: query
+      description: Used to filter loans which started (pending status) after the given date.
+      example: '2020-02-14'
+      schema:
+        $ref: '#/components/schemas/DateSchema'
+    EndDate:
+      name: endDate
+      in: query
+      description: Used to filter loans which ended (any closed status) before the given date.
+      example: '2020-02-14'
+      schema:
+        $ref: '#/components/schemas/DateSchema'
+
+  requestBodies:
+    CreateLoanRequest:
+      description: Details about a loan to be created.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLoanRequest'
+
+    LoanPayOffRequest:
+      description: Details about a loan pay off action.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoanPayOffRequest'
+
+    MakeDisbursementRequest:
+      description: Input details for a disbursement.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MakeDisbursementRequest'
+
+    MakeRepaymentRequest:
+      description: Input details for a repayment.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MakeRepaymentRequest'
+
+  responses:
+    CreateLoanResponse:
+      description: A new loan has been created.
+      headers:
+        Location:
+          schema:
+            type: string
+            description: |
+              Contains path to loan details, such as: **/loans/{loan-id}**
+              Location header should contain only path to resource and must not contain host name.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLoanResponse'
+      links:
+        GetLoanById:
+          description: |
+            The 'id' value returned in the response can be used as a 'loanId' value parameter
+            in GET /api/v1/loans/{loanId}.
+          operationId: getLoan
+          parameters:
+            loanId: '$response.body#/loanId'
+
+    GetLoanResponse:
+      description: A successful response for loan details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Loan'
+
+    GetLoansListResponse:
+      description: A successful response - a loans list.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              metadata:
+                $ref: '#/components/schemas/OffsetPaginationMetadata'
+              loans:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loan'
+      links:
+        GetLoansListOffsetPaginationPreviousPage:
+          $ref: '#/components/links/GetLoansListOffsetPaginationPreviousPage'
+        GetLoansListOffsetPaginationNextPage:
+          $ref: '#/components/links/GetLoansListOffsetPaginationNextPage'
+        GetLoanSummary:
+          $ref: '#/components/links/GetLoanSummary'
+
+    MakeDisbursementResponse:
+      description: A successful response of creating a loan disbursement.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MakeDisbursementResponse'
+
+    MakeRepaymentResponse:
+      description: A successful response of creating a loan repayment.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MakeRepaymentResponse'
+
+    GetLoanProductResponse:
+      description: A successful response for loan product details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoanProduct'
+
+    GetLoanProductsResponse:
+      description: A successful response for a list of loan products.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoanProductsResponse'
+
+    LoanPayOffResponse:
+      description: Pay off action submitted.
+
+    DefaultErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        The error model to hold data which hepls to identify error cause and provide additional tracking information.
+        Every API in RICE project is obliged to use the reference error model.
+        More detailed description could be find on RICE confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes.
+      required:
+        - requestId
+        - correlationId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: A unique UUID to identify a specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: A unique UUID of a specific request. A value shoud be obtained from a X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: A unique UUID for batch requests. A value shoud be obtained from a X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            A HTTP status code. If there is in use different protocol than HTTP, we should map an error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: An additional information about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: A human-readable message in a user-requested language.
+          example: 'Payment rejected. Missing creditor iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'creditorAccount.iban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just informative.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        - COMMON_INVALID_PARAMETER
+        - COMMON_MISSING_PARAMETER
+        - COMMON_BAD_REQUEST
+        - COMMON_MISSING_CREDENTIALS
+        - COMMON_INVALID_CREDENTIALS
+        - COMMON_EXPIRED_ACCESS_TOKEN
+        - COMMON_ACCESS_DENIED
+        - COMMON_NOT_FOUND
+        - COMMON_METHOD_NOT_ALLOWED
+        - COMMON_RESOURCE_ALREADY_EXISTS
+        - COMMON_RATE_LIMIT_EXCEEDED
+        - COMMON_INTERNAL_ERROR
+        - COMMON_SERVICE_UNAVAILABLE
+        - COMMON_GATEWAY_TIMEOUT
+      example: 'COMMON_BAD_REQUEST'
+
+    CreateLoanRequest:
+      required:
+        - customerId
+        - productCode
+        - contractDate
+        - primaryCurrency
+        - approvedAmount
+      properties:
+        productType:
+          $ref: '#/components/schemas/LoanProductType'
+        reservedArrangementNumber:
+          $ref: '#/components/schemas/ReservedArrangementNumber'
+        creditFacilityNumber:
+          $ref: '#/components/schemas/CreditFacilityNumber'
+        productCode:
+          $ref: '#/components/schemas/ProductCode'
+        customerId:
+          $ref: '#/components/schemas/CustomerId'
+        customerPartyType:
+          $ref: '#/components/schemas/PartyType'
+        contractDate:
+          $ref: '#/components/schemas/ContractDate'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedAccountInfo'
+          description: A list of accounts that have some role in a context of the arrangement.
+        isServedAsTranche:
+          $ref: '#/components/schemas/IsServedAsTranche'
+        schedule:
+          $ref: '#/components/schemas/ScheduleSpecification'
+        approvedAmount:
+          $ref: '#/components/schemas/Amount'
+        lineOfBusiness:
+          $ref: '#/components/schemas/LineOfBusiness'
+        repaymentType:
+          $ref: '#/components/schemas/RepaymentType'
+        origination:
+          $ref: '#/components/schemas/OriginationInfo'
+    Loan:
+      required:
+        - loanId
+        - customerId
+        - productCode
+        - contractDate
+        - primaryCurrency
+        - approvedAmount
+      properties:
+        productType:
+          $ref: '#/components/schemas/LoanProductType'
+        reservedArrangementNumber:
+          $ref: '#/components/schemas/ReservedArrangementNumber'
+        creditFacilityNumber:
+          $ref: '#/components/schemas/CreditFacilityNumber'
+        productCode:
+          $ref: '#/components/schemas/ProductCode'
+        loanId:
+          $ref: '#/components/schemas/LoanId'
+        customerId:
+          $ref: '#/components/schemas/CustomerId'
+        customerPartyType:
+          $ref: '#/components/schemas/PartyType'
+        status:
+          $ref: '#/components/schemas/LoanStatus'
+        contractDate:
+          $ref: '#/components/schemas/ContractDate'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedAccountInfo'
+          description: |
+            List of accounts that have some role in context of the arrangement.
+        isServedAsTranche:
+          $ref: '#/components/schemas/IsServedAsTranche'
+        schedule:
+          $ref: '#/components/schemas/ScheduleSpecification'
+        approvedAmount:
+          $ref: '#/components/schemas/Amount'
+        lineOfBusiness:
+          $ref: '#/components/schemas/LineOfBusiness'
+        repaymentType:
+          $ref: '#/components/schemas/RepaymentType'
+        origination:
+          $ref: '#/components/schemas/OriginationInfo'
+    LoanProduct:
+      #bp more parameters should be defined
+      required:
+        - loanProductId
+        - productName
+        - productType
+        - creditArrangmentSettings
+      properties:
+        loanProductId:
+          $ref: '#/components/schemas/LoanProductId'
+        productType:
+          $ref: '#/components/schemas/LoanProductType'
+        productFamilyCode:
+          $ref: '#/components/schemas/ProductFamilyCode'
+        productName:
+          $ref: '#/components/schemas/LoanProductName'
+        creditArrangementSettings:
+          description: Settings related to the funding for the loan product.
+          type: object
+          properties:
+            creditArrangementRequirement:
+              $ref: '#/components/schemas/CreditArrangementRequirement'
+        isActive:
+          description: The current state of the product.
+          type: boolean
+    LoanProductsResponse:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoanProduct'
+    CreditArrangementRequirement:
+      description: If a loan created after this product shall be a part of a line of credit.
+      type: string
+      enum:
+        - OPTIONAL
+        - REQUIRED
+        - RESTRICTED
+    LoanProductId:
+      description: Loan product unique identification number.
+      type: string
+    LoanProductName:
+      description: The name of the loan product.
+      type: string
+    IsServedAsTranche:
+      description: Indicator whether loan arrangement is serving as a tranche in parent arrangement.
+      type: boolean
+    CreditFacilityNumber:
+      description: Arrangement number for credit facility within which this loan is opened.
+      type: string
+    ReservedArrangementNumber:
+      description: |
+        The unique identifier of an arrangement reserved for customer.
+        For account arrangements, this should be the same as primary account number.
+        The only reason for difference are situations when single account covers multiple products.
+      type: string
+    ContractDate:
+      description: |
+        The date when all terms and conditions were agreed upon and contract was signed.
+        This is when loan passed to `ACCEPTED` status.
+      type: string
+      format: date-time
+    CustomerId:
+      description: Unique identifier of borrower in bank's record.
+      type: string
+      minLength: 5
+      maxLength: 20
+      example: '123456'
+    LoanId:
+      type: string
+      description: Loan unique identification number.
+    LoanStatus:
+      description: |
+        Current status of a loan:
+        ** PENDING ** First status of a loan.
+        ** APPROVED ** The organization approved the loan.
+        ** ACCEPTED ** The offer is accepted by the customer.
+        ** ACTIVE ** A loan has been disbursed and is active.
+        ** SUSPENDED ** A loan has been suspended.
+        ** CLOSED ** A loan has been paid off.
+        ** CLOSED_WITHDRAWN ** A loan has been withdrawn by the customer during loan origination process.
+        ** CLOSED_REJECTED ** A loan has been rejected by the bank during loan origination process.
+        ** CLOSED_RESCHEDULED ** A loan has been rescheduled by the bank during loan origination process.
+        ** CLOSED_WRITTEN_OFF ** A loan has been written off by the bank during loan origination process.
+      type: string
+      enum:
+          - PENDING
+          - APPROVED
+          - ACCEPTED
+          - ACTIVE
+          - SUSPENDED
+          - CLOSED
+          - CLOSED_WITHDRAWN
+          - CLOSED_REJECTED
+          - CLOSED_RESCHEDULED
+          - CLOSED_WRITTEN_OFF
+    ProductCode:
+      description: Product unique identification code.
+      type: string
+    ProductFamilyCode:
+      description: Product unique identification code.
+      type: string
+    DateSchema:
+      description: A date.
+      type: string
+      format: date
+    LineOfBusiness:
+      description: |
+        Grouping of bank's product fullfillment organization units according to type of customer
+        for which their products and services are primarily intended.
+      enum:
+        - RETAIL_BANKING
+        - COMMERCIAL_BANKING
+      type: string
+    RepaymentType:
+      description: The kind of repayment of the loan.
+      enum:
+        - STANDING_ORDER
+        - PAYROLL_DEDUCTION
+        - TRANSFER
+      type: string
+    AgentCode:
+      description: A unique code of the organization's agent.
+      type: string
+    LoanPayOffRequest:
+      description: The input representation of a loan pay off.
+      type: object
+      required:
+        - payOffAmounts
+      properties:
+        notes:
+          $ref: '#/components/schemas/Notes'
+        payOffAmounts:
+          description: Amounts to be paid for pay off action.
+          type: object
+          properties:
+            fee:
+              description: The fee amount to be paid.
+              type: number
+            interest:
+              description: The interest amount to be paid.
+              type: number
+            penalty:
+              description: The penalty amount to be paid.
+              type: number
+    MakeDisbursementRequest:
+      description: The input representation of a loan transaction when making a disbursement.
+      type: object
+      required:
+        - amount
+        - accountIban
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        disbursementDate:
+          $ref: '#/components/schemas/DateTimeSchema'
+        accountIban:
+          $ref: '#/components/schemas/AccountIban'
+        beneficiaryReferenceNumber:
+          description: Identifier for the funds recipient to know the origin of the funds paid.
+          type: string
+        agentCode:
+          $ref: '#/components/schemas/AgentCode'
+        branchCode:
+          $ref: '#/components/schemas/BranchCode'
+        notes:
+          $ref: '#/components/schemas/Notes'
+
+    MakeRepaymentRequest:
+      description: The input representation of a loan transaction when making a repayment.
+      type: object
+      required:
+        - amount
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        repaymentDate:
+          $ref: '#/components/schemas/DateTimeSchema'
+        agentCode:
+          $ref: '#/components/schemas/AgentCode'
+        branchCode:
+          $ref: '#/components/schemas/BranchCode'
+        notes:
+          $ref: '#/components/schemas/Notes'
+        recalculationMethod:
+          $ref: '#/components/schemas/RecalculationMethod'
+
+
+    MakeDisbursementResponse:
+      description: Providers result for disbursement creation command.
+      type: object
+      properties:
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
+
+    MakeRepaymentResponse:
+      description: Providers result for repayment creation command.
+      type: object
+      properties:
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
+
+    DateTimeSchema:
+      description: Date with time.
+      type: string
+      format: date-time
+      example: '2016-09-06T13:37:50+03:00'
+    AccountIban:
+      description: Destination account number for disbursement. Account can be external or internal to bank.
+      type: string
+      pattern: '^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$'
+    LoanProductType:
+      description: Primary classification of arrangements according to a loan product type.
+      type: string
+      enum:
+        - MORTGAGE
+        - CASH_LOAN
+        - CONSUMER_LOAN
+        - SYNDICATED_LOAN
+        - CORPORATE_LOAN
+        - MERCHANDISING_LOAN
+        - OVERDRAFT_LOAN
+        - REVOLVING_LOAN
+    PartyType:
+      description: Dictionary of possible party types.
+      type: string
+      enum:
+        - PERSON
+        - LEGAL_ENTITY
+        - SOLE_PROPRIETORSHIP
+    RelatedAccountInfo:
+      description: Reference to related account.
+      type: object
+      properties:
+        accountNumber:
+          description: Unique identifier of the account.
+          type: string
+        role:
+          $ref: '#/components/schemas/RelatedAccountRole'
+    RelatedAccountRole:
+      description: The role account plays in context of the loan.
+      enum:
+        - SETTLEMENT_ACCOUNT
+        - DISBURSEMENT_CASH_ACCOUNT
+        - DISBURSEMENT_PAYMENT_ACCOUNT
+      type: string
+      default: SETTLEMENT_ACCOUNT
+    MaturityReferenceDateType:
+      description: Determines date used as a reference to determine maturity end date.
+      enum:
+        - LAST_DISBURSEMENT
+        - FIRST_DISBURSEMENT
+        - CONTRACT_DATE
+      type: string
+    ScheduleSpecification:
+      properties:
+        maturityReferenceDateType:
+          $ref: '#/components/schemas/MaturityReferenceDateType'
+        gracePeriod:
+          description: The time period without principal repayment.
+          type: string
+          format: ISO 8601 duration
+          default: P0D
+        interestRepaymentFrequency:
+          description: Frequency of repayment interest.
+          type: string
+          format: ISO 8601 duration
+          default: P1M
+        feeRepaymentFrequency:
+          description: Frequency of repayment fee.
+          type: string
+          format: ISO 8601 duration
+          default: P0D
+        installmentPlanType:
+          $ref: '#/components/schemas/InstallmentPlanType'
+        term:
+          description: The time period from contract date to maturity.
+          type: string
+          format: ISO 8601 duration
+        principalRepaymentFrequency:
+          description: Frequency of repayment principal.
+          type: string
+          format: ISO 8601 duration
+          default: P0D
+        totalInstallments:
+          description: Total number of installments per current schedule.
+          type: integer
+          format: int32
+        annuity:
+          description: |
+            Sum of principal and interest to be repayed (if this data is forwarded, it is necessary to forward
+            the installment plan).
+          type: number
+        effectiveApr:
+          description: |
+            Effective Annual Percentage Rate (if this data is forwarded, it is necessary to forward
+            the installment plan).
+          type: number
+        repaymentDaysRestriction:
+          $ref: '#/components/schemas/RepaymentDaysRestriction'
+        installmentPlan:
+          $ref: '#/components/schemas/InstallmentPlan'
+        capitalizationInfo:
+          $ref: '#/components/schemas/CapitalizationInfo'
+        hasManagementFeeInAnnuity:
+          description: Indicates if the management fee is included in the annuity.
+          type: boolean
+          default: false
+        customDetails:
+          $ref: '#/components/schemas/CustomScheduleDetails'
+    RepaymentDaysRestriction:
+      description: Specify how holidays are treated in the repayment schedule.
+      enum:
+        - ANY_DAY
+        - BEFORE_HOLIDAY
+        - AFTER_HOLIDAY
+      type: string
+    InstallmentPlanType:
+      description: Type of installment plan.
+      enum:
+        - EQUAL_ANNUITIES
+        - EQUAL_PRINCIPAL_REPAYMENTS
+        - CUSTOM
+      type: string
+    InstallmentPlan:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleEvent'
+      description: A list of scheduled payments proposed during establishment of an arrangement.
+    ScheduleEvent:
+      description: A scheduled event to establish a new loan - an item in the installment plan.
+      properties:
+        ordinal:
+          description: An ordinal number of the event in the plan.
+          type: integer
+        date:
+          description: A payment due date.
+          type: string
+          format: date
+        eventType:
+          $ref: '#/components/schemas/ScheduleEventType'
+        description:
+          description: |
+            Description of the activity that triggers the payment.
+            Should be translated in selected culture and front-end applications should use it as is.
+            If description is not provided, front-end applications should use eventType
+            to get the appropriate description.
+          type: string
+        disbursement:
+          description: Loan disbursement, deposit, or guarantee opening - principal balance increase.
+          type: number
+        startingBalance:
+          description: Principal balance before payment.
+          type: number
+        principalAmount:
+          description: Principal amount to be repayed.
+          type: number
+        interestAmount:
+          description: Interest amount to be payed.
+          type: number
+        annuity:
+          description: Sum of principal and interest to be repayed.
+          type: number
+        outstandingBalance:
+          description: Principal balance after payment.
+          type: number
+        fee:
+          description: Fee payment.
+          type: number
+        otherExpenses:
+          description: Other expenses.
+          type: number
+        cashCollateral:
+          description: Positive and negative flows of cash collateral.
+          type: number
+        deferredPayment:
+          description: |
+            Part of the payment that is delayed for some future date.
+            If such defferal exists, then the same amount must be deducted from a principal repayment.
+          type: number
+        deferredPaymentInstallment:
+          description: Repayment of aggregated deferred payments.
+          type: number
+        netCashFlow:
+          description: Total net cash flow between the bank and the customer.
+          type: number
+        discountedNetCashFlow:
+          description: Net cash flow that is discounted to present value using calculated EAPR.
+          type: number
+        discountedDisbursement:
+          description: Disbursement flows discounted using APR counted based on discounted-net-flow.
+          type: number
+        discountedCashCollateralFlow:
+          description: Cash collateral flows discounted using APR counted based on discounted-net-flow.
+          type: number
+    CustomScheduleDetails:
+      description: |
+        Starting dates for repayment (installment, interest) and grace period.
+        If those dates are omitted they will be recalculated based on general info,
+        otherwise those are used as provided.
+      properties:
+        repaymentStartDate:
+          description: The date when repayment of the loan starts.
+          type: string
+          format: date
+        firstInstallmentDate:
+          description: The due date of the first installment.
+          type: string
+          format: date
+        firstInterestDate:
+          description: The due date of the first interest.
+          type: string
+          format: date
+        graceStartDate:
+          description: The date when the grace period starts.
+          type: string
+          format: date
+    ScheduleEventType:
+      description: |
+        Classifies the meaning of the event that triggers the payment.
+        For example, in combination with product type it can be used at front end as a resource id
+        for a row description translation into a selected culture.
+        Grouping multiple activities into a single row is allowed, and then the most appropriate classification
+        should be used.
+        For example, a disbursement activity may include a downpayment, a fee-payment, and a cash-collateral-pledging.
+        Also a repayment activity may include an interest-payment, a fee-payment, and a cash-collateral-release.
+        For deposit products, a disbursement activity-type is used to describe a depositing activity,
+        while repayment is used to describe a withdrawal.
+      enum:
+        - DISBURSEMENT
+        - DOWNPAYMENT
+        - REPAYMENT
+        - INTEREST_PAYMENT
+        - FEE_PAYMENT
+        - CASH_COLLATERAL_PLEDGING
+        - CASH_COLLATERAL_RELEASE
+      type: string
+    CapitalizationInfo:
+      properties:
+        isInterestCapitalizedDuringDrawdown:
+          description: Indicates if the interest is capitalized into the principal during a drawdown period.
+          type: boolean
+          default: false
+        isInterestCapitalizedDuringGrace:
+          description: Indicates if the interest is capitalized into the principal during a grace period.
+          type: boolean
+          default: false
+        isInterestCapitalizedDuringRepayment:
+          description: Indicates if the interest is capitalized into the principal during a repayment period.
+          type: boolean
+          default: false
+        isOriginationFeeCapitalized:
+          description: Indicates if the origination fee is capitalized into the principal.
+          type: boolean
+          default: false
+    CreateLoanResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of created loan.
+          example: '0049090001034'
+      description: Providers result for loan creation command.
+    AmountValue:
+      description: |
+        The amount given with fractional digits, where fractions must be compliant to the currency definition.
+        Up to 14 significant figures. Negative amounts are signed by minus. The decimal separator is a dot.
+      type: number
+      pattern: '-?[0-9]{1,14}(\\.[0-9]{1,3})?'
+      example: 5877.78
+    CurrencyCode:
+      description: ISO 4217 Alpha 3 currency code.
+      type: string
+      pattern: '[A-Z]{3}'
+      example: 'EUR'
+    OriginationInfo:
+      properties:
+        organizationBranchCode:
+          description: Branch code for organization unit that is servicing loan arrangement.
+        agent:
+          $ref: '#/components/schemas/AgentCode'
+        channel:
+          description: Unique identifier (channel code) of channel from which loan was originated.
+          type: string
+        applicationNumber:
+          description: Unique identifier of loan application that was used to originate loan arrangement.
+          type: string
+    Amount:
+      type: object
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+        amount:
+          $ref: '#/components/schemas/AmountValue'
+      example:
+        {
+          "currency": "EUR",
+          "amount": 123
+        }
+    BranchCode:
+      description: Branch code.
+      type: string
+    Notes:
+      description: Extra notes related to a transfer.
+      type: string
+
+    TransactionId:
+      description: Transaction identifier.
+      type: string
+      example: '0049090001034'
+
+    RecalculationMethod:
+      description: |
+        The recalculation method of the repayment.
+        ** EQUAL_PAYMENTS ** The repayments (installment + interest) are of equal size. They will change only if
+        the interest rate changes.
+        ** EQUAL_INSTALLEMTNS* The installments are of equal size. The repayment amount varies in accordance with
+        the interest.
+        ** FIXED_ANNUITY_LOAN ** All repayments are of equal size throughout the loan period. The loan period varies
+        in accordance with the reference rate.
+      type: string
+      enum:
+        - EQUAL_PAYMENTS
+        - EQUAL_INSTALLMENTS
+        - FIXED_ANNUITY_LOAN
+
+    OffsetPaginationMetadata:
+      description: Offset pagination data.
+      type: object
+      properties:
+        limit:
+          description: Limit parameter from the request or default.
+          type: number
+        offset:
+          description: Offset parameter from the request or 0.
+          type: number
+        nextOffset:
+          description: |
+            Offset of the next page if exists, otherwise <null>.
+            Calculated from query parameters. If sum of offset and limit is less then collection size, then we will
+            return summary result, if greater, then offset will be returned.
+          type: number
+        previousOffset:
+          description: |
+            Offset of the next page if exists, otherwise 0.
+            Calculated from query parameters by substracting limit from offset. If value is greater than zero, then
+            substraction result is returned, if less then 0, will be placed to previousOffset.
+          type: number
+        size:
+          description: Cardinality of loans list set.
+          type: number
+
+  links:
+    GetLoansListOffsetPaginationNextPage:
+      description: Url to the next page in offset paging.
+      operationId: getLoans
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetLoansListOffsetPaginationPreviousPage:
+      description: Url to the previous page in offset paging.
+      operationId: getLoans
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+    GetLoanSummary:
+      description: Url to summary of the specific loan.
+      operationId: getLoan
+      parameters:
+        loanId: '$response.body#/loanId'

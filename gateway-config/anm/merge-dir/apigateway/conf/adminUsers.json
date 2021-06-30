@@ -20,7 +20,37 @@
     },
     {
       "id": "user-4",
-      "name": "chris",
+      "name": "pavellom",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-5",
+      "name": "kchris13",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-6",
+      "name": "vvidovic-croz",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-7",
+      "name": "daniel.druzak-external@rbinternational.com",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-7",
+      "name": "gabriel-stoicescu",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-8",
+      "name": "alexPolisevschi",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-9",
+      "name": "markus",
       "roles": ["role-1", "role-6", "role-7"]
     }
   ],

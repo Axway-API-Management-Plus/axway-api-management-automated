@@ -1,0 +1,163 @@
+name: SinglePayments-Diagnostics API
+
+env:
+  apiId: api-single-payments-diagnostic
+  working-directory: api-single-payments-diagnostic
+  dockerRegistry: docker.pkg.github.com
+  dockerRepository: cwiechmann/axway-api-management-automated
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - api-single-payments-diagnostic/**
+  release:
+    types:
+      - published
+    tags:
+      - '*api-single-payments-diagnostic*'
+
+defaults:
+  run:
+    working-directory: api-single-payments-diagnostic
+
+jobs:
+  create-latest-docker-image:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Create API-Builder Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v2
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create image tag
+        run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+      - name: Build container image
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./${{ env.apiId }}/api-single-payments-mock
+          file: ./${{ env.apiId }}/api-single-payments-mock/Dockerfile
+          push: true
+          tags: docker.pkg.github.com/${{ github.repository }}/${{ env.apiId }}:${{ env.IMAGE_TAG }}
+
+  deploy-api-builder:
+    name: Deploy API-Builder application
+    needs: create-latest-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: List current directory
+        run: ls -l
+      - name: Update deployment file
+        run: IMAGE_TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker.pkg.github.com/cwiechmann/axway-api-management-automated/api-single-payments-diagnostic:'${IMAGE_TAG}'|' config/api-deployment.yaml
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+      - name: Deploy to Kubernetes
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
+        run: |
+          mkdir  $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          kubectl apply -n apim -f config/api-deployment.yaml
+      - name: Verify deployment
+        if: "!contains(github.event.head_commit.message, 'skip builder')"
+        run: kubectl -n apim rollout status deployment/${{ env.apiId }}
+
+  deploy-api:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Deploy API on API-Management
+    runs-on: ubuntu-latest
+    needs: deploy-api-builder
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Deploy API
+        env:
+          APIM_USER: ${{ secrets.APIM_USER }}
+          APIM_PASS: ${{ secrets.APIM_PASS }}
+          APIM_HOST: ${{ secrets.APIM_HOST }}
+          APIM_PORT: ${{ secrets.APIM_PORT }}
+        run: mvn clean exec:java
+
+  test-api:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Test API
+    runs-on: ubuntu-latest
+    needs: deploy-api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install newman
+        run: sudo npm -g install newman
+      - name: Run API tests
+        run: |
+          sleep 1
+          newman run ./tests/DiagnosticAPI.postman_collection.json -e ../lib/Demo-Environment.postman_environment.json --reporter-json-export output.json --insecure
+
+#  Publish-API:
+#    runs-on: ubuntu-latest
+#    needs: API-Deployment
+#    steps:
+#      - uses: hmarr/debug-action@v2
+#      - name: Publish package
+#        run: mvn --batch-mode deploy
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   
+  Release-API:
+    if: github.event.release.tag_name
+    runs-on: ubuntu-latest
+    needs: test-api
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: github
+      - name: Configure Git user
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+      - name: List current directory
+        run: |
+          ls -la
+      - name: Release prepare
+        run: |
+          git status
+          mvn -B -f api-single-payments-diagnostic/pom.xml release:prepare
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List current directory
+        run: |
+          ls -la
+      - name: Release perform
+        run: |
+          mvn -B -f api-single-payments-diagnostic/pom.xml release:perform
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

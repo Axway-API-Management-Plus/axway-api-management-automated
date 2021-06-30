@@ -1,10 +1,10 @@
 name: EMR-Diagnotics API
 
 env:
-  appId: api-emr-diagnostic
+  appId: emr-diagnostic-app
   working-directory: api-emr-diagnostic
   dockerRegistry: docker.pkg.github.com
-  dockerRepository: Axway-API-Management-Plus/axway-api-management-automated
+  dockerRepository: cwiechmann/axway-api-management-automated
 
 on:
   push:

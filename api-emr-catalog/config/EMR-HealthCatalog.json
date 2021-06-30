@@ -13,7 +13,7 @@
     "API Key" : [ ]
   } ],
   "paths" : {
-    "/" : {
+    "/a/change" : {
       "get" : {
         "operationId" : "All",
         "parameters" : [ ],

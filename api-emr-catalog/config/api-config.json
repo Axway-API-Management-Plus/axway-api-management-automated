@@ -1,12 +1,12 @@
 {
-  "name" : "EMR-HealthCatalog",
+  "name" : "EMR HealthCatalog",
   "path" : "/api/emr/catalog",
   "state" : "published",
-  "version" : "3.7",
+  "version" : "5.7",
   "organization" : "Plexus Health",
   "apiDefinition" : "EMR-HealthCatalog.json",
   "summary" : "Processes health data for patient symptom recommendation",
-  "backendBasepath" : "${BACKEND_HOST}/api/api/emr/catalog/",
+  "backendBasepath" : "http://some.host.com/api/api/emr/catalog/",
   "image" : "api-image.jpg",
   "securityProfiles" : [ {
     "name" : "_default",
@@ -40,5 +40,8 @@
     "name" : "Plexus Suite - Patient Monitoring",
     "enabled" : true,
     "state" : "approved"
-  } ]
+  } ],
+  "customProperties":{
+    "publicAPI": "true"
+  }
 }

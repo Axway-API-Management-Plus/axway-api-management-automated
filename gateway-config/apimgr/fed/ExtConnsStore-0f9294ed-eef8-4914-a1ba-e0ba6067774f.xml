@@ -1511,6 +1511,32 @@
 	<fval name="timeToIdleSeconds"><value>0</value></fval>
 	<fval name="timeToLiveSeconds"><value>0</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="Cache" entityPK="-1992360985588140553" parentPK="-442596440354008525">
+	<fval name="diskExpiryThreadIntervalSeconds"><value>120</value></fval>
+	<fval name="diskPersistent"><value>0</value></fval>
+	<fval name="diskSpoolBufferSizeMB"><value>30</value></fval>
+	<fval name="eternal"><value>0</value></fval>
+	<fval name="maxElementsInMemory"><value>1000</value></fval>
+	<fval name="maxElementsOnDisk"><value>1000</value></fval>
+	<fval name="memoryStoreEvictionPolicy"><value>LRU</value></fval>
+	<fval name="name"><value>Cognito JWK-Cache</value></fval>
+	<fval name="overflowToDisk"><value>0</value></fval>
+	<fval name="timeToIdleSeconds"><value>300</value></fval>
+	<fval name="timeToLiveSeconds"><value>300</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="Cache" entityPK="-1056517319713424200" parentPK="-442596440354008525">
+	<fval name="diskExpiryThreadIntervalSeconds"><value>120</value></fval>
+	<fval name="diskPersistent"><value>0</value></fval>
+	<fval name="diskSpoolBufferSizeMB"><value>30</value></fval>
+	<fval name="eternal"><value>1</value></fval>
+	<fval name="maxElementsInMemory"><value>1000</value></fval>
+	<fval name="maxElementsOnDisk"><value>1000</value></fval>
+	<fval name="memoryStoreEvictionPolicy"><value>LRU</value></fval>
+	<fval name="name"><value>swagger</value></fval>
+	<fval name="overflowToDisk"><value>1</value></fval>
+	<fval name="timeToIdleSeconds"><value>0</value></fval>
+	<fval name="timeToLiveSeconds"><value>0</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="Cache" entityPK="1356954771595985985" parentPK="-442596440354008525">
 	<fval name="diskExpiryThreadIntervalSeconds"><value>120</value></fval>
 	<fval name="diskPersistent"><value>false</value></fval>

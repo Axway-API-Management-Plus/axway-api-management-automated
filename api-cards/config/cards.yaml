@@ -1,0 +1,1883 @@
+openapi: 3.0.1
+
+info:
+  title: Cards
+  version: 0.2.0
+  description: |
+    # Cards API
+
+    `Overview`
+
+    Defines operations for cards domain related resources. API is composed of four parts:
+    - <b>Card Notifications</b> - configuration of card related notifications.
+    - <b>Card Operations</b> - common operations on cards like create, update, configure, etc.
+    - <b>Card Products</b> - crud operations on card products.
+    - <b>Card Transitions</b> - managing card states.
+
+    `List of operations`
+    - Card Notifications
+      - <b>updateAuthorizationNotifications</b>, updates email and phone number for authorization notifications.
+      - <b>updateOtpNotifications</b>, updates email and phone number for One-Time-Password notifications.
+
+    - Card Operations
+      - <b>createCard</b>, creates new card.
+      - <b>getCards</b>, retrieves all customer cards.
+      - <b>updateCard</b>, updates card.
+      - <b>getCard</b>, retrieves single card details.
+      - <b>updateCashLimits</b>, updates cash/monetary limits of single card.
+      - <b>updateGeoLimits</b>, updates geographical restrictions of single card.
+      - <b>updateBillingCycle</b>, updates billing cycle day of the card.
+      - <b>getCardPAN</b>, retrieves PAN (card number) of the card.
+      - <b>getCardByPAN</b>, retrieves card by PAN (card number).
+      - <b>updatePIN</b>, updates card's PIN.
+      - <b>getPIN</b>, retrieves card's PIN.
+      - <b>createPINControlToken</b>, creates PIN control token.
+      - <b>getLoyaltyPoints</b>, retrieves card's loyalty points.
+
+    - Card Products
+      - <b>createCardProduct</b>, creates card product.
+      - <b>getCardProducts</b>, retrieves card products.
+      - <b>updateCardProduct</b>, updates card product.
+      - <b>getCardProduct</b>, retrieves card product.
+
+    - Card Transitions
+      - <b>createCardTransition</b>, creates card transition (change of the state).
+      - <b>getCardTransitions</b>, retrieves card all transitions.
+      - <b>getCardTransition</b>, retrieves single card transition details.
+
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: CardNotifications
+    description: Card Notifications.
+  - name: CardOperations
+    description: Card Operations.
+  - name: CardProducts
+    description: Card Products.
+  - name: CardTransitions
+    description: Card Transitions.
+
+paths:
+  /api/v1/cards/{cardId}/notifications/authorization:
+    put:
+      description: |
+        Updates authorization notification details. At the moment we can update only notification channels:
+        email and/or phone number.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateAuthorizationNotifications
+      tags:
+        - CardNotifications
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAuthorizationNotificationRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateAuthorizationNotificationResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/notifications/otp:
+    put:
+      description: Updates 3DS OTP notification details.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateOtpNotifications
+      tags:
+        - CardNotifications
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateOTPNotificationRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateOTPNotificationResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards:
+    post:
+      description: |
+        Creates card for customer. Newly created card is always inactive. To create a new card you must enter
+        card product id, linked account id, expiration date and shipping address. Optionally cash limits, geo limits and
+        billing cycle day can be provided.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: createCard
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCardRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateCardResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    get:
+      description: |
+        Gets all customer's cards details. Some sensitive data is hidden: ccv, pin, card number (only masked one is
+        returned).
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCards
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}:
+    put:
+      description: |
+        Updates card. Creates card for customer. Newly created card is always inactive. To create a new card you must
+        enter card product id, linked account id, expiration date and shipping address. Optionally cash limits,
+        geo limits and billing cycle day can be provided.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateCard
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCardRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateCardResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    get:
+      description: |
+        Gets single card details. Some sensitive data is hidden: ccv, pin, card number (only masked one is returned).
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCard
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/limits/cash:
+    put:
+      description: Updates card's cash limits. Cash limits can be also set by PUT /api/v1/cards/{cardId} endpoint.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateCashLimits
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCardCashLimitsRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateCardCashLimitsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/limits/geo:
+    put:
+      description: |
+        Updates card's geographical limits. Geographical limits can be also set by PUT /api/v1/cards/{cardId} endpoint.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateGeoLimits
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCardGeoLimitsRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateCardGeoLimitsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/billing-cycle:
+    put:
+      description: |
+        Updates card's billing cycle. Billing cycle day can be also set by PUT /api/v1/cards/{cardId} endpoint.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updateBillingCycle
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCardBillingCycleRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateCardBillingCycleResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/pan:
+    get:
+      description: Gets a card's PAN.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCardByPan
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardPANResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/pan:
+    post:
+      description: |
+        Get a card's details by PAN. This is the only endpoint which can present full card number. Other endpoints
+        shows only masked PAN.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCardPan
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      requestBody:
+        $ref: '#/components/requestBodies/GetCardByPANRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardByPANResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/pin:
+    put:
+      description: Updates card's PIN. Control token is required to update card's PIN.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: updatePin
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePINRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdatePINResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    post:
+      description: Gets card's PIN. Control token is required to show card's PIN.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getPin
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/GetPINRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetPINResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/pin/control-token:
+    post:
+      description: Creates control token for retrieving card's PIN. Generated token is used later to access PIN.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: createPinControlToken
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/CreatePINControlTokenRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatePINControlTokenResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/loyalty-points:
+    get:
+      description: Gets loyalty points.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getLoyaltyPoints
+      tags:
+        - CardOperations
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetLoyaltyPointsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/card-products:
+    post:
+      description: Creates card product. Card product is required to create card.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: createCardProduct
+      tags:
+        - CardProducts
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCardProductRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateCardProductResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    get:
+      description: Gets all card products.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCardProducts
+      tags:
+        - CardProducts
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardProductsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/card-products/{cardProductId}:
+    put:
+      description: Updates card product.
+      security:
+        - openId:
+           - customer
+           - employee
+      operationId: updateCardProduct
+      tags:
+        - CardProducts
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardProductId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCardProductRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/UpdateCardProductResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    get:
+      description: Gets single card product.
+      security:
+        - openId:
+          - customer
+          - employee
+      operationId: getCardProduct
+      tags:
+        - CardProducts
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardProductId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardProductResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/transitions:
+    post:
+      description: |
+        Creates card transition. Card transition is immutable. It can be created but not updated nor deleted.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: createCardTransition
+      tags:
+        - CardTransitions
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        - $ref: '#/components/parameters/CardId'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCardTransitionRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateCardTransitionResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+    get:
+      description: Gets card's transitions. Returns immutable list of card transitions (full history).
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCardTransitions
+      tags:
+        - CardTransitions
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardTransitionsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/cards/{cardId}/transitions/{cardTransitionId}:
+    get:
+      description: Get card's single transition. Returns details of single immutable transition.
+      security:
+        - openId:
+            - customer
+            - employee
+      operationId: getCardTransition
+      tags:
+        - CardTransitions
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/CardId'
+        - $ref: '#/components/parameters/CardTransitionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCardTransitionResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+  parameters:
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows,
+        map how services contribute to response times, identify bottle necks, etc. The X-Correlation-ID must be
+        propagated unchanged in any and all downstream service calls to other Newton Microservices as well as
+        NWU services. Multiple calls from Newton services to NWU services will potentially have equal X-Correlation-ID
+        values.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Idempotency-Key:
+      name: X-Idempotency-Key
+      in: header
+      description:  Unique request identifier to support idempotency.
+      required: false
+      example: 'e457b5a2e4d86bd1198ee56343ba864fe8b2'
+      schema:
+        type: string
+        maxLength: 40
+
+    CardId:
+      name: cardId
+      in: path
+      description: Card Identifier.
+      required: true
+      schema:
+        type: string
+
+    CardProductId:
+      name: cardProductId
+      in: path
+      description: Card Product Identifier.
+      required: true
+      schema:
+        type: string
+
+    CardTransitionId:
+      name: cardTransitionId
+      in: path
+      description: Card Transition Identifier.
+      required: true
+      schema:
+        type: string
+
+  requestBodies:
+    UpdateAuthorizationNotificationRequest:
+      description: Request for update authorization notification operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAuthorizationNotificationRequest'
+
+    UpdateOTPNotificationRequest:
+      description: Request for update OTP notification operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateOTPNotificationRequest'
+
+    CreateCardProductRequest:
+      description: Request for create card product operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCardProductRequest'
+
+    UpdateCardProductRequest:
+      description: Request for update card product operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCardProductRequest'
+
+    CreateCardRequest:
+      description: Request for create card operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCardRequest'
+
+    UpdateCardRequest:
+      description: Request for update card operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCardRequest'
+
+    UpdateCardCashLimitsRequest:
+      description: Request for update card cash limits operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCardCashLimitsRequest'
+
+    UpdateCardGeoLimitsRequest:
+      description: Request for update card geo limits operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCardGeoLimitsRequest'
+
+    UpdateCardBillingCycleRequest:
+      description: Request for update card billing cycle operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCardBillingCycleRequest'
+
+    GetCardByPANRequest:
+      description: Request for get card by PAN operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardByPANRequest'
+
+    UpdatePINRequest:
+      description: Request for update card's PIN operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePINRequest'
+
+    CreatePINControlTokenRequest:
+      description: Request for create card's PIN control token operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatePINControlTokenRequest'
+
+    GetPINRequest:
+      description: Request for get card's PIN operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetPINRequest'
+
+    CreateCardTransitionRequest:
+      description: Request for create card transition.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCardTransitionRequest'
+
+  responses:
+    UpdateAuthorizationNotificationResponse:
+      description: Authorization notification successfully updated.
+
+    UpdateOTPNotificationResponse:
+      description: OPT notification successfully updated.
+
+    CreateCardProductResponse:
+      description: Card product sucessfully created.
+
+    UpdateCardProductResponse:
+      description: Card product sucessfully updated.
+
+    GetCardProductResponse:
+      description: Card product details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardProductResponse'
+
+    GetCardProductsResponse:
+      description: List of card products.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardProductsResponse'
+
+    CreateCardResponse:
+      description: Card successfully created.
+
+    UpdateCardResponse:
+      description: Card successfully updated.
+
+    GetCardsResponse:
+      description: List of customer's all cards.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardsResponse'
+
+    GetCardResponse:
+      description: Card details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardResponse'
+
+    UpdateCardCashLimitsResponse:
+      description: Cash limit successfully updated.
+
+    UpdateCardGeoLimitsResponse:
+      description: Geo limit successfully updated.
+
+    UpdateCardBillingCycleResponse:
+      description: Billing cycle day successfully updated.
+
+    GetCardPANResponse:
+      description: Card's PAN.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardPANResponse'
+
+    GetCardByPANResponse:
+      description: Response for get card by PAN operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardByPANResponse'
+
+    UpdatePINResponse:
+      description: successfully updated.
+
+    CreatePINControlTokenResponse:
+      description: Response for create PIN control token operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatePINControlTokenResponse'
+
+    GetPINResponse:
+      description: Response for get PIN operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetPINResponse'
+
+    GetLoyaltyPointsResponse:
+      description: Response for get loyalty points operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetLoyaltyPointsResponse'
+
+    CreateCardTransitionResponse:
+      description: successfully created.
+
+    GetCardTransitionsResponse:
+      description: Response for get card transition operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardTransitionsResponse'
+
+    GetCardTransitionResponse:
+      description: Response for get card transition operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCardTransitionResponse'
+
+    ErrorResponse:
+      description: Unexpected Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    GetCardProductResponse:
+      allOf:
+        - $ref: '#/components/schemas/CardProduct'
+
+    CardProduct:
+      description: Card product definition.
+      type: object
+      required:
+        - id
+        - name
+        - startDate
+        - stopDate
+        - usageConfiguration
+      properties:
+        id:
+          $ref: '#/components/schemas/CardProductId'
+        name:
+          $ref: '#/components/schemas/CardProductName'
+        startDate:
+          $ref: '#/components/schemas/ProductStartDate'
+        stopDate:
+          $ref: '#/components/schemas/ProductStopDate'
+        usageConfiguration:
+          $ref: '#/components/schemas/CardUsageConfiguration'
+        cashLimits:
+          $ref: '#/components/schemas/CashLimits'
+      example:
+        {
+          "id": "VISA_CREDIT_CARD",
+          "name": "Visa Credit Card",
+          "startDate": "2021-02-23",
+          "stopDate": "2023-02-23",
+          "usageConfiguration": {
+            "isOnlineAllowed": false,
+            "isWithdrawingAtATMAllowed": true,
+            "isCashbackAtPOSAllowed": true
+          }
+        }
+
+    CreateCardRequest:
+      description: Create card request details.
+      type: object
+      required:
+        - cardProductId
+        - linkedAccountId
+        - expirationDate
+        - shipping
+      properties:
+        cardProductId:
+          $ref: '#/components/schemas/CardProductId'
+        linkedAccountId:
+          $ref: '#/components/schemas/LinkedAccountId'
+        expirationDate:
+          $ref: '#/components/schemas/ExpirationDate'
+        shipping:
+          $ref: '#/components/schemas/ShippingInformation'
+        billingCycleDay:
+          $ref: '#/components/schemas/BillingCycleDay'
+        cashLimits:
+          $ref: '#/components/schemas/CashLimits'
+        geoLimits:
+          $ref: '#/components/schemas/GeoLimits'
+      example:
+        {
+          "cardProductId": "VISA_CREDIT_CARD",
+          "linkedAccountId": "7cb60a98-f293-470a-821f-57bf67f324f",
+          "expirationDate": "04/25",
+          "shipping": {
+            "method": "LOCAL_MAIL",
+            "recipientAddress": {
+              "addressType": "OTHER",
+              "country": "AT",
+              "street": "Am Stadtpark",
+              "streetNumber": "9",
+              "doorNumber": "9",
+              "floorNumber": "9",
+              "city": "Vienna",
+              "postalCode": "1030",
+              "addressLines": [
+                "Am Stadtpark 9",
+                "1030 Vienna, Austria"
+              ]
+            }
+          },
+          "cashLimits": {
+            "daily": {
+              "withdrawal": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 1000,
+                "currency": "EUR"
+              }
+            },
+            "weekly": {
+              "withdrawal": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 5000,
+                "currency": "EUR"
+              }
+            },
+            "monthly": {
+              "withdrawal": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 10000,
+                "currency": "EUR"
+              }
+            }
+          },
+          "geoLimits": [
+            {
+              "region": "AFRICA",
+              "allowed": true
+            },
+            {
+              "region": "ASIA",
+              "allowed": true
+            },
+            {
+              "region": "AUSTRALIA",
+              "allowed": false
+            },
+            {
+              "region": "EUROPE",
+              "allowed": true
+            },
+            {
+              "region": "NORTH_AMERICA",
+              "allowed": true
+            },
+            {
+              "region": "SOUTH_AMERICA",
+              "allowed": true
+            }
+          ],
+          "billingCycleDay": 10
+        }
+
+    GetCardsResponse:
+      description: List of card details.
+      type: object
+      properties:
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+
+    UpdateCardRequest:
+      description: Update card request details.
+      properties:
+        cardProductId:
+          $ref: '#/components/schemas/CardProductId'
+        linkedAccountId:
+          $ref: '#/components/schemas/LinkedAccountId'
+        expirationDate:
+          $ref: '#/components/schemas/ExpirationDate'
+        shipping:
+          $ref: '#/components/schemas/ShippingInformation'
+        billingCycleDay:
+          $ref: '#/components/schemas/BillingCycleDay'
+        cashLimits:
+          $ref: '#/components/schemas/CashLimits'
+        geoLimits:
+          $ref: '#/components/schemas/GeoLimits'
+      example:
+        {
+          "cardProductId": "VISA_CREDIT_CARD",
+          "linkedAccountId": "7cb60a98-f293-470a-821f-57bf67f324f",
+          "expirationDate": "05/24",
+          "shipping": {
+            "method": "LOCAL_MAIL",
+            "recipientAddress": {
+              "addressType": "OTHER",
+              "country": "AT",
+              "street": "Am Stadtpark",
+              "streetNumber": "9",
+              "doorNumber": "9",
+              "floorNumber": "9",
+              "city": "Vienna",
+              "postalCode": "1030",
+              "addressLines": [
+                  "Am Stadtpark 9",
+                  "1030 Vienna, Austria"
+              ]
+            }
+          },
+          "cashLimits": {
+            "daily": {
+              "withdrawal": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 1000,
+                "currency": "EUR"
+              }
+            },
+            "weekly": {
+              "withdrawal": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 5000,
+                "currency": "EUR"
+              }
+            },
+            "monthly": {
+              "withdrawal": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 10000,
+                "currency": "EUR"
+              }
+            }
+          },
+          "geoLimits": [
+            {
+              "region": "AFRICA",
+              "allowed": true
+            },
+            {
+              "region": "ASIA",
+              "allowed": true
+            },
+            {
+              "region": "AUSTRALIA",
+              "allowed": false
+            },
+            {
+              "region": "EUROPE",
+              "allowed": true
+            },
+            {
+              "region": "NORTH_AMERICA",
+              "allowed": true
+            },
+            {
+              "region": "SOUTH_AMERICA",
+              "allowed": true
+            }
+          ],
+          "billingCycleDay": 10
+        }
+
+    GetCardProductsResponse:
+      description: List of card products.
+      type: object
+      properties:
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardProduct'
+          example:
+            [
+              {
+                "id": "VISA_CREDIT_CARD",
+                "name": "Visa Credit Card",
+                "startDate": "2021-02-23",
+                "stopDate": "2023-02-23",
+                "usageConfiguration": {
+                  "isOnlineAllowed": true,
+                  "isWithdrawingAtATMAllowed": true,
+                  "isCashbackAtPOSAllowed": true
+                }
+              },
+              {
+              "id": "VISA_DEBIT_CARD",
+                "name": "Visa Debit Card",
+                "startDate": "2021-02-23",
+                "stopDate": "2023-02-23",
+                "usageConfiguration": {
+                  "isOnlineAllowed": true,
+                  "isWithdrawingAtATMAllowed": true,
+                  "isCashbackAtPOSAllowed": true
+                }
+              }
+            ]
+
+    CashLimits:
+      description: Cash limits details.
+      type: object
+      required:
+        - daily
+        - weekly
+        - monthly
+      properties:
+        daily:
+          $ref: '#/components/schemas/UnitCashLimits'
+        weekly:
+          $ref: '#/components/schemas/UnitCashLimits'
+        monthly:
+          $ref: '#/components/schemas/UnitCashLimits'
+      example:
+        {
+          "daily": {
+            "withdrawal": {
+              "value": 1000,
+              "currency": "EUR"
+            },
+            "retail": {
+              "value": 1000,
+              "currency": "EUR"
+            },
+            "online": {
+              "value": 1000,
+              "currency": "EUR"
+            }
+          },
+          "weekly": {
+            "withdrawal": {
+              "value": 5000,
+              "currency": "EUR"
+            },
+            "retail": {
+              "value": 5000,
+              "currency": "EUR"
+            },
+            "online": {
+              "value": 5000,
+              "currency": "EUR"
+            }
+          },
+          "monthly": {
+            "withdrawal": {
+              "value": 10000,
+              "currency": "EUR"
+            },
+            "retail": {
+              "value": 10000,
+              "currency": "EUR"
+            },
+            "online": {
+              "value": 10000,
+              "currency": "EUR"
+            }
+          }
+        }
+
+    GeoLimits:
+      description: Geographical limits details.
+      type: array
+      items:
+        $ref: '#/components/schemas/GeoLimit'
+      example:
+        [
+          {
+            "region": "AFRICA",
+            "allowed": true
+          },
+          {
+            "region": "ASIA",
+            "allowed": true
+          },
+          {
+            "region": "AUSTRALIA",
+            "allowed": false
+          },
+          {
+            "region": "EUROPE",
+            "allowed": true
+          },
+          {
+            "region": "NORTH_AMERICA",
+            "allowed": true
+          },
+          {
+            "region": "SOUTH_AMERICA",
+            "allowed": true
+          }
+        ]
+
+    GetCardPANResponse:
+      description: Card's PAN.
+      type: object
+      properties:
+        pan:
+          type: string
+      example:
+        {"pan" : "4111 1111 1111 1111"}
+
+    GetCardByPANRequest:
+      description: Get card by PAN request details.
+      type: object
+      properties:
+        pan:
+          type: string
+      example:
+        {"pan" : "4111 1111 1111 1111"}
+
+    UpdatePINRequest:
+      description: Update PIN request details.
+      type: object
+      properties:
+        pin:
+          $ref: '#/components/schemas/PIN'
+        controlToken:
+          type: string
+      example:
+        {
+          "pin": "1234",
+          "controlToken": "3fb285ef-2d98-4c38-986d-d4cf26e413b9"
+        }
+
+    GetPINRequest:
+      description: Get PIN request details.
+      type: object
+      properties:
+        controlToken:
+          type: string
+      example:
+        {
+          "controlToken": "3fb285ef-2d98-4c38-986d-d4cf26e413b9"
+        }
+
+    GetPINResponse:
+      allOf:
+        - $ref: '#/components/schemas/PIN'
+
+    PIN:
+      description: Card's PIN.
+      type: string
+      minLength: 4
+      maxLength: 4
+
+    GetCardResponse:
+      allOf:
+        - $ref: '#/components/schemas/Card'
+
+    GetCardByPANResponse:
+      allOf:
+        - $ref: '#/components/schemas/Card'
+
+    Card:
+      description: Card details.
+      type: object
+      properties:
+        cardProductId:
+          $ref: '#/components/schemas/CardProductId'
+        linkedAccountId:
+          $ref: '#/components/schemas/LinkedAccountId'
+        state:
+          $ref: '#/components/schemas/CardState'
+        maskedPAN:
+          $ref: '#/components/schemas/MaskedPAN'
+        expirationDate:
+          $ref: '#/components/schemas/ExpirationDate'
+        shipping:
+          $ref: '#/components/schemas/ShippingInformation'
+        billing:
+          $ref: '#/components/schemas/BillingCycleDay'
+        cashLimits:
+          $ref: '#/components/schemas/CashLimits'
+        geoLimits:
+          $ref: '#/components/schemas/GeoLimits'
+        billingCycleDay:
+          $ref: '#/components/schemas/BillingCycleDay'
+      example:
+        {
+          "cardProductId": "VISA_CREDIT_CARD",
+          "state": "ACTIVE",
+          "expirationDate": "05/25",
+          "maskedPAN": "492500******5678",
+          "shipping": {
+            "method": "LOCAL_MAIL",
+            "recipientAddress": {
+              "addressType": "OTHER",
+              "country": "AT",
+              "street": "Am Stadtpark",
+              "streetNumber": "9",
+              "doorNumber": "9",
+              "floorNumber": "9",
+              "city": "Vienna",
+              "postalCode": "1030",
+              "addressLines": [
+                  "Am Stadtpark 9",
+                  "1030 Vienna, Austria"
+              ]
+            }
+          },
+          "cashLimits": {
+            "daily": {
+              "withdrawal": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 1000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 1000,
+                "currency": "EUR"
+              }
+            },
+            "weekly": {
+              "withdrawal": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 5000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 5000,
+                "currency": "EUR"
+              }
+            },
+            "monthly": {
+              "withdrawal": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "retail": {
+                "value": 10000,
+                "currency": "EUR"
+              },
+              "online": {
+                "value": 10000,
+                "currency": "EUR"
+              }
+            }
+          },
+          "geoLimits": [
+            {
+              "region": "AFRICA",
+              "allowed": true
+            },
+            {
+              "region": "ASIA",
+              "allowed": true
+            },
+            {
+              "region": "AUSTRALIA",
+              "allowed": false
+            },
+            {
+              "region": "EUROPE",
+              "allowed": true
+            },
+            {
+              "region": "NORTH_AMERICA",
+              "allowed": true
+            },
+            {
+              "region": "SOUTH_AMERICA",
+              "allowed": true
+            }
+          ],
+          "billingCycleDay": 10
+        }
+
+    MaskedPAN:
+      description: Masked card number.
+      type: string
+      example: '492500******1234'
+
+    ExpirationDate:
+      description: Expiration date of the card.
+      type: string
+      pattern: '^(0[1-9]|1[0-2])\/?([0-9]{2})$'
+      example: '04/24'
+
+    ShippingInformation:
+      description: Card's shipping information.
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/ShippingMethod'
+        recipientAddress:
+          $ref: '#/components/schemas/Address'
+
+    ShippingMethod:
+      description: Card's shipping method.
+        ** LOCAL_MAIL **      - Local mail service.
+        ** FEDEX_EXPEDITED ** - FedEx Expedited service.
+        ** FEDEX_REGULAR **   - FedEx Regular service.
+        ** UPS_EXPEDITED **   - UPS Expedited service.
+        ** UPS_REGULAR **     - UPS Regular service.
+        ** USPS_EXPEDITED **  - US Postal Expedited service.
+        ** USPS_REGULAR **    - US Postal Regular service.
+      type: string
+      enum:
+        - LOCAL_MAIL
+        - FEDEX_EXPEDITED
+        - FEDEX_REGULAR
+        - UPS_EXPEDITED
+        - UPS_REGULAR
+        - USPS_EXPEDITED
+        - USPS_REGULAR
+
+    Address:
+      description: |
+        Definition of address in 2 ways:
+        * Structured - by filling country, street, buildingNumber, city, postalCode
+        * Unstructured - by filling addressLines
+
+        Field addresType is defining purpose of this address.
+      type: object
+      required:
+        - addressType
+        - country
+        - street
+        - postalCode
+      properties:
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+        street:
+          $ref: '#/components/schemas/Street'
+        streetNumber:
+          $ref: '#/components/schemas/StreetNumber'
+        doorNumber:
+          $ref: '#/components/schemas/DoorNumber'
+        floorNumber:
+          $ref: '#/components/schemas/FloorNumber'
+        city:
+          $ref: '#/components/schemas/City'
+        postalCode:
+          $ref: '#/components/schemas/PostalCode'
+        addressLines:
+          $ref: '#/components/schemas/AddressLines'
+
+    AddressType:
+      description: Dictionary of address purposes.
+      type: string
+      enum:
+        - OTHER
+        - LEGAL
+        - MAIN
+        - CORRESPONDENCE
+
+    CountryCode:
+      description: ISO 3166 ALPHA2 country code.
+      type: string
+      pattern: '[A-Z]{2}'
+      example: 'SE'
+
+    Street:
+      description: Street name.
+      type: string
+      example: 'Am Stadtpark'
+      minLength: 1
+      maxLength: 70
+
+    City:
+      description: City name.
+      type: string
+      example: 'Vienna'
+      minLength: 1
+      maxLength: 35
+
+    StreetNumber:
+      description: Identifies building or parcel number on given street.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    DoorNumber:
+      description: Identifies flat number.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    FloorNumber:
+      description: Identifies floor number.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    PostalCode:
+      description: Postal Code.
+      type: string
+      example: '1030'
+      minLength: 1
+      maxLength: 16
+
+    AddressLines:
+      description: Alternative to the structured format giving the address multiple lines.
+      type: array
+      items:
+        maxItems: 2
+        type: string
+        minLength: 1
+        maxLength: 70
+      example: ['Am Stadtpark 9', '1030 Vienna, Austria']
+
+    CardProductId:
+      description: Card product identifier.
+      type: string
+
+    CardProductName:
+      description: Card product name.
+      type: string
+
+    CardUsageConfiguration:
+      description: Describes how card can be used.
+      type: object
+      properties:
+        isOnlineAllowed:
+          type: boolean
+        isWithdrawingAtATMAllowed:
+          type: boolean
+        isCashbackAtPOSAllowed:
+          type: boolean
+
+    ProductStartDate:
+      description: |
+        The date the card product becomes active. If the start date has passed and the card is set  to
+        active = false, then the card will not be activated.
+      type: string
+      format: date
+      example: '2021-02-23'
+
+    ProductStopDate:
+      description: The end date of the range over which the card product can be active.
+      type: string
+      format: date
+      example: '2021-02-23'
+
+    CreateCardTransitionRequest:
+      allOf:
+        - $ref: '#/components/schemas/CardTransition'
+
+    GetCardTransitionsResponse:
+      description: List of card all transitions.
+      type: object
+      properties:
+        transitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardTransition'
+
+    GetCardTransitionResponse:
+      allOf:
+        - $ref: '#/components/schemas/CardTransition'
+
+    CardTransition:
+      description: Card's transition details.
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/CardState'
+        channel:
+          $ref: '#/components/schemas/TransitionChannel'
+        reason:
+          $ref: '#/components/schemas/TransitionReason'
+      example:
+        {
+          "state": "SUSPENDED",
+          "channel": "SYSTEM",
+          "reason": "Card has been lost."
+        }
+
+    CreatePINControlTokenRequest:
+      description: Create PIN control token request details.
+      type: object
+      properties:
+        verificationType:
+          $ref: '#/components/schemas/CardHolderVerificationMethod'
+
+    UpdateAuthorizationNotificationRequest:
+      description: Update authorization notification request details.
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/NotificationEmail'
+        phone:
+          $ref: '#/components/schemas/NotificationPhone'
+
+    UpdateOTPNotificationRequest:
+      description: Update OTP notification request details.
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/NotificationEmail'
+        phone:
+          $ref: '#/components/schemas/NotificationPhone'
+
+    CreateCardProductRequest:
+      allOf:
+        - $ref: '#/components/schemas/CardProduct'
+
+    UpdateCardProductRequest:
+      allOf:
+        - $ref: '#/components/schemas/CardProduct'
+
+    UpdateCardCashLimitsRequest:
+      allOf:
+        - $ref: '#/components/schemas/CashLimits'
+
+    UpdateCardGeoLimitsRequest:
+      allOf:
+        - $ref: '#/components/schemas/GeoLimits'
+
+    TransitionReason:
+      description: Card's transition reason.
+      type: string
+      maxLength: 100
+
+    TransitionChannel:
+      description: |
+        Card's transition channel:
+        ** IVR **    - Indicates that the card transition was initiated through your Interactive Voice Response system.
+        ** FRAUD **  - Indicates that the card network has determined that the card is fraudulent.
+        ** SYSTEM ** - Indicates that the card transition was initiated by System. For example, System suspended the
+                       card due to excessive failed PIN entries.
+      type: string
+      enum:
+        - IVR
+        - FRAUD
+        - SYSTEM
+
+    CardState:
+      description: Card's state.
+      type: string
+      enum:
+        - INACTIVE
+        - ACTIVE
+        - SUSPENDED
+        - TERMINATED
+
+    UnitCashLimits:
+      description: Cash limits details for given unit.
+      type: object
+      properties:
+        withdrawal:
+          $ref: '#/components/schemas/Amount'
+        retail:
+          $ref: '#/components/schemas/Amount'
+        online:
+          $ref: '#/components/schemas/Amount'
+
+    UpdateCardBillingCycleRequest:
+      description: Update billing cycle day request details.
+      type: object
+      properties:
+        billingCycleDay:
+          $ref: '#/components/schemas/BillingCycleDay'
+
+    BillingCycleDay:
+      description: Day of month, when the billing cycle starts.
+      type: integer
+      example: 15
+
+    Amount:
+      description: Amount definition.
+      type: object
+      properties:
+        value:
+          type: number
+          description: |
+            The amount given with fractional digits, where fractions must be compliant to the currency definition.
+            Up to 14 significant figures. Negative amounts are signed by minus. The decimal separator is a dot.
+          example: 1000.00
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+
+    CurrencyCode:
+      description: ISO 4217 Alpha 3 currency code.
+      type: string
+      pattern: '^[A-Z]{3}$'
+      example: 'EUR'
+
+    GeoLimit:
+      description: Geographical limit details.
+      type: object
+      properties:
+        region:
+          $ref: '#/components/schemas/GeoRegion'
+        allowed:
+          type: boolean
+          default: true
+
+    GeoRegion:
+      description: Geographical region definition.
+      type: string
+      enum:
+        - AFRICA
+        - ASIA
+        - AUSTRALIA
+        - EUROPE
+        - NORTH_AMERICA
+        - SOUTH_AMERICA
+
+    LinkedAccountId:
+      description: Persistent UUID for account linked to the card.
+      example: 'f392b391-0f57-4b27-8cc4-16b4044d7d1a'
+      type: string
+      maxLength: 36
+
+    CardHolderVerificationMethod:
+      description: Card holder verification method definition.
+      type: string
+      enum:
+        - BIOMETRIC_FACE
+        - BIOMETRIC_FINGERPRINT
+        - LOGIN
+        - EXP_CVV
+        - OTP_CVV
+        - OTP
+
+    ControlPINToken:
+      description: Conttol PIN token definition.
+      type: string
+      example: 'a32aa772-6122-42d2-9923-b88be8615f8b'
+
+    CreatePINControlTokenResponse:
+      description: Create PIN control token response details.
+      type: object
+      properties:
+        controlToken:
+          $ref: '#/components/schemas/ControlPINToken'
+
+    NotificationEmail:
+      description: E-mail address to which authorization notifications will be sent.
+      type: string
+      minLength: 1
+      maxLength: 140
+      pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+      example: 'test@example.com'
+
+    NotificationPhone:
+      description: Phone number to which authorization notifications will be sent.
+      type: string
+      maxLength: 35
+      example: '+49 170 1234567'
+
+    GetLoyaltyPointsResponse:
+      description: Loyalty points assigned to the card.
+      type: object
+      properties:
+        points:
+          type: number
+          example: 10
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        Error model to hold data which hepls to identify error cause and provide additional tracking informations.
+        Every API in RICE project are obligated to use reference error model.
+        More detailed description could be find on confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes
+      required:
+        - requestId
+        - correlationIdId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: Unique UUID to identify specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: Unique UUID of specific request. Value shoud be obtained from X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: Unique UUID for batch of requests. Value shoud be obtained from X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            HTTP status code. If there is in use different protocol than HTTP we should map error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: Additional info about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: Human-readable message in user-requested language.
+          example: 'Payment rejected. Missing creditor iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'creditorAccount.iban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just information.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        - COMMON_INVALID_PARAMETER
+        - COMMON_MISSING_PARAMETER
+        - COMMON_BAD_REQUEST
+        - COMMON_MISSING_CREDENTIALS
+        - COMMON_INVALID_CREDENTIALS
+        - COMMON_EXPIRED_ACCESS_TOKEN
+        - COMMON_ACCESS_DENIED
+        - COMMON_NOT_FOUND
+        - COMMON_METHOD_NOT_ALLOWED
+        - COMMON_RESOURCE_ALREADY_EXISTS
+        - COMMON_RATE_LIMIT_EXCEED
+        - COMMON_INTERNAL_ERROR
+        - COMMON_SERVICE_UNAVAIAVLE
+        - COMMON_GATEWAY_TIMEOUT
+      example: 'COMMON_BAD_REQUEST'
+

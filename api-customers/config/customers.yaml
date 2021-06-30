@@ -1,0 +1,2273 @@
+openapi: 3.0.1
+
+info:
+  title: Customers
+  version: 0.5.1
+  description: |
+    # Customers API
+
+    The API allows you to create, update, archive and retrieve your customers and their groups.
+    You can retrieve individual customers as well as a list of search results for customers.
+
+    ### TODO
+    ====
+    - security -> ID and access tokens. For now basic digest auth is applied.
+
+  contact:
+    name: Realtime Integration Center of Excellence
+
+tags:
+  - name: Customers
+    description: Group Customers API.
+
+  - name: ReferenceData
+    description: Reference data exposed by NWUs.
+
+paths:
+  /api/v1/customer-creation-requests:
+    post:
+      description: Creates customer request.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: createCustomerCreationRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerCreationRequest'
+      responses:
+        "202":
+          $ref: '#/components/responses/CreateCustomerCreationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customer-creation-requests/{requestId}:
+    get:
+      description: Gets customer creation request data.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: getCustomerCreationRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # path parameter
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetCustomerCreationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers:
+    get:
+      description: Finds customers data based on a provided query.
+      security:
+        - openId:
+            - customer
+            - employee
+            - third-party-customer
+            - m2m
+      operationId: findCustomers
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # query parameters
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        - $ref: '#/components/parameters/CustomerName'
+        - $ref: '#/components/parameters/CustomerStatus'
+        - $ref: '#/components/parameters/PartyType'
+        - $ref: '#/components/parameters/BranchCode'
+        - $ref: '#/components/parameters/IdentificationType'
+        - $ref: '#/components/parameters/IdentificationValue'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetCustomersResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers/{customerId}:
+    get:
+      description: This method is used to get a specific customer.
+      security:
+        - openId:
+            - customer
+            - employee
+            - third-party-customer
+            - m2m
+      operationId: getSingleCustomer
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/Fields'
+        # path parameter
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetCustomerResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/external-registry-requests:
+    post:
+      description: |
+        Finds company's data (both sole proprietorship or legal entity) in external registries based on a provided
+        query. If a certain registry provides data synchronously, data will be provided in a response message.
+        Else, request identifier will be retrieved.
+      security:
+        - openId:
+            - customer
+            - employee
+            - third-party-customer
+            - m2m
+      operationId: getSingleCustomerExternalRegistry
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateExternalRegistryRequest'
+      responses:
+        "201":
+          $ref: '#/components/responses/CreateExternalRegistryRequestResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/external-registry-requests/{requestId}:
+    get:
+      description: |
+        Gets a status of request and company's data (both sole proprietorship or legal entity) in external registries
+        based on a provided query.
+      security:
+        - openId:
+            - customer
+            - employee
+            - third-party-customer
+            - m2m
+      operationId: getSingleCustomerExternalRegistryRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # path parameter
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        "200":
+          $ref: '#/components/responses/CreateExternalRegistryRequestResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers/{customerId}/customer-archiving-requests:
+    post:
+      description: This method is used to start customer archiving process.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: createCustomerArchivingRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        # path parameter
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        "200":
+          $ref: '#/components/responses/CreateCustomerArchivingRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers/{customerId}/customer-archiving-requests/{requestId}:
+    get:
+      description: This method is used to get customer archiving status.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: getCustomerArchivingRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # path parameters
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetCustomerArchivingRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers/{customerId}/customer-modification-requests:
+    post:
+      description: This method is used to start customer modification process.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: createCustomerModificationRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/X-Idempotency-Key'
+        # path parameters
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerModification'
+      responses:
+        "200":
+          $ref: '#/components/responses/CreateCustomerModificationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers/{customerId}/customer-modification-requests/{requestId}:
+    get:
+      description: This method is used to get customer modification status.
+      security:
+        - openId:
+            - customer
+            - employee
+            - m2m
+      operationId: getCustomerModificationRequest
+      tags:
+        - Customers
+      parameters:
+        # headers
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        # path parameters
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetCustomerModificationRequestsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/reference-data/person-hobbies:
+    get:
+      description: |
+        This method is used to get NWU's specific hobbies referenece list to be used in a customer creation request.
+      security:
+        - openId:
+            - customer
+            - employee
+            - third-party-customer
+            - m2m
+      operationId: getPersonHobbies
+      tags:
+        - ReferenceData
+      responses:
+        "200":
+          $ref: '#/components/responses/GetPersonHobbiesReferenceResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v1/customers-groups:
+    get:
+      tags:
+        - Customers
+      summary: Retrieves groups of connected customers.
+      description: Control and economic dependency connections within a group of connected customers (GCC).
+      operationId: getGroupOfConnectedCustomers
+      security:
+        - openId:
+            - customer
+            - employee
+            - client
+            - third-party-customer
+      parameters:
+        # common header parameters
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-Correlation-ID'
+        - $ref: '#/components/parameters/OffsetPaginationLimit'
+        - $ref: '#/components/parameters/OffsetPaginationOffset'
+        # common query parameters
+        - $ref: '#/components/parameters/CocunutId'
+        - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCustomerGroupsResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+  parameters:
+    OffsetPaginationOffset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set.
+      example: 20
+      schema:
+        type: integer
+    OffsetPaginationLimit:
+      name: limit
+      in: query
+      description: The numbers of items to return.
+      example: 20
+      schema:
+        type: integer
+    CustomerId:
+      name: customerId
+      in: path
+      description: The unique identifier to get a specific customer.
+      required: true
+      schema:
+        type: string
+    RequestId:
+      name: requestId
+      in: path
+      description: The identifier of a customer creation request.
+      required: true
+      example: '1234567890'
+      schema:
+        type: string
+        maxLength: 50
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      description: ID of the request, unique to the call, as determined by the initiating party.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Correlation-ID:
+      name: X-Correlation-ID
+      in: header
+      description: |
+        X-Correlation-ID will be used to track requests through all involved services to be able to graph request flows,
+        map how services contribute to response times, identify bottle necks, etc.
+        The X-Correlation-ID must be propagated unchanged in any and all downstream service calls to other
+        Newton Microservices as well as NWU services. Multiple calls from Newton services to NWU services will
+        potentially have equal X-Correlation-ID values.
+      required: true
+      example: '99391c7e-ad88-49ec-a2ad-99ddcb1f7721'
+      schema:
+        type: string
+        format: uuid
+    X-Idempotency-Key:
+      name: X-Idempotency-Key
+      in: header
+      description: The unique request identifier to support idempotency.
+      required: false
+      example: e457b5a2e4d86bd1198ee56343ba864fe8b2
+      schema:
+        type: string
+        maxLength: 40
+    IdentificationType:
+      in: query
+      required: false
+      name: identificationType
+      description: |
+        Customer's Identification type. If api client pass is not supported by NWU type, then service should return
+        400 Bad Request. Example of types: CoCuNut, PersonalID, IdentityDocumentID, LEI, TaxId.
+      example: 'TAX_ID'
+      schema:
+        $ref: '#/components/schemas/IdentificationType'
+    IdentificationValue:
+      in: query
+      required: false
+      name: identificationValue
+      description: A Customer's Identification Number.
+      example: '1234567890'
+      schema:
+        $ref: '#/components/schemas/IdentificationValue'
+    CocunutId:
+      in: query
+      name: cocunutId
+      description: A customer's RBI group ID - tiger unique identifier.
+      example: '0987654321'
+      schema:
+        $ref: '#/components/schemas/CocunutIdentifier'
+    CustomerName:
+      in: query
+      name: name
+      description: A customer's name (exact or partial).
+      example: 'John Doe'
+      schema:
+        type: string
+    CustomerStatus:
+      in: query
+      name: status
+      description: A customer's status.
+      example: 'ONBOARDING'
+      schema:
+        $ref: '#/components/schemas/CustomerStatus'
+    PartyType:
+      in: query
+      name: partyType
+      description: A customer's partyType.
+      schema:
+        $ref: '#/components/schemas/PartyType'
+    BranchCode:
+      in: query
+      name: branchCode
+      description: A customer's default branch.
+      schema:
+        $ref: '#/components/schemas/BranchCode'
+    Fields:
+      in: query
+      name: fields
+      description: |
+        Partial response support.
+        A list of comma-separated fields that must be included in the response message. If a given query consist of
+        fields which don't exist in a data model, http 400 bad request should be returned.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          example: 'fullName'
+      required: false
+    Sort:
+      in: query
+      name: sort
+      description: |
+        Comma-separated list of fields to define the sort order.
+        To indicate sorting direction, fields may be suffixed with asc: or desc:
+        e.g. /customers-groups?sort=groupName:asc.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(groupName):(asc|desc)$'
+          example: 'groupName:asc'
+
+
+  requestBodies:
+
+    CreateCustomerCreationRequest:
+      description: A request for creating a customer.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerCreationRequest'
+
+    CustomerModification:
+      description: A request for modifying a customer.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerModification'
+
+    CreateExternalRegistryRequest:
+      description: A request for retrieving a customer's data from external registry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExternalRegistryRequest'
+
+  responses:
+    GetCustomerResponse:
+      description: A response with a customer's summary for a specific customer's identification.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customer'
+
+    CreateExternalRegistryRequestResponse:
+      description: A response with a customer's summary from external registry for a specific customer's identification.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExternalRegistryRequestCreationResponse'
+
+    GetCustomersResponse:
+      description: A response with array of customer briefs.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomersResponse'
+      links:
+        GetCustomersOffsetPaginationNextPage:
+          $ref: '#/components/links/GetCustomersOffsetPaginationNextPage'
+        GetCustomersOffsetPaginationPreviousPage:
+          $ref: '#/components/links/GetCustomersOffsetPaginationPreviousPage'
+        GetCustomerSummary:
+          $ref: '#/components/links/GetCustomerSummary'
+    CreateCustomerCreationRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerCreationRequestResponse'
+
+
+    GetCustomerCreationRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerCreationRequestResponse'
+
+    CreateCustomerArchivingRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerArchivingRequestResponse'
+
+
+    GetCustomerArchivingRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerArchivingRequestResponse'
+
+
+    CreateCustomerModificationRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerModificationRequestResponse'
+
+
+    GetCustomerModificationRequestsResponse:
+      description: A successful response for a customer creation request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerCreationRequestResponse'
+
+    GetPersonHobbiesReferenceResponse:
+      description: A successful reposnse for getting persons hobbies code book.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Hobby'
+
+    ErrorResponse:
+      description: An Unexpected Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    GetCustomerGroupsResponse:
+      description: A list of customers' connected groups.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerGroupsResponse'
+
+  links:
+    GetCustomersOffsetPaginationNextPage:
+      description: The url to the next page in offset paging.
+      operationId: findCustomers
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/nextOffset'
+    GetCustomersOffsetPaginationPreviousPage:
+      description: The url to the previous page in offset paging.
+      operationId: findCustomers
+      parameters:
+        limit: '$response.body#/metadata/limit'
+        offset: '$response.body#/metadata/previousOffset'
+    GetCustomerSummary:
+      description: The url to summary of the specific customer.
+      operationId: getSingleCustomer
+      parameters:
+        accountId: '$response.body#/id'
+
+  schemas:
+    CustomerCreationRequestResponse:
+      description: A response message for creating a customer.
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        customerId:
+          $ref: '#/components/schemas/CustomerIdentifier'
+        status:
+          $ref: '#/components/schemas/CustomerCreationRequestStatus'
+
+    ExternalRegistryRequestCreationResponse:
+      description: A response message for retrieving a customer from the external registry.
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        identifications:
+          $ref: '#/components/schemas/Identifications'
+        requestStatus:
+          $ref: '#/components/schemas/ExternalRegistryRequestStatus'
+        companyType:
+          $ref: '#/components/schemas/CompanyType'
+        address:
+          $ref: '#/components/schemas/Address'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+        companyEstablishmentDate:
+          $ref: '#/components/schemas/DateSchema'
+        legalForm:
+          $ref: '#/components/schemas/LegalForm'
+        companyName:
+          $ref: '#/components/schemas/FullName'
+        partyStatus:
+          $ref: '#/components/schemas/PartyStatus'
+        naceCodes:
+          $ref: '#/components/schemas/NaceCodes'
+        connectedPersons:
+          $ref: '#/components/schemas/ConnectedPersons'
+        communicationChannels:
+          $ref: '#/components/schemas/CommunicationChannels'
+
+    CustomerArchivingRequestResponse:
+      description: A response message for archiving a customer.
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        status:
+          $ref: '#/components/schemas/CustomerArchivingRequestStatus'
+
+    CustomerModificationRequestResponse:
+      description: A response message for modify a customer.
+      type: object
+      properties:
+        requestId:
+          $ref: '#/components/schemas/RequestId'
+        status:
+          $ref: '#/components/schemas/CustomerModificationRequestStatus'
+
+    CustomerGroupsResponse:
+      description: A response message for retrieving customer groups.
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+
+
+    CustomerCreationRequestStatus:
+      description: |
+        A customer creation request status:
+          ** PENDING ** A customer creation request is in progress.
+          ** DONE ** A customer creation request was processed.
+          ** REJECTED ** A customer creation request was rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+
+    ExternalRegistryRequestStatus:
+      description: |
+        An external registry request status:
+          ** RECEIVED ** An external registry request has been received.
+          ** PENDING ** An external registry request is in progress.
+          ** DONE ** An external registry request was processed.
+          ** REJECTED ** An external registry request was rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+
+    CustomerArchivingRequestStatus:
+      description: |
+        A customer archiving request status:
+          ** RECEIVED ** A customer archiving request has been received.
+          ** PENDING ** A customer archiving request is in progress.
+          ** DONE ** A customer archiving request was processed.
+          ** REJECTED ** A customer archiving request was rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+
+    CustomerModificationRequestStatus:
+      description: |
+        A customer modification request status:
+          ** RECEIVED ** A customer modification request has been received.
+          ** PENDING ** A customer modification request is in progress.
+          ** DONE ** A customer modification request was processed.
+          ** REJECTED ** A customer modification request was rejected.
+      type: string
+      enum:
+        - RECEIVED
+        - PENDING
+        - DONE
+        - REJECTED
+
+    RequestId:
+      description: |
+        Immutable request id. This identifier is used to identify creation request id to get
+        a status of account creation process.
+      example: '1234567890'
+      type: string
+      maxLength: 50
+
+    CustomerBrief:
+      description: Customer brief.
+      type: object
+      properties:
+        customerId:
+          $ref: '#/components/schemas/CustomerIdentifier'
+        taxId:
+          $ref: '#/components/schemas/TaxIdentification'
+        name:
+          type: string
+        partyType:
+          $ref: '#/components/schemas/PartyType'
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
+        bankRelatedInfo:
+          $ref: '#/components/schemas/BankRelatedInfo'
+
+    CustomerCreationRequest:
+      description: The customer's summary contains info about customer depended on customer's party type.
+      type: object
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        segmentCode:
+          $ref: '#/components/schemas/CustomerSegmentCode'
+        bankRelatedInfo:
+          $ref: '#/components/schemas/BankRelatedInfo'
+        leadSource:
+          $ref: '#/components/schemas/LeadSource'
+        isBehaviourSuspicious:
+          $ref: '#/components/schemas/IsBehaviourSuspicious'
+        productsOfInterest:
+          $ref: '#/components/schemas/ProductsOfInterest'
+        hasDepositGuaranteed:
+          $ref: '#/components/schemas/HasDepositGuaranteed'
+        isEnrolledRemotely:
+          $ref: '#/components/schemas/IsEnrolledRemotely'
+        consents:
+          $ref: '#/components/schemas/Consents'
+
+    CustomerModification:
+      description: The customer's modification request to customer's party type.
+      type: object
+      properties:
+        party:
+          $ref: '#/components/schemas/Party'
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
+        segmentCode:
+          $ref: '#/components/schemas/CustomerSegmentCode'
+        bankRelatedInfo:
+          $ref: '#/components/schemas/BankRelatedInfo'
+
+    Customer:
+      description: The customer's summary contains info about customer depended on customer's party type.
+      type: object
+      properties:
+        customerId:
+          $ref: '#/components/schemas/CustomerIdentifier'
+        party:
+          $ref: '#/components/schemas/Party'
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
+        segmentCode:
+          $ref: '#/components/schemas/CustomerSegmentCode'
+        bankRelatedInfo:
+          $ref: '#/components/schemas/BankRelatedInfo'
+        productsOfInterest:
+          $ref: '#/components/schemas/ProductsOfInterest'
+        isBehaviourSuspicious:
+          $ref: '#/components/schemas/IsBehaviourSuspicious'
+        leadSource:
+          $ref: '#/components/schemas/LeadSource'
+        hasDepositGuaranteed:
+          $ref: '#/components/schemas/HasDepositGuaranteed'
+        isEnrolledRemotely:
+          $ref: '#/components/schemas/IsEnrolledRemotely'
+        consents:
+          $ref: '#/components/schemas/Consents'
+
+    CustomersResponse:
+      description: A response with array of customer briefs.
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerBrief'
+        metadata:
+          $ref: '#/components/schemas/OffsetPaginationMetadata'
+
+    ExternalRegistryRequest:
+      description: A request message for company to external registry.
+      type: object
+      properties:
+        identifications:
+          $ref: '#/components/schemas/Identifications'
+        countryCode:
+          $ref: '#/components/schemas/CountryCode'
+        companyName:
+          $ref: '#/components/schemas/FullName'
+
+    Identifications:
+      type: array
+      description: An array of party identifications.
+      items:
+        $ref: '#/components/schemas/Identification'
+
+    Identification:
+      type: object
+      properties:
+        identificationType:
+          $ref: '#/components/schemas/IdentificationType'
+        identificationValue:
+          $ref: '#/components/schemas/IdentificationValue'
+        validFrom:
+          $ref: '#/components/schemas/DateSchema'
+        validTo:
+          $ref: '#/components/schemas/DateSchema'
+
+    BankRelatedInfo:
+      description: An additional information about a bank's dealer and manager.
+      type: object
+      properties:
+        dealerName:
+          $ref: '#/components/schemas/DealerName'
+        dealerId:
+          $ref: '#/components/schemas/DealerId'
+        relationshipManagerName:
+          $ref: '#/components/schemas/RelationshipManagerName'
+        relationshipManagerId:
+          $ref: '#/components/schemas/RelationshipManagerId'
+        defaultBranchCode:
+          $ref: '#/components/schemas/BranchCode'
+
+
+    DealerName:
+      description: Sales dealer name (treated as attribute). Use only when dealerId is empty.
+      type: string
+    DealerId:
+      description: Sales dealer id in networks bank's identity provider for E-FLEX
+      type: string
+    RelationshipManagerName:
+      description: Relationship manager name (treated as attribute). Use only when relationshipManagerId is empty.
+      type: string
+    RelationshipManagerId:
+      description: Relationship manager id in network bank's identity provider for E-FLEX.
+      type: string
+
+    CustomerStatus:
+      description: A status which defines a customer.
+      type: string
+      enum:
+        - ONBOARDING
+        - PENDING_APPROVAL
+        - INACTIVE
+        - ACTIVE
+        - BLACKLISTED
+        - REJECTED
+        - ARCHIVED
+
+    CustomerSegmentCode:
+      description: |
+        A customer's segment code according to NWU's primary segmentation. Possible values:
+        ** LARGE ** A large company.
+        ** MEDIUM ** A medium company.
+        ** MICRO ** A micro company.
+        ** SMALL ** A small company.
+        ** SOVEREIGN ** A sovereign-controlled company.
+        ** PUBLIC ** A public sector company.
+        ** BANK ** A bank.
+        ** INSURANCE ** An insurance company.
+        ** FINANCIAL ** - A financial institution.
+        ** OTHER ** Other.
+      type: string
+      enum:
+        - LARGE
+        - MEDIUM
+        - MICRO
+        - SMALL
+        - SOVEREIGN
+        - PUBLIC
+        - BANK
+        - INSURANCE
+        - FINANCIAL
+        - OTHER
+
+    Party:
+      description: |
+        A definition of customer's party which could be one of specified types:
+          * Person.
+          * Legal Entity.
+          * Sole Proprietorship.
+      oneOf:
+        - $ref: '#/components/schemas/Person'
+        - $ref: '#/components/schemas/LegalEntity'
+        - $ref: '#/components/schemas/SoleProprietorship'
+      discriminator:
+        propertyName: partyType
+        mapping:
+          PERSON: '#/components/schemas/Person'
+          LEGAL_ENTITY: '#/components/schemas/LegalEntity'
+          SOLE_PROPRIETORSHIP: '#/components/schemas/SoleProprietorship'
+
+
+    TaxIdentification:
+      description: Contains a party tax identifier.
+      type: string
+      minLength: 1
+      maxLength: 35
+
+    IdentificationValue:
+      description: Contains a party identifier value.
+      type: string
+      minLength: 1
+      maxLength: 35
+
+    IdentificationType:
+      description: |
+        Contains a party identifier type.
+        ** TAX_ID ** tax payer identification number.
+        ** CUSTOMER_ID ** customer ID number.
+      type: string
+      enum:
+        - TAX_ID
+        - CUSTOMER_ID
+
+    OwnershipType:
+      description: |
+        Contains an ownership type.
+        ** DIRECT_BENEFICIARY ** A direct beneficial ownership.
+        ** INDIRECT_BENEFICIARY ** An indirect beneficial ownership.
+        ** SUBSIDIARY_BENEFICIARY ** A subsidiary beneficial ownership.
+        ** TRUSTEE ** A trustee.
+        ** FOUNDER ** A settlor/trustor/founder.
+        ** BENEFICIARY ** A beneficiary.
+        ** PROTECTOR ** A protector.
+        ** FOUNDATION_COUNCIL ** A member of the foundation council.
+        ** BENEFICIARY_ALTERNATIVE_CONTROL ** A beneficial ownership through aternative control.
+      type: string
+      enum:
+        - DIRECT_BENEFICIARY
+        - INDIRECT_BENEFICIARY
+        - SUBSIDIARY_BENEFICIARY
+        - TRUSTEE
+        - FOUNDER
+        - BENEFICIARY
+        - PROTECTOR
+        - FOUNDATION_COUNCIL
+        - BENEFICIARY_ALTERNATIVE_CONTROL
+
+    B2BHighRiskCountriesList:
+      description: A list of the highest risk countries in which a customer has a business relationship.
+      type: array
+      items:
+        $ref: '#/components/schemas/CountryCode'
+
+    B2BTransactionCountry:
+      description: A country in which a customer has made transactions.
+      type: string
+
+    TransactionType:
+      description: |
+        A type of transaction. Possible values:
+        ** CASH ** Cash transactions.
+        ** NON-CASH ** Non-cash transactions.
+      type: string
+      enum:
+        - CASH
+        - NON-CASH
+
+    BusinessTransactions:
+      description: An array of transaction type and transaction country.
+      type: array
+      items:
+        $ref: '#/components/schemas/BusinessTransaction'
+
+    BusinessTransaction:
+      description: An object which contains transaction type and transaction country.
+      type: object
+      properties:
+        transactionType:
+          $ref: '#/components/schemas/TransactionType'
+        b2BTransactionCountry:
+          $ref: '#/components/schemas/B2BTransactionCountry'
+
+    CompanyCommon:
+      description: A common set of fields which are applicable to all types of companies.
+      type: object
+      properties:
+        bankToPartyRelationships:
+          $ref: '#/components/schemas/BankToPartyRelationships'
+        b2BHighRiskCountriesList:
+          $ref: '#/components/schemas/B2BHighRiskCountriesList'
+        businessTransactions:
+          $ref: '#/components/schemas/BusinessTransactions'
+
+
+    PartyCommon:
+      description: A common set of fields which are applicable to all types of parties.
+      type: object
+      required:
+        - taxId
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomerIdentifier'
+        taxResidencyCountryCode:
+          $ref: '#/components/schemas/CountryCode'
+        communicationChannels:
+          $ref: '#/components/schemas/CommunicationChannels'
+        addresses:
+          $ref: '#/components/schemas/Addresses'
+        crsStatus:
+          $ref: '#/components/schemas/CrsStatus'
+        groupName:
+          $ref: '#/components/schemas/GroupName'
+        turnover:
+          $ref: '#/components/schemas/Turnover'
+        partyStatus:
+          $ref: '#/components/schemas/PartyStatus'
+        isVatPayer:
+          $ref: '#/components/schemas/IsVatPayer'
+        fundsSources:
+          $ref: '#/components/schemas/FundsSources'
+        notificationChannels:
+          $ref: '#/components/schemas/NotificationChannels'
+
+    Addresses:
+      description: An array of addresses.
+      type: array
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/Address'
+
+    Address:
+      description: |
+        Definition of address in 2 ways:
+        * Structured - by filling country, street, buildingNumber, city, postalCode.
+        * Unstructured - by filling addressLines.
+
+        Field addresType is defining purpose of this address.
+        This type definition relates to the standard ISO20022.
+      type: object
+      required:
+        - addressType
+      properties:
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+        streetType:
+          description: A proprietary street type definition.
+          type: string
+        street:
+          $ref: '#/components/schemas/Street'
+        streetNumber:
+          $ref: '#/components/schemas/StreetNumber'
+        doorNumber:
+          $ref: '#/components/schemas/DoorNumber'
+        floorNumber:
+          $ref: '#/components/schemas/FloorNumber'
+        staircaseNumber:
+          $ref: '#/components/schemas/StaircaseNumber'
+        city:
+          $ref: '#/components/schemas/City'
+        postalCode:
+          $ref: '#/components/schemas/PostalCode'
+        addressLines:
+          $ref: '#/components/schemas/AddressLines'
+
+
+    AddressType:
+      description: A dictionary of address' purposes.
+      type: string
+      enum:
+        - OTHER
+        - LEGAL
+        - MAIN
+        - CORRESPONDENCE
+
+    ## TODO phone, mobile phone could be detailed  (countryCode, areaCode, PhoneNUmber,extension)
+    CommunicationChannels:
+      description: |
+        Defining possible communication channels. Every channel could be one of:
+        * Domestic phone.
+        * Mobile phone.
+        * E-mail.
+        * Website.
+        * Facebook.
+        * Instagram.
+        * LinkedIn.
+      type: array
+      minItems: 1
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/Phone'
+          - $ref: '#/components/schemas/Email'
+          - $ref: '#/components/schemas/Website'
+          - $ref: '#/components/schemas/Facebook'
+          - $ref: '#/components/schemas/Instagram'
+          - $ref: '#/components/schemas/LinkedIn'
+        discriminator:
+          propertyName: type
+          mapping:
+            DOMESTIC_PHONE: '#/components/schemas/Phone'
+            MOBILE_PHONE: '#/components/schemas/Phone'
+            EMAIL: '#/components/schemas/Email'
+            WEBSITE: '#/components/schemas/Website'
+            FACEBOOK: '#/components/schemas/Facebook'
+            INSTAGRAM: '#/components/schemas/Instagram'
+            LINKED_IN: '#/components/schemas/LinkedIn'
+
+    Phone:
+      description: A domestic or mobile phone number.
+      type: object
+      required:
+        - phone
+        - type
+      properties:
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 35
+        type:
+          type: string
+          enum:
+            - DOMESTIC_PHONE
+            - MOBILE_PHONE
+
+    Facebook:
+      description: A domestic phone number.
+      type: object
+      required:
+        - phone
+        - type
+      properties:
+        link:
+          type: string
+        type:
+          type: string
+          enum:
+            - FACEBOOK
+
+    LinkedIn:
+      description: A domestic phone number.
+      type: object
+      required:
+        - phone
+        - type
+      properties:
+        link:
+          type: string
+        type:
+          type: string
+          enum:
+            - LINKED_IN
+
+    Instagram:
+      description: A domestic phone number.
+      type: object
+      required:
+        - phone
+        - type
+      properties:
+        link:
+          type: string
+        type:
+          type: string
+          enum:
+            - INSTAGRAM
+
+    Website:
+      description: A domestic phone number.
+      type: object
+      required:
+        - phone
+        - type
+      properties:
+        link:
+          type: string
+        type:
+          type: string
+          enum:
+            - WEBSITE
+
+
+    Email:
+      description: An e-mail definition.
+      type: object
+      required:
+        - email
+        - type
+      properties:
+        email:
+          type: string
+          minLength: 1
+          maxLength: 140
+          pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+        type:
+          type: string
+          enum:
+            - EMAIL
+
+    Person:
+      description: A definition of person party type.
+      allOf:
+        - type: object
+          required:
+            - identifications
+            - name
+            - gender
+            - birth
+            - partyType
+          properties:
+            name:
+              $ref: '#/components/schemas/PersonName'
+            birth:
+              $ref: '#/components/schemas/PersonBirth'
+            nameDay:
+              $ref: '#/components/schemas/DateSchema'
+            employmentType:
+              $ref: '#/components/schemas/EmploymentType'
+            maritalStatus:
+              $ref: '#/components/schemas/MaritalStatus'
+            childrenNumber:
+              $ref: '#/components/schemas/ChildrenNumber'
+            hobby:
+              $ref: '#/components/schemas/Hobby'
+            gender:
+              $ref: '#/components/schemas/Gender'
+            identifications:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/PersonIdentification'
+            nationalities:
+              $ref: '#/components/schemas/Nationalities'
+            primaryParent:
+              $ref: '#/components/schemas/ParentName'
+            secondaryParent:
+              $ref: '#/components/schemas/ParentName'
+            income:
+              $ref: '#/components/schemas/PersonalIncome'
+            documents:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/PersonalDocument'
+            partyType:
+              description: Party types for a person.
+              type: string
+              enum:
+                - PERSON
+            role:
+              $ref: '#/components/schemas/Role'
+        - $ref: '#/components/schemas/PartyCommon'
+
+    Hobby:
+      description: A personal hobby which person does in free time.
+      type: object
+      properties:
+        code:
+          description: A reference code used to represent hobby code in NWUs dictionaries.
+          type: string
+          example: 'BEER_BREWING'
+        name:
+          description: A name is human readable label which client application will show to the User.
+          type: string
+          example: 'Craft beer brewing'
+
+    ChildrenNumber:
+      description: A number of children.
+      type: integer
+
+    MaritalStatus:
+      description: |
+        Distinct options that describe a person's relationship with a significant other. Types:
+        ** MARRIED ** This category includes persons whose opposite- or same-sex spouse is living, unless the couple is
+        separated or a divorce has been obtained. Also included are persons in civil unions.
+        ** SEPARATED ** This category includes persons currently legally married but who are no longer living with their
+        spouse (for any reason other than illness, work or school) and have not obtained a divorce. Those who live with
+        a common-law partner are included in this category.
+        ** DIVORCED ** This category includes persons who have obtained a legal divorce and have not remarried. Those
+        who live with a common-law partner are included in this category.
+        ** WIDOWED ** This category includes persons who have lost their legally-married spouse through death and have
+        not remarried. Those who live with a common-law partner are included in this category.
+        ** SINGLE ** This category includes persons who have never married (including all persons less than 15 years of
+        age). It also includes persons whose marriage has been legally annulled who were single before the annulled
+        marriage and who have not remarried. Those who live with a common-law partner are included in this category.
+      type: string
+      enum:
+        - MARRIED
+        - SEPARATED
+        - DIVORCED
+        - WIDOWED
+        - SINGLE
+
+    EmploymentType:
+      description: A type of person employment.
+      type: string
+      enum:
+        - PERMANENT
+        - FIXED_TERM
+        - CASUAL
+        - APPRENTICES
+        - SELF_EMPLOYED
+
+
+    PersonalIncome:
+      description: The amount and source of personal income.
+      type: object
+      required:
+        - amount
+        - source
+      properties:
+        amount:
+          description: A person's annualy income.
+          type: string
+        source:
+          description: A person's source of income.
+          type: string
+
+
+    PersonName:
+      description: A first name and a last name of the person.
+      type: object
+      required:
+        - firstName
+        - lastName
+      properties:
+        prefix:
+          description: Precedes a person's full name and provides additional information about the person.
+          type: string
+        firstName:
+          description: Part of a full name that identifies a person.
+          type: string
+        lastName:
+          description: Part of full name that indicates person family.
+          type: string
+        middleName:
+          description: Part of a full name that is written between their first and last name.
+          type: string
+        suffix:
+          description: Follows a person's full name and provides additional information about the person.
+          type: string
+
+    PersonBirth:
+      description: A place, a country and a birth name of the person.
+      type: object
+      required:
+        - place
+        - country
+        - birthName
+      properties:
+        date:
+          $ref: '#/components/schemas/DateSchema'
+        place:
+          $ref: '#/components/schemas/City'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+        birthName:
+          description: A birth person's lastname which has before being married and took married person last name.
+          type: string
+
+    LegalEntity:
+      description: A definition of a legal entity party type.
+      allOf:
+        - $ref: '#/components/schemas/PartyCommon'
+        - $ref: '#/components/schemas/CompanyCommon'
+        - type: object
+          required:
+            - identifications
+            - fullName
+            - partyType
+          properties:
+            fullName:
+              $ref: '#/components/schemas/FullName'
+            shortName:
+              $ref: '#/components/schemas/ShortName'
+            jurisdiction:
+              $ref: '#/components/schemas/CountryCode'
+            legalForm:
+              $ref: '#/components/schemas/LegalForm'
+            naceCode:
+              $ref: '#/components/schemas/NaceCode'
+            identifications:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/LegalEntityIdentification'
+            connectedPersons:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/ConnectedPersons'
+            owners:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/Owner'
+            partyType:
+              description: Party types for a legal entity.
+              type: string
+              enum:
+                - LEGAL_ENTITY
+            legalEntityType:
+              $ref: '#/components/schemas/LegalEntityType'
+            companyEstablishmentDate:
+              $ref: '#/components/schemas/DateSchema'
+            employeesNumber:
+              $ref: '#/components/schemas/Number'
+            isStockExchangeListed:
+              $ref: '#/components/schemas/IsStockExchangeListed'
+
+    SoleProprietorship:
+      description: A definition of a sole proprietorship party type.
+      allOf:
+        - $ref: '#/components/schemas/PartyCommon'
+        - $ref: '#/components/schemas/CompanyCommon'
+        - type: object
+          required:
+            - soleProprietorshipId
+            - fullName
+            - partyType
+          properties:
+            fullName:
+              $ref: '#/components/schemas/FullName'
+            shortName:
+              $ref: '#/components/schemas/ShortName'
+            identifications:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/SoleProprietorshipIdentification'
+            nace:
+              $ref: '#/components/schemas/NaceCode'
+            connectedPersons:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/ConnectedPersons'
+            owners:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/Owner'
+            partyType:
+              description: Party types for a sole proprietorship.
+              type: string
+              enum:
+                - SOLE_PROPRIETORSHIP
+            companyEstablishmentDate:
+              $ref: '#/components/schemas/DateSchema'
+
+    ConnectedPersons:
+      description: An entity owning certain part of the company property.
+      type: object
+      required:
+        - roles
+        - person
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        person:
+          $ref: '#/components/schemas/Person'
+
+    Owner:
+      description: An entity owning certain part of the company property.
+      type: object
+      required:
+        - ownershipPercentage
+        - party
+      properties:
+        ownershipPercentage:
+          $ref: '#/components/schemas/Percentage'
+        ownershipType:
+          $ref: '#/components/schemas/OwnershipType'
+        dateSinceOwner:
+          $ref: '#/components/schemas/DateSchema'
+        dateToOwner:
+          $ref: '#/components/schemas/DateSchema'
+        party:
+          oneOf:
+            - $ref: '#/components/schemas/Person'
+            - $ref: '#/components/schemas/LegalEntity'
+          discriminator:
+            propertyName: partyType
+            mapping:
+              PERSON: '#/components/schemas/Person'
+              LEGAL_ENTITY: '#/components/schemas/LegalEntity'
+        hasComplexOwnerStructure:
+          $ref: '#/components/schemas/HasComplexOwnerStructure'
+        isOffshoreOwner:
+          $ref: '#/components/schemas/IsOffshoreOwner'
+
+    Percentage:
+      description: A percentage ownership.
+      type: number
+      example: 100
+      minimum: 0
+      maximum: 100
+
+    HasComplexOwnerStructure:
+      description: |
+        This field will be true if the party's legal person meets at least one of the following 2 conditions
+        according to Annex 1 Guide for identifying the real beneficiary:
+        1. The shareholding structure has 10 or more levels
+        2. The party has "trustee" relations (such as: trust, trust contract, trust declaration)
+        or mandated shareholders ("nominee shareholders").
+      type: boolean
+
+    IsOffshoreOwner:
+      description: A flag which indicates whether an owner is an offshore shareholder.
+      type: boolean
+
+    Role:
+      description: A role of the connected person.
+      type: string
+      example: CONTACT_PERSON
+      enum:
+        - CONTACT_PERSON
+        - MANAGER
+        - REPRESENTATIVE
+        - OWNER
+        - SIGNER
+        - BENEFICIARY
+        - DIRECTOR
+        - SECRETARY
+        - KYC_CONTACT_PERSON
+        - FATCA_OFFICER
+        - AML_OFFICER
+        - BOARD_CHAIRMAN
+        - DEPUTY_BOARD_CHAIRMAN
+        - BOARD_MEMBER
+        - CEO
+        - CFO
+        - MANAGING_DIRECTOR
+        - SUPERVISORY_BOARD_MEMBER
+        - OTHER
+
+    PersonIdentification:
+      description: A person's party type identification.
+      type: object
+      required:
+        - number
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/PersonalIdentificationType'
+        number:
+          $ref: '#/components/schemas/Number'
+
+    LegalEntityIdentification:
+      type: object
+      description: A legal entity's party type identification.
+      required:
+        - number
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/LegalEntityIdentificationType'
+        number:
+          $ref: '#/components/schemas/Number'
+        validFrom:
+          $ref: '#/components/schemas/DateSchema'
+        validTo:
+          $ref: '#/components/schemas/DateSchema'
+
+
+    SoleProprietorshipIdentification:
+      description: A sole proprietorship's party type identification.
+      type: object
+      required:
+        - number
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/SoleProprietorshipIdentificationType'
+        number:
+          $ref: '#/components/schemas/Number'
+        validFrom:
+          $ref: '#/components/schemas/DateSchema'
+        validTo:
+          $ref: '#/components/schemas/DateSchema'
+
+
+    PersonalIdentificationType:
+      # TODO Get party identification types from NWUs
+      description: A pesonal identification's type dictionary.
+      type: string
+      x-extensible-enum:
+        - PERSONAL_NUMBER
+        - SK_ECHID
+        - SK_BIRTH_NUMBER
+
+    LegalEntityIdentificationType:
+      # TODO Get party identification types from NWUs
+      description: |
+        A legal entity's identification type dictionary.
+        ** COCONUT ** Tiger ID - customer's RBI group id - tiger unique identifier.
+        ** LEI ** Legal Entity Identifier. ISO 17442 LEI code structure.
+        ** REGISTRATION_NUMBER ** A company registration number.
+        ** TAX_ID ** A party tax identifier.
+        ** BIC ** Business Identifier Code. ISO 9362 SWIFT BIC code structure.
+      type: string
+      x-extensible-enum:
+        - HR_OIB
+        - HR_MBS
+        - COCONUT
+        - LEI
+        - RO_CUI
+        - REGISTRATION_NUMBER
+        - TAX_ID
+        - BIC
+
+    SoleProprietorshipIdentificationType:
+      # TODO Get party identification types from NWUs
+      description: |
+        A sole proprietorship's identification type dictionary.
+        ** COCONUT ** Tiger ID - customer's RBI group id - tiger unique identifier.
+        ** REGISTRATION_NUMBER ** A company registration number.
+        ** TAX_ID ** A party tax identifier.
+      type: string
+      x-extensible-enum:
+        - COCONUT
+        - REGISTRATION_NUMBER
+        - TAX_ID
+
+    PartyType:
+      description: A dictionary of possible party types.
+      type: string
+      enum:
+        - PERSON
+        - LEGAL_ENTITY
+        - SOLE_PROPRIETORSHIP
+
+    CompanyType:
+      description: A dictionary of possible company types.
+      type: string
+      enum:
+        - LEGAL_ENTITY
+        - SOLE_PROPRIETORSHIP
+
+    LegalEntityType:
+      description: Legal entity types.
+      type: string
+      enum:
+        - PRIVATE_LIMITED_SHARES
+        - PUBLIC_LIMITED_SHARES
+        - LIMITED_PARTNERSHIP
+        - LIMITED_LIABILITY
+        - LIMITED_PARTNERSHIP_WITH_SHARES
+        - GENERAL_PARTNERSHIP
+        - SUBSIDIARY
+        - REPRESENTATIVE_OFFICE
+        - JOINT-STOCK
+        - NON-GOVERNMENTAL
+        - REAL_ESTATE_INVESTMENT_TRUST
+
+    CustomerIdentifier:
+      description: A customer's unique identifier.
+      type: string
+      example: '01234567890'
+
+    CocunutIdentifier:
+      description: A customer's RBI group id - tiger unique identifier.
+      type: string
+      example: '0987654321'
+
+    BranchCode:
+      description: A Bank's branch code.
+      type: string
+      example: '12'
+
+    FullName:
+      description: A full name of Legal Entity or Sole Proprietorship.
+      type: string
+      maxLength: 140
+      example: 'ACME company'
+
+    ShortName:
+      description: A full name of Legal Entity or Sole Proprietorship.
+      type: string
+      maxLength: 70
+      example: 'ACME'
+
+    Gender:
+      description: A definition of gender types.
+      type: string
+      enum:
+        - MALE
+        - FEMALE
+        - OTHER
+      example: 'MALE'
+
+    PersonalDocument:
+      description: A definition of a pesonal identification document.
+      type: object
+      required:
+        - id
+        - type
+        - validUntil
+      properties:
+        id:
+          $ref: '#/components/schemas/PersonalDocumentId'
+        type:
+          $ref: '#/components/schemas/DocumentType'
+        issuedOn:
+          $ref: '#/components/schemas/DateSchema'
+        validUntil:
+          $ref: '#/components/schemas/DateSchema'
+        issuingAuthority:
+          type: string
+          maxLength: 70
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentAttachment'
+
+    PersonalDocumentId:
+      description: The id of the document.
+      type: string
+      maxLength: 35
+
+    DocumentAttachment:
+      description: A personal document attachment. It might be a scan of a document.
+      type: object
+      required:
+        - name
+        - fileType
+        - content
+      properties:
+        name:
+          type: string
+          maxLength: 70
+        fileType:
+          type: string
+          maxLength: 70
+        content:
+          type: string
+          format: byte
+
+    DocumentType:
+      # TODO get enums values from all NWUs
+      description: A dictionary of possible document types - passport, id card, drivers license etc.
+      type: string
+      enum:
+        - PERSONAL_ID_CARD
+
+    LegalForm:
+      description: ISO standard 20275 Financial Services – Entity Legal Forms (ELF).
+      type: string
+      format: '([A-Z][A-Z0-9]{3}|[A-Z0-9][A-Z][A-Z0-9]{2}|[A-Z0-9]{2}[AZ][A-Z0-9]|[A-Z0-9]{3}[A-Z]|9999|8888)'
+
+    Year:
+      description: A year.
+      type: string
+      pattern: '^[0-9]{4}$'
+      example: '2020'
+
+    DateSchema:
+      description: A date.
+      type: string
+      format: date
+      example: '2020-03-13'
+
+    CountryCode:
+      description: ISO 3166 ALPHA2 country code.
+      type: string
+      pattern: '[A-Z]{2}'
+      example: 'SE'
+
+    Nationalities:
+      description: Person's nationalities.
+      type: array
+      items:
+        $ref: '#/components/schemas/CountryCode'
+
+    Street:
+      description: A street name.
+      type: string
+      example: 'Am Stadtpark'
+      minLength: 1
+      maxLength: 70
+
+    City:
+      description: A city.
+      type: string
+      example: 'Vienna'
+      minLength: 1
+      maxLength: 35
+
+    StreetNumber:
+      description: Identifies a building or a parcel number on a given street.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    DoorNumber:
+      description: Identifies a flat number.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    FloorNumber:
+      description: Identifies a floor number.
+      type: string
+      example: '9'
+      minLength: 1
+      maxLength: 16
+
+    StaircaseNumber:
+      description: Identifies a staircase number.
+      type: string
+      example: '3'
+      minLength: 1
+      maxLength: 16
+
+    PostalCode:
+      description: A Postal Code.
+      example: '1030'
+      type: string
+      minLength: 1
+      maxLength: 16
+
+    AddressLines:
+      description: |
+        An alternative to the structured format giving the address multiple lines. The recommendation is to use
+        the first line for the street related data and the second line for a city, a postal code and a country.
+      type: array
+      items:
+        maxItems: 2
+        type: string
+        minLength: 1
+        maxLength: 70
+      example: ['Am Stadtpark 9', '1030 Vienna, Austria']
+
+    NaceCodes:
+      description: An array of company's nace codes.
+      type: array
+      items:
+        $ref: '#/components/schemas/NaceCode'
+
+    NaceCode:
+      description: NACE code - Statistical classification of economic activities in the European Community.
+      type: string
+      maxLength: 35
+      example: '12000'
+
+    CrsStatus:
+      description: Defines the status of a Common Reporting Standard.
+      type: string
+      enum:
+        - ACCEPTED
+        - REJECTED
+
+    PartyStatus:
+      description: |
+        Defines the status of the party:
+        - ** ACTIVE ** Active.
+        - ** REMOVED ** Removed from commercial registry.
+        - ** CEASED ** Ceased commercial activity.
+        - ** IN_LIQUIDATION ** In liquidation.
+        - ** IN_BANKRUPTCY ** In bankruptcy or in bankruptcy proceedings.
+      type: string
+      enum:
+        - ACTIVE
+        - REMOVED
+        - CEASED
+        - IN_LIQUIDATION
+        - IN_BANKRUPTCY
+
+    Turnover:
+      description: The latest full year turnover.
+      type: object
+      required:
+        - turnoverAmount
+        - year
+      properties:
+        currency:
+          $ref: "#/components/schemas/CurrencyCode"
+        amount:
+          description: The amount given with fractional digits.
+          type: number
+          example: 123.45
+        year:
+          $ref: '#/components/schemas/Year'
+
+    CurrencyCode:
+      description: ISO 4217 Alpha 3 currency code.
+      type: string
+      maxLength: 3
+      pattern: '[A-Z]{3}'
+      example: 'EUR'
+
+    Number:
+      description: A number.
+      type: string
+      maxLength: 35
+
+    IsVatPayer:
+      description: A flag which indicates if a party is a VAT tax payer.
+      type: boolean
+
+    IsStockExchangeListed:
+      description: A flag which indicates if a legal entity is included on a stock exchange.
+      type: boolean
+
+    IsBehaviourSuspicious:
+      description: A flag which indicates if a party behaved suspiciously.
+      type: boolean
+
+    FundsSources:
+      description: An array of fund sources.
+      type: array
+      items:
+        $ref: '#/components/schemas/FundsSource'
+
+    FundsSource:
+      description: |
+        Defines the source of the party's funds:
+        ** RECEIPTS ** Current activity receipts.
+        ** DONATION ** Donation or sponsorship.
+        ** SHAREHOLDERS ** Impr shareholders or credit companies.
+        ** LOANS ** Loans.
+        ** INHERITANCE ** Inheritance or court decision.
+        ** SALARIES ** Salaries.
+        ** ACTIVE_SALES ** Active sales.
+        ** GOODS_SALES ** Sales of movable or immovable goods.
+        ** DUES ** Dues.
+      type: string
+      enum:
+        - RECEIPTS
+        - DONATION
+        - SHAREHOLDERS
+        - LOANS
+        - INHERITANCE
+        - SALARIES
+        - ACTIVE_SALES
+        - GOODS_SALES
+        - DUES
+
+    LeadSource:
+      description: |
+        Defines the source of the lead:
+        ** REMOTE ** Lead's source is remote.
+      type: string
+      enum:
+        - REMOTE
+
+    ProductsOfInterest:
+      description: |
+        Defines party's products of interest:
+        ** SAVINGS ** Current accounts and savings.
+        ** DEPOSITS ** Deposit products.
+        ** CREDITS ** Credit products.
+        ** ELECTRONICS ** Electronic services.
+      type: string
+      enum:
+        - SAVINGS
+        - DEPOSITS
+        - CREDITS
+        - ELECTRONICS
+
+    NotificationChannels:
+      description: |
+        Defines the channel for the notifications:
+        ** MOBILE_PHONE_SMS ** SMS on the mobile phone communication channel.
+        ** MOBILE_PHONE_CALL ** Call on the mobile phone communication channel.
+        ** DOMESTIC_PHONE_CALL ** Call on the domestic phone communication channel.
+        ** EMAIL ** E-mail.
+      type: string
+      enum:
+        - MOBILE_PHONE_SMS
+        - MOBILE_PHONE_CALL
+        - DOMESTIC_PHONE_CALL
+        - EMAIL
+
+    BankToPartyRelationships:
+      description: An array of relationships between a bank and a customer.
+      type: array
+      items:
+        $ref: '#/components/schemas/BankToPartyRelationship'
+
+    BankToPartyRelationship:
+      description: |
+        A list of relationships between a bank and a customer.
+        ** SAVINGS_INVESTMENTS ** Savings and investments.
+        ** OPERATIONS ** Current operations.
+        ** FINANCING ** Financing.
+        ** FX ** Foreign exchange.
+        ** BGS_LCS ** Bank guarantees and letters of credit.
+        ** CARDS_ACCEPTANCE ** Acceptance of cards.
+        ** CASH_ADMINISTRATION ** Cash administration.
+        ** INVESTMENTS ** Investments.
+        ** SALARY_PAYMENTS ** Salary payments.
+      type: string
+      enum:
+        - SAVINGS_INVESTMENTS
+        - OPERATIONS
+        - FINANCING
+        - FX
+        - BGS_LCS
+        - CARDS_ACCEPTANCE
+        - CASH_ADMINISTRATION
+        - INVESTMENTS
+        - SALARY_PAYMENTS
+    # needs additional clarification
+    HasDepositGuaranteed:
+      description: A flag which indicates if a customer has a guaranteed deposit product.
+      type: boolean
+
+    IsEnrolledRemotely:
+      description: A flag which indicates if a customer has been remotely enrolled.
+      type: boolean
+
+    Consents:
+      description: An array of customer's consents.
+      type: array
+      items:
+        $ref: '#/components/schemas/Consent'
+
+    Consent:
+      description: A consent.
+      type: object
+      properties:
+        consentSubject:
+          description: |
+            An identification number of a consent. Possible values:
+            ** MARKETING ** A consent related to the marketing purposes.
+            ** PROFILING ** A consent related to the profiling purposes.
+            ** GDPR ** A conselt related to the General Data Protection Regulation.
+
+          type: string
+          enum:
+            - MARKETING
+            - PROFILING
+            - GDPR
+        consentName:
+          description: A name of the consent.
+          type: string
+        consentValue:
+          description: A true/false flag.
+          type: boolean
+        capturedDate:
+          description: A date of giving a consent.
+          type: string
+          format: date-time
+        consentVersion:
+          description: A version of the consent.
+          type: string
+
+    ParentName:
+      description: The name of the person's parent.
+      type: string
+
+    Group:
+      description: |
+        A specific customer group. A group is a type of a customer that can represent a non-physical person
+        such as a company customer or a grouping of private individuals.
+      type: object
+      required:
+        - groupName
+      properties:
+        groupName:
+          $ref: '#/components/schemas/GroupName'
+        groupMembers:
+          $ref: '#/components/schemas/GroupMembers'
+        addresses:
+          $ref: '#/components/schemas/Addresses'
+        creationDate:
+          $ref: '#/components/schemas/DateSchema'
+        modificationDate:
+          $ref: '#/components/schemas/DateSchema'
+        communicationChannels:
+          $ref: '#/components/schemas/CommunicationChannels'
+        notes:
+          $ref: '#/components/schemas/Notes'
+
+    GroupName:
+      description: A name of the group.
+      type: string
+    GroupRole:
+      description: A role of the group.
+      type: string
+    GroupMembers:
+      description: The members of this group.
+      type: array
+      items:
+        type: object
+        properties:
+          groupRole:
+            $ref: '#/components/schemas/GroupRole'
+          customerId:
+            $ref: '#/components/schemas/CustomerIdentifier'
+
+    Notes:
+      description: Extra notes.
+      type: string
+
+    Error:
+      type: object
+      description: |
+        # Error Reference Model
+
+        The error model to hold data which hepls to identify error cause and provide additional tracking information.
+        Every API in RICE project is obliged to use the reference error model.
+        More detailed description could be find on RICE confluence page:
+        https://wiki.rbinternational.corp/confluence/display/RICE/API+response+and+error+codes.
+      required:
+        - requestId
+        - correlationIdId
+        - status
+      properties:
+        errorId:
+          type: string
+          description: A unique UUID to identify a specific error.
+          example: 'c052421c-17ab-457f-9be6-5cbce2724094'
+        requestId:
+          type: string
+          description: A unique UUID of a specific request. A value shoud be obtained from a X-Request-Id header.
+          example: '06f31981-c15d-48fb-86c6-53bfae940802'
+        correlationId:
+          type: string
+          description: A unique UUID for batch requests. A value shoud be obtained from a X-Correlation-Id header.
+          example: '2725ab36-4608-4abc-ba1c-6e929ef539b1'
+        status:
+          type: integer
+          format: int32
+          description: |
+            A HTTP status code. If there is in use different protocol than HTTP, we should map an error to this protocol.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 400
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorReason'
+
+    ErrorReason:
+      type: object
+      description: An additional information about caused error.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCodeType'
+        severity:
+          $ref: '#/components/schemas/SeverityType'
+        message:
+          type: string
+          description: A human-readable message in a user-requested language.
+          example: 'Payment rejected. Missing creditor iban.'
+        path:
+          type: string
+          description: The path of the problematic field which causes the error.
+          example: 'creditorAccount.iban'
+
+    SeverityType:
+      type: string
+      description: Shows if the reason for an unexpected situation is critical or just informative.
+      enum:
+        - ERROR
+        - WARNING
+        - INFO
+      example: 'ERROR'
+
+    ErrorCodeType:
+      type: string
+      description: |
+        This is the standardized error entry that can be translated by the frontends to a custom error message or
+        used by support to track the origination of a bug. List of common error codes:
+        - COMMON_INVALID_PARAMETER
+        - COMMON_MISSING_PARAMETER
+        - COMMON_BAD_REQUEST
+        - COMMON_MISSING_CREDENTIALS
+        - COMMON_INVALID_CREDENTIALS
+        - COMMON_EXPIRED_ACCESS_TOKEN
+        - COMMON_ACCESS_DENIED
+        - COMMON_NOT_FOUND
+        - COMMON_METHOD_NOT_ALLOWED
+        - COMMON_RESOURCE_ALREADY_EXISTS
+        - COMMON_RATE_LIMIT_EXCEEDED
+        - COMMON_INTERNAL_ERROR
+        - COMMON_SERVICE_UNAVAILABLE
+        - COMMON_GATEWAY_TIMEOUT
+      example: 'COMMON_BAD_REQUEST'
+
+    OffsetPaginationMetadata:
+      type: object
+      description: Offset pagination data.
+      properties:
+        limit:
+          type: number
+          description: Limit parameter from the request or default.
+        offset:
+          type: number
+          description: Offset parameter from the request or 0.
+        nextOffset:
+          type: number
+          description: |
+            Offset of the next page if exists, otherwise <null>.
+            Calculated from query parameters. If sum of offset and limit is less then collection size, then we will
+            return summary result, if greater, then offset will be returned.
+        previousOffset:
+          type: number
+          description: |
+            Offset of the next page if exists, otherwise 0.
+            Calculated from query parameters by substracting limit from offset. If value is greater than zero, then
+            substraction result is returned, if less then 0, will be placed to previousOffset.
+        setSize:
+          type: number
+          description: Cardinality of accounts list set.
