@@ -15,7 +15,7 @@ env.PORT.MANAGEMENT=8090
 env.PORT.SAMPLE.SERVICES=8090
 
 # An example of how  you might bind a reference to a host-specific certificate to a given deployment. The
-# SSL X509 Certificate in the 'SSL Interface' configuration item can then reference it using the binding 
+# SSL X509 Certificate in the 'SSL Interface' configuration item can then reference it using the binding
 # variable '${env.serverCertificate}'
 #env.serverCertificate=${system.prefix.cert}CN=MYHOST
 

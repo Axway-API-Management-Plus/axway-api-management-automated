@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "A new description for my API..",
+    "description": "",
     "version": "3.7",
     "title": "EMR-DiagnosticInfo",
     "x-summary": "Processes submitted patient diagnostics data"

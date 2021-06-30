@@ -1,12 +1,12 @@
 {
-  "name" : "EMR-DiagnosticInfo Changed",
+  "name" : "EMR-DiagnosticInfo",
   "path" : "/api/emr/diagnostic",
   "state" : "published",
   "version" : "3.7",
   "organization" : "Plexus Health",
   "apiDefinition" : "EMR-DiagnosticInfo.json",
   "summary" : "Processes submitted patient diagnostics data",
-  "backendBasepath" : "http://emr-diagnostic-app:8080/api/api/emr/diagnostic/",
+  "backendBasepath" : "http://api-emr-diagnostic:8080/api/api/emr/diagnostic/",
   "image" : "api-image.jpg",
   "tags" : {
     "Industry" : [ "Healthcare" ],
@@ -31,8 +31,5 @@
     "name" : "Plexus Suite - Surgery Center"
   }, {
     "name" : "Plexus Suite - Patient Monitoring"
-  } ],
-  "customProperties":{
-    "publicAPI": "true"
-  }
+  } ]
 }
