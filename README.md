@@ -93,6 +93,12 @@ This video explains how to configure and use Mutual-SSL with Axway's API Managem
 
 [![Axway API-Management - Mutual SSL](https://img.youtube.com/vi/IsAt9bE4aUk/0.jpg)](https://youtu.be/IsAt9bE4aUk)  
 
+### Internal OAuth-Service 
+
+This video explains how the internal OAuth service works in the Axway API Management solution and provides a brief overview of the capabilities.   
+
+[![Axway API-Management - Internal OAuth](https://img.youtube.com/vi/pANzfw2ALYc/0.jpg)](https://youtu.be/pANzfw2ALYc)  
+
 ## Base-Setup
 
 You are welcome to  fork this repository and customize it according to your own needs. In the default setup with a Kubernetes cluster (EKS) on AWS and using GitPackages as the repository, the following [GitHub secretes](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) are required and must be created accordingly in your fork. 
