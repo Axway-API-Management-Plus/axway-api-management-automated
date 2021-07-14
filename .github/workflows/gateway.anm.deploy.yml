@@ -3,8 +3,8 @@ name: Deploy Admin-Node-Manager
 env:
   dockerRegistry: docker.pkg.github.com
   dockerRepository: cwiechmann/axway-api-management-automated
-  baseImage: "base:77-20210330"
-  outImage: "anm:77-20210330-v1"
+  baseImage: "base:77-20210530"
+  outImage: "anm:77-20210530-v1"
 
 on:
   push:
