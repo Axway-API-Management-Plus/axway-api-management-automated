@@ -17,16 +17,16 @@
 	"repository": {},
 	"private": true,
 	"dependencies": {
-		"@axway/api-builder-runtime": "^4.33.0",
 		"@axway/api-builder-plugin-fn-base64": "^3.0.0",
 		"@axway/api-builder-plugin-fn-javascript": "^2.0.0",
 		"@axway/api-builder-plugin-fn-json": "^4.0.0",
-		"@axway/api-builder-plugin-fn-mustache": "^1.0.1",
-		"@axway/api-builder-plugin-fn-restclient": "^2.0.0",
-		"@axway/api-builder-plugin-fn-swagger": "^2.0.0"
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.8",
+		"@axway/api-builder-plugin-fn-restclient": "^2.0.23",
+		"@axway/api-builder-plugin-fn-swagger": "^2.9.5",
+		"@axway/api-builder-runtime": "^4.66.15"
 	},
 	"devDependencies": {
-		"@axway/api-builder-admin": "^1.21.0",
+		"@axway/api-builder-admin": "^1.44.7",
 		"chai": "^4.1.2",
 		"mocha": "^6.1.4"
 	},
