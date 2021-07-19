@@ -41,6 +41,7 @@ jobs:
         run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: Create FED-File
         run: |
+          sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
           jar cvfm apimanager.fed apimgr/fed/meta-inf/manifest.mf -C apimgr fed
           jar tvf apimanager.fed
       - name: Build Manager image
