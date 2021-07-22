@@ -7049,6 +7049,8 @@
 <key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Routing policy 1'/></key></key>	</value>
 		<value contentType="reference">
 <key type='CircuitContainer'><id field='name' value='OAuth 2.0'/><key type='CircuitContainer'><id field='name' value='Access Token Service'/><key type='FilterCircuit'><id field='name' value='Access Code'/></key></key></key>	</value>
+		<value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='Generated Policies'/><key type='CircuitContainer'><id field='name' value='REST API&apos;s'/><key type='CircuitContainer'><id field='name' value='Templates'/><key type='FilterCircuit'><id field='name' value='Default URL-based Routing'/></key></key></key></key>	</value>
 	</fval>
 	<fval name="applicationQuotaWarnThresholdPercent"><value>80</value></fval>
 	<fval name="asyncExecutorStopWaitMs"><value>5000</value></fval>
