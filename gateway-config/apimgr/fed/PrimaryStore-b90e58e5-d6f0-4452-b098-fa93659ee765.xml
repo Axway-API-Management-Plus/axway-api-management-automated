@@ -14592,6 +14592,56 @@
 	<fval name="logSuccess"><value>Successfully echoed back the message</value></fval>
 	<fval name="name"><value>Send Login Page</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="207001633173737588" parentPK="-4873283247220532276">
+	<fval name="category"><value contentType="reference">6169495634075218336</value></fval>
+	<fval name="description"><value></value></fval>
+	<fval name="logMask"><value>3</value></fval>
+	<fval name="name"><value>Create Transaction-ID</value></fval>
+	<fval name="start"><value contentType="reference">-873377292841348313</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeExtractHTTPHeaderFilter" entityPK="-873377292841348313" parentPK="207001633173737588">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="attributeName"><value>transactionId</value></fval>
+	<fval name="base64Decode"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">99756471687872337</value></fval>
+	<fval name="failureNode"><value contentType="reference">3723384926776427101</value></fval>
+	<fval name="headerName"><value>X-TransactionID</value></fval>
+	<fval name="logFailure"><value>Creating new Transaction-ID</value></fval>
+	<fval name="logFatal"><value>Error occurred while extracting attributes from HTTP header. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>6</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Re-Use existing Transaction-ID</value></fval>
+	<fval name="name"><value>Get X-TransactionID</value></fval>
+	<fval name="useQueryParameter"><value>0</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CreateMessageKeyFilter" entityPK="3723384926776427101" parentPK="207001633173737588">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">333676678804776345</value></fval>
+	<fval name="logFailure"><value>Error creating transactionId</value></fval>
+	<fval name="logFatal"><value>Error during message creation of message key from attribute. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Message key created from attribute.</value></fval>
+	<fval name="name"><value>Create TransactionID</value></fval>
+	<fval name="outputAttributeName"><value>transactionId</value></fval>
+	<fval name="successNode"><value contentType="reference">5068721117866355646</value></fval>
+	<fval name="uniqueAttributeName"><value>id</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AddHTTPHeaderFilter" entityPK="5068721117866355646" parentPK="207001633173737588">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="addWhere"><value>httpheaders</value></fval>
+	<fval name="base64Encode"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">333676678804776345</value></fval>
+	<fval name="headerName"><value>X-TransactionID</value></fval>
+	<fval name="headerValue"><value>${transactionId}</value></fval>
+	<fval name="logFailure"><value>Failed in adding the HTTP header to the message</value></fval>
+	<fval name="logFatal"><value>Error in adding the HTTP header to the message. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in adding the HTTP header to the message</value></fval>
+	<fval name="name"><value>Add X-TransactionID HTTP Header</value></fval>
+	<fval name="overwriteExistingHeader"><value>1</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="862558468116209275" parentPK="-4873283247220532276">
 	<fval name="category"><value contentType="reference">6169495634075218336</value></fval>
 	<fval name="description"><value></value></fval>
@@ -15260,6 +15310,19 @@
 	<fval name="logMaskType"><value>SERVICE</value></fval>
 	<fval name="logSuccess"><value>Success in calling policy shortcut</value></fval>
 	<fval name="name"><value>Call &apos;Validate Public-API&apos;</value></fval>
+	<fval name="successNode"><value contentType="reference">8122638472275292470</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CircuitDelegateFilter" entityPK="8122638472275292470" parentPK="6789116367667713571">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">333676678804776345</value></fval>
+	<fval name="circuitPK"><value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='API Manager Policies'/><key type='FilterCircuit'><id field='name' value='Create Transaction-ID'/></key></key>	</value></fval>
+	<fval name="logFailure"><value>Failed in calling policy shortcut</value></fval>
+	<fval name="logFatal"><value>Error in calling policy shortcut circuit. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in calling policy shortcut</value></fval>
+	<fval name="name"><value>Call &apos;Create Transaction-ID&apos;</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="6924363165565179598" parentPK="-4100876678442574279">
 	<fval name="category"><value contentType="reference">6169495634075218336</value></fval>
@@ -22194,6 +22257,10 @@
 	<fval name="eventLogDir"><value>${environment.VDISTDIR}/events</value></fval>
 	<fval name="name"><value>Event Log Configuration</value></fval>
 	<fval name="writeSystemEventFreqSecs"><value>60</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CustomMessageAttribute" entityPK="-8865146464677051185" parentPK="6343231336477134372">
+	<fval name="enabled"><value>1</value></fval>
+	<fval name="name"><value>transactionId</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TivoliActionGroupGroup" entityPK="6575248312617370773" parentPK="0">
 	<fval name="name"><value>Tivoli Action Groups</value></fval>
