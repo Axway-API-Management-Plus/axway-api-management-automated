@@ -5284,7 +5284,7 @@
 	<fval name="category"><value contentType="reference">6169495634075218336</value></fval>
 	<fval name="logMask"><value>3</value></fval>
 	<fval name="name"><value>Health Check</value></fval>
-	<fval name="start"><value contentType="reference">-430022193467351726</value></fval>
+	<fval name="start"><value contentType="reference">7299549771454691199</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="Reflector" entityPK="-941148071904997677" parentPK="-5125824825995469523">
 	<fval name="abortProcessingOnLogError"><value>0</value></fval>
@@ -5309,6 +5309,19 @@
 	<fval name="name"><value>Set Message</value></fval>
 	<fval name="outputContentType"><value>text/xml</value></fval>
 	<fval name="successNode"><value contentType="reference">-941148071904997677</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CircuitDelegateFilter" entityPK="7299549771454691199" parentPK="-5125824825995469523">
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">333676678804776345</value></fval>
+	<fval name="circuitPK"><value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='API Manager Policies'/><key type='FilterCircuit'><id field='name' value='Create Transaction-ID'/></key></key>	</value></fval>
+	<fval name="logFailure"><value>Failed in calling policy shortcut</value></fval>
+	<fval name="logFatal"><value>Error in calling policy shortcut circuit. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>2</value></fval>
+	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logSuccess"><value>Success in calling policy shortcut</value></fval>
+	<fval name="name"><value>Call &apos;Create Transaction-ID&apos;</value></fval>
+	<fval name="successNode"><value contentType="reference">-430022193467351726</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FilterCircuit" entityPK="3682476869739791783" parentPK="-9038536999636498845">
 	<fval name="category"><value contentType="reference">6169495634075218336</value></fval>
