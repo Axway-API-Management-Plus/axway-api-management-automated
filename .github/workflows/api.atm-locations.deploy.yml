@@ -32,11 +32,14 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: List current directory
-        run: |
-          ls -la
+
+  to-integration:
+    name: To Integration stage
+    needs: [API-Deployment]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
       - name: Deploy API to Integration
-        if: ${{ github.event_name == 'pull_request' }}
         env:
           APIM_USER: ${{ secrets.APIM_USER }}
           APIM_PASS: ${{ secrets.APIM_PASS }}
@@ -44,8 +47,14 @@ jobs:
           APIM_PORT: ${{ secrets.APIM_PORT }}
         run: |
           mvn clean exec:java
+
+  to-qa:
+    name: To Q&A stage
+    needs: [API-Deployment]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
       - name: Deploy API to QA
-        if: ${{ github.event_name != 'pull_request' }}
         env:
           APIM_USER: ${{ secrets.APIM_USER }}
           APIM_PASS: ${{ secrets.APIM_PASS }}
