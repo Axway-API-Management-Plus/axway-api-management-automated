@@ -42,7 +42,6 @@ jobs:
       - name: Create FED-File
         run: |
           sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
-          cat apimgr/fed/meta-inf/manifest.mf
           jar cvfm apimanager.fed apimgr/fed/meta-inf/manifest.mf -C apimgr fed
           jar tvf apimanager.fed
       - name: Build Manager image
