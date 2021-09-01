@@ -18,6 +18,8 @@ jobs:
   API-Deployment:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        uses: hmarr/debug-action@v1.0.0
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
