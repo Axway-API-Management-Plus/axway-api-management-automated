@@ -35,7 +35,17 @@ jobs:
       - name: List current directory
         run: |
           ls -la
-      - name: Deploy API
+      - name: Deploy API to Integration
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          APIM_USER: ${{ secrets.APIM_USER }}
+          APIM_PASS: ${{ secrets.APIM_PASS }}
+          APIM_HOST: ${{ secrets.APIM_HOST }}
+          APIM_PORT: ${{ secrets.APIM_PORT }}
+        run: |
+          mvn clean exec:java
+      - name: Deploy API to QA
+        if: ${{ github.event_name != 'pull_request' }}
         env:
           APIM_USER: ${{ secrets.APIM_USER }}
           APIM_PASS: ${{ secrets.APIM_PASS }}
