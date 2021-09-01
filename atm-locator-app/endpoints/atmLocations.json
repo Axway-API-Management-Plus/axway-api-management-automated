@@ -1,0 +1,179 @@
+{
+  "info": {
+    "version": "2.0",
+    "description": "List of ATM  locations for Yoisho Banking Corporation",
+    "title": "ATM Locations"
+  },
+  "paths": {
+    "/atm/{id}": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            }
+          }
+        },
+        "summary": "Update ATM Location",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "name": "body",
+            "in": "body"
+          }
+        ],
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "PUT-atm-location",
+        "x-flow": "atmLocations-PUT-atm-location"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "id",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "summary": "Get ATM Location",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            }
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "GET-atm-location",
+        "x-flow": "atmLocations-GET-atm-location"
+      }
+    },
+    "/atm": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            }
+          }
+        },
+        "summary": "Create ATM Location",
+        "parameters": [
+          {
+            "schema": {
+              "example": {
+                "lat": "35.6925508",
+                "lon": "139.6922616",
+                "location": "Shinjuku Station"
+              },
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "name": "body",
+            "in": "body"
+          }
+        ],
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "POST-atm-location",
+        "x-flow": "atmLocations-POST-atm-location"
+      },
+      "get": {
+        "summary": "List Atm locations",
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "lat": "35.6684231",
+                    "lon": "139.6833085",
+                    "location": "Ebisu Station"
+                  },
+                  {
+                    "lat": "35.6284713",
+                    "lon": "139.736571",
+                    "location": "Shinagawa Station"
+                  }
+                ]
+              }
+            },
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "lat": {
+                        "type": "string"
+                      },
+                      "lon": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "LIST-atm-locations",
+        "x-flow": "atmLocations-LIST-atm-locations"
+      }
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "basePath": "/banking/v2",
+  "host": "backend.yoisho.dob.jp",
+  "definitions": {
+    "atm-location-input": {
+      "required": [
+        "location"
+      ],
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "string"
+        },
+        "lon": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "title": "ATM Location Input"
+    }
+  },
+  "swagger": "2.0",
+  "consumes": [
+    "application/json"
+  ]
+}
