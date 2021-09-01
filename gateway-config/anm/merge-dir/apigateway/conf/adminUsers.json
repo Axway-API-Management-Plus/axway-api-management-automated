@@ -22,6 +22,21 @@
       "id": "user-4",
       "name": "chris",
       "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-5",
+      "name": "ravee",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-6",
+      "name": "achoudhary",
+      "roles": ["role-1", "role-6", "role-7"]
+    },
+    {
+      "id": "user-7",
+      "name": "anujkumar",
+      "roles": ["role-1", "role-6", "role-7"]
     }
   ],
   "adminUserCredentials": {
