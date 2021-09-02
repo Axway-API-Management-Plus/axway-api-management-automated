@@ -4,7 +4,9 @@ APIGATEWAY_HOME=$1
 API_TRAFFIC_URL=$2
 
 if [ "$APIGATEWAY_HOME" == "" -o "$API_TRAFFIC_URL" == "" ]; then
-    echo "Missing APIGATEWAY_HOME. For example please call: ./scripts/callAPI.sh \"/opt/Axway/APIM/apigateway\" \"https://traffic.axway-amplify-central.com\""
+    echo "Missing APIGATEWAY_HOME. For example please call: ./scripts/callAPIs.sh \"/opt/Axway/apigateway\" \"https://traffic.axway-amplify-central.com\""
+    echo "Or as a background process"
+    echo "nohup ./callAPIs.sh /opt/Axway/apigateway https://traffic.axway-amplify-central.com >/dev/null 2>&1 &"
     exit
 fi
 
@@ -31,18 +33,18 @@ apis[17]=GET#/api/emr/surgery#Dummy:Header
 
 while [ true ]
 do
-	test $? -gt 128 && break;
-	apiNo=`shuf -i1-17 -n1`
-	#apiNo=13
-	echo "Using API-No: $apiNo"
-	verb=$(echo ${apis[${apiNo}]} | cut -f1 -d#)
-	uri=$(echo ${apis[${apiNo}]} | cut -f2 -d#)
-	header=$(echo ${apis[${apiNo}]} | cut -f3 -d#)
-	echo "Calling API: $uri"
-	echo "Header: $header"
-	echo "Verb: $verb"
-	set -x
-	${APIGATEWAY_HOME}/Linux.x86_64/bin/sr -d 5 -p 5 -w 8 -qq ${API_TRAFFIC_URL}${uri} -A "${header}" -v GET
-	set +x
+        test $? -gt 128 && break;
+        apiNo=`shuf -i1-17 -n1`
+        #apiNo=13
+        echo "Using API-No: $apiNo"
+        verb=$(echo ${apis[${apiNo}]} | cut -f1 -d#)
+        uri=$(echo ${apis[${apiNo}]} | cut -f2 -d#)
+        header=$(echo ${apis[${apiNo}]} | cut -f3 -d#)
+        echo "Calling API: $uri"
+        echo "Header: $header"
+        echo "Verb: $verb"
+        set -x
+        ${APIGATEWAY_HOME}/Linux.x86_64/bin/sr -d 5 -p 5 -w 8 -qq ${API_TRAFFIC_URL}${uri} -A "${header}" -v GET
+        set +x
 
 done

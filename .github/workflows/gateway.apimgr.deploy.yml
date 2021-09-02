@@ -1,9 +1,9 @@
 name: Deploy API-Manager
 
 env:
-  dockerRegistry: docker.pkg.github.com
+  dockerRegistry: ghcr.io
   dockerRepository: cwiechmann/axway-api-management-automated
-  baseImage: "base:77-20210530"
+  baseImage: "base:77-20210830-1"
   outImage: "manager:77-20210530-v1"
 
 on:
@@ -42,7 +42,6 @@ jobs:
       - name: Create FED-File
         run: |
           sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
-          cat apimgr/fed/meta-inf/manifest.mf
           jar cvfm apimanager.fed apimgr/fed/meta-inf/manifest.mf -C apimgr fed
           jar tvf apimanager.fed
       - name: Build Manager image
