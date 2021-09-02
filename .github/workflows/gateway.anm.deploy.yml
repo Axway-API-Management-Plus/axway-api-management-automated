@@ -42,7 +42,7 @@ jobs:
         run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: Create FED-File
         run: |
-          sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
+          sed -i 's/^Id:\s.*$/Id: fed/' anm/fed/meta-inf/manifest.mf
           jar cvfm anm.fed anm/fed/meta-inf/manifest.mf -C anm fed
           jar tvf anm.fed
       - name: Build ANM image
