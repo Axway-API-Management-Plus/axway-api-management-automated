@@ -28,8 +28,19 @@
         "tags": [
           "Atm locations"
         ],
-        "operationId": "PUT-atm-location",
-        "x-flow": "atmLocations-PUT-atm-location"
+        "operationId": "PUT-atm-location"
+      },
+      "delete": {
+        "summary": "Delete ATM Location",
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "DELETE-atm-location"
       },
       "parameters": [
         {
@@ -52,8 +63,7 @@
         "tags": [
           "Atm locations"
         ],
-        "operationId": "GET-atm-location",
-        "x-flow": "atmLocations-GET-atm-location"
+        "operationId": "GET-atm-location"
       }
     },
     "/atm": {
@@ -84,8 +94,7 @@
         "tags": [
           "Atm locations"
         ],
-        "operationId": "POST-atm-location",
-        "x-flow": "atmLocations-POST-atm-location"
+        "operationId": "POST-atm-location"
       },
       "get": {
         "summary": "List Atm locations",
@@ -138,8 +147,7 @@
         "tags": [
           "Atm locations"
         ],
-        "operationId": "LIST-atm-locations",
-        "x-flow": "atmLocations-LIST-atm-locations"
+        "operationId": "LIST-atm-locations"
       }
     }
   },

@@ -32,17 +32,16 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Debug some stuff
-        run: |
-          ls -la
-          echo ${{ github.event_name }}
+      #- name: Debug some stuff
+      #  run: |
+      #    echo ${{ github.event_name }}
       - name: Deploy API to Integration
         if: ${{ github.event_name == 'pull_request' }}
         env:
-          APIM_USER: ${{ secrets.APIM_USER }}
-          APIM_PASS: ${{ secrets.APIM_PASS }}
-          APIM_HOST: ${{ secrets.APIM_HOST }}
-          APIM_PORT: ${{ secrets.APIM_PORT }}
+          APIM_USER: ${{ secrets.APIM_USER_INT }}
+          APIM_PASS: ${{ secrets.APIM_PASS_INT }}
+          APIM_HOST: ${{ secrets.APIM_HOST_INT }}
+          APIM_PORT: ${{ secrets.APIM_PORT_INT }}
         run: |
           mvn clean exec:java
       - name: Deploy API to QA
