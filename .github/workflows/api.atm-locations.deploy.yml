@@ -32,9 +32,10 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: List current directory
+      - name: Debug some stuff
         run: |
           ls -la
+          echo ${{ github.event_name }}
       - name: Deploy API to Integration
         if: ${{ github.event_name == 'pull_request' }}
         env:
