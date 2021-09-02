@@ -1,15 +1,16 @@
 name: Deploy Admin-Node-Manager
 
 env:
-  dockerRegistry: docker.pkg.github.com
+  dockerRegistry: ghcr.io
   dockerRepository: cwiechmann/axway-api-management-automated
-  baseImage: "base:77-20210530"
-  outImage: "anm:77-20210530-v1"
+  baseImage: "base:77-20210830-1"
+  outImage: "anm:77-20210830-1"
 
 on:
   push:
     branches:
       - main
+      - test-august-release
     paths:
       - gateway-config/anm/**
   release:
@@ -41,7 +42,7 @@ jobs:
         run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: Create FED-File
         run: |
-          sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
+          sed -i 's/^Id:\s.*$/Id: fed/' anm/fed/meta-inf/manifest.mf
           jar cvfm anm.fed anm/fed/meta-inf/manifest.mf -C anm fed
           jar tvf anm.fed
       - name: Build ANM image
