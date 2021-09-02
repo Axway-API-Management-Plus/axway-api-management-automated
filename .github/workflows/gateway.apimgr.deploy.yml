@@ -1,15 +1,16 @@
 name: Deploy API-Manager
 
 env:
-  dockerRegistry: docker.pkg.github.com
+  dockerRegistry: ghcr.io
   dockerRepository: cwiechmann/axway-api-management-automated
-  baseImage: "base:77-20210530"
+  baseImage: "base:77-20210830-1"
   outImage: "manager:77-20210530-v1"
 
 on:
   push:
     branches:
       - main
+      - test-august-release
     paths:
       - gateway-config/apimgr/**
   release:
