@@ -1,0 +1,111 @@
+{
+    "paths" : {
+      "root" : { "path" : "/?transaction=" },
+      "emc pages" : { "path" : "/emc/*" },
+      "site images" : { "path" : "/images/*" },
+      "dojo resources" : { "path" : "/dojo/*" },
+      "dojox resources" : { "path" : "/dojox/*" },
+      "dijit resources" : { "path" : "/dijit/*" },
+      "gridx resources" : { "path" : "/gridx/*" },
+      "lib resources" : { "path" : "/lib/*" },
+      "common resources" : { "path" : "/common/*" },
+      "dashboard resources" : { "path" : "/dashboard/*" },
+      "events resources" : { "path" : "/events/*" },
+      "fileviewer resources" : { "path" : "/fileviewer/*" },
+      "rtm resources" : { "path" : "/trm/*" },
+      "scratch resources" : { "path" : "/scratch/*" },
+      "settings resources" : { "path" : "/settings/*" },
+      "vordel resources" : { "path" : "/vordel/*" },
+      "sm resources" : { "path" : "/sm/*" },
+      "css" : { "path" : "/css/*" },
+      "site icon" : { "path" : "/favicon.ico" },
+      "documentation" : { "path" : "/docs/*" },
+      "ops_get_summary" : { "path" : "/ops/data/{correlationID}/{legID}" },
+      "ops_get_http_body" : { "path" : "/ops/entity/{correlationID}/{legID}/{tag}" },
+      "ops_get_traffic" : { "path" : "/ops/getdistinctvalues?field=&format=" },
+      "ops_get_config" : { "path" : "/ops/getserviceconfig?format=" },
+      "ops_get_headers" : { "path" : "/ops/headers/{correlationID}/{legID}/{tag}" },
+      "ops_get_transactions" : { "path" : "/ops/legs/{correlationID}" },
+      "ops_get_performance" : { "path" : "/ops/performance*" },
+      "ops_get_messages" : { "path" : "/ops/search?protocol=&format=&from=&count=&order=&rorder=&ago=&field=&value=&op=&jmsPropertyName=&jmsPropertyValue=" },
+      "ops_set_config" : { "path" : "/ops/setserviceconfig?enable=&useSystemSettings=&process=&httpService=&uri=&webService=&port=&httpPortName=&logFatal=&logFailure=&logSuccess=&payloadOnRequest=&payloadOnResponse=&payloadOnRemoteSend=&payloadOnRemoteReceive=&recordInboundTransactions=&recordOutboundTransactions=&recordCircuitPath=&recordTrace=&recordSent=&recordReceived=&traceLevel=&enableAccessLogging=&enableTrafficMonitoring=" },
+      "ops_get_metadata" : { "path" : "/ops/showtype/{protocol}?format=&recurse=" },
+      "ops_get_stream" : { "path" : "/ops/stream/{correlationID}/{legID}/{tag}?sentData=&receivedData=" },
+      "ops_get_trace" : { "path" : "/ops/trace/{correlationID}?format=&sentData=&receivedData=" },
+      "ops_get_request_info" : { "path" : "/ops/{protocol}/{correlationID}/{legID}/getinfo?format=&details=&rheaders=&sheaders=" },
+      "kps_browser" : { "path" : "/kps/*" }
+    },
+  
+    "operations" : {
+        "emc_read_web" : {
+           "methods" : [ "GET" ], "paths" : [ "emc pages", "dojo resources", "dojox resources", "lib resources", "dijit resources", "gridx resources", "common resources", "dashboard resources", "events resources", "fileviewer resources", "rtm resources", "sm resources", "scratch resources", "settings resources", "vordel resources" ]
+      },
+        "common_read_web" : {
+           "methods" : [ "GET" ], "paths" : [ "root", "site images", "site icon", "css", "documentation" ]
+      },
+        "ops_read" : {
+           "methods" : [ "GET" ], "paths" : [ "ops_get_summary", "ops_get_http_body", "ops_get_traffic", "ops_get_config", "ops_get_headers", "ops_get_transactions", "ops_get_performance", "ops_get_messages", "ops_get_metadata", "ops_get_stream", "ops_get_trace", "ops_get_request_info" ]
+      },
+        "ops_modify" : {
+           "methods" : [ "GET" ], "paths" : [ "ops_set_config" ]
+      },
+      "kps_browser_read" : {
+           "methods" : [ "GET" ], "paths" : [ "kps_browser" ]
+      }
+    },
+
+
+    "permissions" : {
+        "mgmt" : [ "rbac", "topology", "topology.read", "router", "router.read", "router.modify", "management.read" ],
+        "mgmt_modify" : [ "topology.modify", "topology.domaincert", "management.modify" ],
+    
+        "emc" : [ "common_read_web", "emc_read_web" ],
+    
+        "adminusers" : ["adminusers.read"],
+        "adminusers_modify" : ["adminusers.modify"],
+        "adminusers_reset" : ["adminusers.resetpassword"],
+        "adminusers_passwordpolicy_modify" : ["adminusers.passwordpolicy_modify", "topology.passwordpolicy_modify"],
+        "adminusers_advisorybanner_modify" : ["adminusers.advisorybanner_modify"],
+    
+        "config" : [ "configuration" ],
+        "deploy" : [ "deployment", "deployment.config_read", "deployment.status_read", "deployment.modify" ],
+        "kps" : [ "kps", "kps_browser_read"],
+    
+        "dashboard" : [ "monitoring", "deployment", "deployment.status_read" ],
+        "dashboard_modify" : [ "monitoring" ],
+    
+        "monitoring" : [ "monitoring" ],
+        "events" : [ "monitoring" ],
+    
+        "traffic_monitor" : [ "ops_read" ],
+    
+        "settings" : [ "ops_read" ],
+        "settings_modify" : [ "ops_modify" ],
+    
+        "domain_audit" : [ "domainaudit", "domainaudit.search", "domainaudit.events_read", "domainaudit.settings_read" ],
+        "domain_audit_modify" : [ "domainaudit.events_modify", "domainaudit.settings_modify" ],
+    
+        "discovery" : [ "discovery" ],
+    
+        "logs" : [ "ops_read", "file" ],
+    
+        "ama" : [ "ama", "ama.read_status", "ama.read_queue", "ama.read_connection", "ama.read_consumer", "ama.read_message", "ama.read_statistics", "ama.read_subscriber" ],
+        "ama_modify" : [ "ama.delete_queue", "ama.create_queue", "ama.delete_message", "ama.modify_message", "ama.create_message", "ama.delete_subscriber", "ama.create_subscriber" ],
+    
+        "group_lock" : [ "topology.create_user_lock" ],
+        "group_unlock" : [ "topology.delete_user_lock" ],
+        "group_force_unlock" : [ "topology.delete_lock"],
+        "fips_read" : [ "management.fips_read", "topology.fips_read" ],
+        "fips_modify" : [ "management.fips_modify", "topology.fips_modify" ]
+      },
+    
+      "roles" : {
+        "API Server Administrator" : [ "emc", "mgmt", "mgmt_modify", "dashboard", "dashboard_modify", "deploy", "config", "monitoring", "events", "traffic_monitor", "settings", "settings_modify", "logs", "adminusers", "adminusers_modify", "adminusers_passwordpolicy_modify", "adminusers_advisorybanner_modify","adminusers_reset", "domain_audit", "domain_audit_modify", "discovery", "ama", "ama_modify", "group_force_unlock", "fips_read", "fips_modify" ],
+        "API Server Operator" : [ "emc", "mgmt", "dashboard", "monitoring", "events", "traffic_monitor", "settings", "logs", "adminusers", "adminusers_reset", "ama", "fips_read" ],
+        "Monitoring" : [ "emc", "mgmt", "dashboard", "dashboard_modify", "traffic_monitor" ],
+        "KPS Administrator" : [ "mgmt", "kps" ],
+    
+        "Policy Developer" : [ "mgmt", "deploy", "config", "adminusers_reset", "group_lock", "group_unlock" ],
+        "Deployer" : [ "mgmt", "deploy", "config" ]
+      }
+}

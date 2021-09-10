@@ -10,18 +10,18 @@
     },
     {
       "id": "user-2",
-      "name": "adamzareba",
-      "roles": ["role-1", "role-6", "role-7"]
+      "name": "susan",
+      "roles": ["role-8"]
     },
     {
       "id": "user-3",
-      "name": "ChristianPacifici",
-      "roles": ["role-1", "role-6", "role-7"]
+      "name": "markus",
+      "roles": ["role-2"]
     },
     {
       "id": "user-4",
       "name": "chris",
-      "roles": ["role-1", "role-6", "role-7"]
+      "roles": ["role-8"]
     },
     {
       "id": "user-5",

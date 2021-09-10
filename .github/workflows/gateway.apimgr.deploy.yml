@@ -4,7 +4,7 @@ env:
   dockerRegistry: ghcr.io
   dockerRepository: cwiechmann/axway-api-management-automated
   baseImage: "base:77-20210830-1"
-  outImage: "manager:77-20210530-v1"
+  outImage: "manager:77-20210830-v1"
 
 on:
   push:
