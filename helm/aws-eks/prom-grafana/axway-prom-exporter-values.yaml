@@ -1,0 +1,25 @@
+global:
+  pullPolicy: Always
+
+ingress:
+  enabled: true
+  annotations: 
+    # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/annotations
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: axway-apim
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+    alb.ingress.kubernetes.io/healthcheck-path: /api/metrics
+    alb.ingress.kubernetes.io/success-codes: "200"
+
+  hosts:
+    - host: metrics.axway-apim-on-eks.de
+      paths:
+      - path: /*
+
+anm: 
+  url: https://axway-apim-anm:8090
+  username: admin
+  password: changeme

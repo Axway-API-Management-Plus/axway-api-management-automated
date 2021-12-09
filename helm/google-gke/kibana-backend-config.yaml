@@ -1,0 +1,12 @@
+---
+# Source: axway-apim/templates/apimgr/apimgr-backend-config.yaml
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: kibana-backend-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 5601
+    requestPath: /status
+    type: HTTPS

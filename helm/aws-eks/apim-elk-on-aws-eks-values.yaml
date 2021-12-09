@@ -7,6 +7,9 @@ apibuilder4elastic:
   secrets: 
     apimgrUsername: "apiadmin"
     apimgrPassword: "axway123"
+
+  apmserver:
+    verifyServerCert: "false"
   # logLevel: debug
 # Enable, if you would like to deploy a new Elasticsearch cluster for the solution
 elasticsearch:
@@ -74,7 +77,20 @@ filebeat:
   # Only create the ConfigMaps which are used by Filebeat running along the API-Gateways as a side-car
   createFilebeatConfig: true
 
-  elasticsearchClusterUUID: TM00mq1zQ4aU7Qun9o8gIQ
+  elasticsearchClusterUUID: 3hxrsNg6QXq2wSkVWGTD4A
 
   filebeatSecrets: 
     beatsSystemUsername: ""
+
+apm-server:
+  enabled: true
+
+  elasticsearchClusterUUID: 3hxrsNg6QXq2wSkVWGTD4A
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "200m"
+      memory: "250Mi"

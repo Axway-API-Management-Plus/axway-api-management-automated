@@ -1,0 +1,9 @@
+prometheus:
+  scrapeInterval: 60s
+  logLevel: debug
+
+  additionalScrapeConfigs:
+    enabled: true
+    external:
+      name: "additional-scrape-configs"
+      key: "prometheus-additional.yaml"

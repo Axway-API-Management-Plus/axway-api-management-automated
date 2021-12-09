@@ -1,0 +1,14 @@
+ingress:
+  enabled: true
+  hostname: grafana.axway-apim-on-eks.de
+  path: /*
+  annotations: 
+    # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/annotations
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: axway-apim
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+    alb.ingress.kubernetes.io/healthcheck-path: /login
+    alb.ingress.kubernetes.io/success-codes: "200"

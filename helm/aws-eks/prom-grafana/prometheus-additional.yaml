@@ -1,0 +1,5 @@
+- job_name: "apim-metrics"
+  metrics_path: /api/metrics
+  honor_timestamps: false
+  static_configs:
+    - targets: ["prom-exp-axway-apim-prometheus.apim.svc.cluster.local:8080"]

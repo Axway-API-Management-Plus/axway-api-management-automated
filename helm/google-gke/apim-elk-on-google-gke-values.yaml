@@ -1,0 +1,101 @@
+# A sample myvalues.yaml file
+apibuilder4elastic: 
+  imageTag: "latest"
+  replicas: 1
+  anmUrl: "https://axway-apim-anm:8090"
+  apimgrUrl: "https://apimgr:8075"
+  secrets: 
+    apimgrUsername: "apiadmin"
+    apimgrPassword: "axway123"
+
+  ingress: 
+    enabled: false
+
+  apmserver:
+    verifyServerCert: "false"
+  # logLevel: debug
+# Enable, if you would like to deploy a new Elasticsearch cluster for the solution
+elasticsearch:
+  enabled: true
+  ingress: 
+    enabled: false
+  extraInitContainers: [] # To be removed on release after 3.2.0
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 100Gi
+  esJavaOpts: "-Xms4g -Xmx4g"
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: "8Gi"
+    limits:
+      cpu: "4000m"
+      memory: "8Gi"
+
+  # For this demo environment it's okay to have two ES-Nodes on the same worker node
+  antiAffinity: "ignore"
+
+# Enable, if you would like to deploy Kibana for the solution
+kibana:
+  enabled: true
+  ingress:
+    annotations:
+      # If you are using Google-Managed certificates, make sure the state of your certificate is active, otherwise the Load-Balancer
+      # communication fails
+      networking.gke.io/managed-certificates: kibana-managed-certificate
+      # Disabled HTTP as it leads to an additional Public-IP causing the following error later:
+      # Error syncing to GCP: error running load balancer syncing routine: loadbalancer 1esc4l6d-apim-axway-elk-apim4elastic-kibana-1ss2c0fg does not exist: googleapi: Error 403: QUOTA_EXCEEDED - Quota 'IN_USE_ADDRESSES' exceeded. Limit: 8.0 globally. 
+      kubernetes.io/ingress.allow-http: "false"
+    hosts:
+      - host: kibana.axway-apim-on-gke.com
+        paths:
+          - path: /*
+
+  service:
+    annotations:
+      cloud.google.com/app-protocols: '{"http": "HTTPS"}'
+      # Required to configure the Healthcheck to use the /login/ endpoint, otherwise a 301 is returned, which is not acceppted as a valid response code
+      cloud.google.com/backend-config: '{"default": "kibana-backend-config"}'
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "500Mi"
+    limits:
+      cpu: "1000m"
+      memory: "700Mi"
+
+logstash:
+  replicas: 1
+  logstashJavaOpts: "-Xmx6g -Xms6g"
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "6Gi"
+    limits:
+      cpu: "1000m"
+      memory: "6Gi"
+
+filebeat: 
+  # Only create the ConfigMaps which are used by Filebeat running along the API-Gateways as a side-car
+  createFilebeatConfig: true
+
+  elasticsearchClusterUUID: sEvszXLTSn6lUM03zJCnFw
+
+  filebeatSecrets: 
+    beatsSystemUsername: ""
+
+apm-server:
+  enabled: true
+
+  elasticsearchClusterUUID: sEvszXLTSn6lUM03zJCnFw
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
+    limits:
+      cpu: "200m"
+      memory: "250Mi"
