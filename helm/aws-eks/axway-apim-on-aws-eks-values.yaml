@@ -109,9 +109,6 @@ apitraffic:
       - name: filebeat-config
         configMap:
           name: axway-elk-apim4elastic-filebeat-config
-      - name: audit
-        persistentVolumeClaim:
-          claimName: apigw-audit
       - name: certificates
         secret:
           secretName: axway-elk-apim4elastic-certificates
