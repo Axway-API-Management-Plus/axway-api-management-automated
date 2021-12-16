@@ -84,7 +84,7 @@ apitraffic:
 
    extraContainers:
      - name: filebeat
-       image: docker.elastic.co/beats/filebeat:7.15.2
+       image: docker.elastic.co/beats/filebeat:7.16.1
        envFrom:
          - configMapRef:
              name: axway-elk-apim4elastic-filebeat-env-config

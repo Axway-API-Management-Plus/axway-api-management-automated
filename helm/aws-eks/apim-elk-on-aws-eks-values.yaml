@@ -34,11 +34,17 @@ elasticsearch:
   # For this demo environment it's okay to have two ES-Nodes on the same worker node
   antiAffinity: "ignore"
 
+  # Enabling this will publicly expose your Elasticsearch instance.
+  # Only enable this if you have security enabled on your cluster
+  ingress: 
+    enabled: false
+
 # Enable, if you would like to deploy Kibana for the solution
 kibana:
   enabled: true
   imageTag: "7.16.1"
   ingress:
+    className: ""
     # Annotations used to expose Kibana on an AWS-ALB
     # See here for more information
     # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/annotations
@@ -81,7 +87,7 @@ filebeat:
   createFilebeatConfig: true
   imageTag: "7.16.1"
 
-  elasticsearchClusterUUID: 3hxrsNg6QXq2wSkVWGTD4A
+  elasticsearchClusterUUID: i1djDUVbTcKj2ySgf1PCmg
 
   filebeatSecrets: 
     beatsSystemUsername: ""
@@ -89,7 +95,7 @@ filebeat:
 apm-server:
   enabled: true
 
-  elasticsearchClusterUUID: 3hxrsNg6QXq2wSkVWGTD4A
+  elasticsearchClusterUUID: i1djDUVbTcKj2ySgf1PCmg
 
   resources:
     requests:
