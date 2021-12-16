@@ -1,5 +1,6 @@
 global:
   pullPolicy: Always
+  # imageTag: "latest"
 
 ingress:
   enabled: true
@@ -19,7 +20,8 @@ ingress:
       paths:
       - path: /*
 
-anm: 
-  url: https://axway-apim-anm:8090
-  username: admin
-  password: changeme
+config:
+  anm: 
+    url: https://axway-apim-anm:8090
+    username: admin
+    password: changeme
