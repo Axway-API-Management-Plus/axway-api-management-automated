@@ -5,6 +5,8 @@
 This API is implemented by an API-Builder microservice. Changes to the API configuration or microservice result in 
 a deployment to the API management platform and then the API is tested end-to-end.  
 
+![Workflow executed](images/example-diagnostic-info-workflow.png)
+
 ### Technical details
 
 #### API-Configuration
