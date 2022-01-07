@@ -14,7 +14,8 @@ apibuilder4elastic:
 # Enable, if you would like to deploy a new Elasticsearch cluster for the solution
 elasticsearch:
   enabled: true
-  imageTag: "7.16.1"
+  imageTag: "7.16.2"
+  replicas: 3
   extraInitContainers: [] # To be removed on release after 3.2.0
   volumeClaimTemplate:
     accessModes: [ "ReadWriteOnce" ]
@@ -42,7 +43,7 @@ elasticsearch:
 # Enable, if you would like to deploy Kibana for the solution
 kibana:
   enabled: true
-  imageTag: "7.16.1"
+  imageTag: "7.16.2"
   ingress:
     className: ""
     # Annotations used to expose Kibana on an AWS-ALB
@@ -71,21 +72,21 @@ kibana:
       memory: "700Mi"
 
 logstash:
-  replicas: 1
-  imageTag: "7.16.1"
+  replicas: 2
+  imageTag: "7.16.2"
   logstashJavaOpts: "-Xmx6g -Xms6g"
   resources:
     requests:
-      cpu: "1000m"
+      cpu: "2000m"
       memory: "6Gi"
     limits:
-      cpu: "1000m"
+      cpu: "3000m"
       memory: "6Gi"
 
 filebeat: 
   # Only create the ConfigMaps which are used by Filebeat running along the API-Gateways as a side-car
   createFilebeatConfig: true
-  imageTag: "7.16.1"
+  imageTag: "7.16.2"
 
   elasticsearchClusterUUID: i1djDUVbTcKj2ySgf1PCmg
 
