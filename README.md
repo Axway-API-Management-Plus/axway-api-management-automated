@@ -14,6 +14,18 @@ The following use cases/requirements are illustrated:
 The DevOps pipelines run on top of GitHub actions, but are also implementable with any other technology such as Jenkins or Azure pipelines, as only standard tools such as the APIM CLI, kubectl, etc. are used. 
 Some of the use cases, like API builder or API gateway updates, require the API management solution to run in a Kubernetes cluster.
 
+## Git-Example structure
+
+| Folder                                            | Comment                                                                           | 
+| :---                                              | :---                                                                              |
+| .github                                           | Contains GitHub-Action CI/CD workflows                                            |
+| api-emr-catalog                                   | Simple example API – Based on existing API-Specification                          |
+| api-emr-diagnostic                                | Example API implemented by an API-Builder Microservice                            |
+| gateway-config                                    | API-Gateway configuration assets used to build API-Gateway Docker-Images          |
+| helm                                              | HELM-Examples to deploy solution on AWS or GKE                                    |
+| lib                                               | Contains postman environment variables to be used by Postman test suite           |
+| setup                                             | Test-Data to setup a new platform with APIs, Apps, Organizations, ...             |
+
 ## Setup 
 
 ### Service-Provider Setup
