@@ -56,6 +56,8 @@ cd axway-api-management-automated/api-emr-diagnostic/emr-diagnostic-app
 npm start
 ```
 
+After starting the API-Builder process locally using npm start you can point your browser to: http://localhost:8080/console
+
 As part of the CI/CD workflow, a Docker image for the API-Builder application is created and rolled out in 
 Kubernetes using the [deployment](config/api-deployment.yaml).
 
