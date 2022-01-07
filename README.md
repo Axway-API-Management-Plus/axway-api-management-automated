@@ -16,6 +16,8 @@ Some of the use cases, like API builder or API gateway updates, require the API 
 
 ## Git-Example structure
 
+This repository represents an example structure of how one might store the resources needed for the Axway API Management Platform in a version control system. It is primarily about individual APIs, the API gateway configuration incl. policies and settings. This GitHub repository uses GitHub Actions as the CI/CD platform, but can be modified accordingly to, for example, Jenkins.
+
 | Folder                                            | Comment                                                                           | 
 | :---                                              | :---                                                                              |
 | .github                                           | Contains GitHub-Action CI/CD workflows                                            |
