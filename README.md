@@ -32,7 +32,7 @@ This repository represents an example structure of how one might store the resou
 
 ### Service-Provider Setup
 
-The steps listed here are necessary for the API service provider if they want to use all or some of the use cases. For example, if you want to register or modify APIs or change policies.
+A service provider is a person who wants to manage APIs in the platform.  The steps listed here are necessary for the API service provider if they want to use all or some of the use cases. For example, if you want to register or modify APIs or change policies.
 
 The following requirements
 - Windows or Linux environment (Learn more [System requirements](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigtw_install/system_requirements/index.html#operating-systems-and-hardware))
