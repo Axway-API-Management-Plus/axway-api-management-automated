@@ -22,7 +22,7 @@ This repository represents an example structure of how one might store the resou
 | :---                                              | :---                                                                              |
 | .github                                           | Contains GitHub-Action CI/CD workflows                                            |
 | api-emr-catalog                                   | Simple example API – Based on existing API-Specification                          |
-| api-emr-diagnostic                                | Example API implemented by an API-Builder Microservice                            |
+| api-emr-diagnostic                                | API that is automatically tested after each deployment using newman.              |
 | gateway-config                                    | API-Gateway configuration assets used to build API-Gateway Docker-Images          |
 | helm                                              | HELM-Examples to deploy solution on AWS or GKE                                    |
 | lib                                               | Contains postman environment variables to be used by Postman test suite           |
