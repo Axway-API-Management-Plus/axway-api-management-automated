@@ -3,7 +3,7 @@ name: EMR-Diagnotics API
 env:
   appId: api-emr-diagnostic
   working-directory: api-emr-diagnostic
-  dockerRegistry: docker.pkg.github.com
+  dockerRegistry: ghcr.io
   dockerRepository: Axway-API-Management-Plus/axway-api-management-automated
 
 on:
@@ -34,7 +34,7 @@ jobs:
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v1
         with:
-          registry: docker.pkg.github.com
+          registry: ${{ env.dockerRegistry }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create image tag
