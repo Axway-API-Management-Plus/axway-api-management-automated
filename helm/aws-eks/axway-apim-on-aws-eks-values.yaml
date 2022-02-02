@@ -4,7 +4,7 @@ global:
 
   domainName: "axway-apim-on-eks.de"
   dockerRepository: "ghcr.io/cwiechmann/axway-api-management-automated"
-  imageTag: "77-20211130-1-eed8beb"
+  imageTag: "77-20211130-1-ae1a6bc"
 
 ##################################################################################################################################
 #   A D M I N - N O D E M A N A G E R
@@ -37,7 +37,7 @@ anm:
 ##################################################################################################################################
 apimgr:
    enabled: true
-   imageTag: 77-20211130-v1-eed8beb
+   imageTag: 77-20211130-v1-780fff6
    ingress:
       enabled: true
       annotations: 
@@ -56,7 +56,8 @@ apimgr:
 ##################################################################################################################################
 apitraffic:
    enabled: true
-   imageTag: 77-20211130-v1-eed8beb
+   imageTag: 77-20211130-v1-780fff6
+   domainName: xxx.com
    ingress:
       enabled: true
       name: traffic
@@ -84,7 +85,7 @@ apitraffic:
 
    extraContainers:
      - name: filebeat
-       image: docker.elastic.co/beats/filebeat:7.16.1
+       image: docker.elastic.co/beats/filebeat:7.16.3
        envFrom:
          - configMapRef:
              name: axway-elk-apim4elastic-filebeat-env-config
@@ -154,6 +155,10 @@ cassandra:
          cpu: 2
          memory: 2Gi
 
+   metrics:
+     # Start a side-car prometheus exporter
+     enabled: true
+
 ##################################################################################################################################
 #   INTERNAL ANALYTICS/METRICS DATABASE
 ##################################################################################################################################
@@ -165,6 +170,8 @@ mysqlmetrics:
 ##################################################################################################################################
 mysqlapiportal:
    internal: true
+   image:  
+      debug: true
 
 ##################################################################################################################################
 #   AMPLIFY AGENTS
@@ -218,3 +225,9 @@ pvcs:
    audit:
       # Not using a persistent volume as Filebeat runs as a sidecar 
       enabled: false
+
+   apiportalDbVolumeClaim:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+         requests:
+            storage: 2Gi
