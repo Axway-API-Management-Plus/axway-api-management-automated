@@ -12,23 +12,23 @@
 		"service"
 	],
 	"engines": {
-		"node": ">=12.15"
+		"node": ">=12.13"
 	},
 	"repository": {},
 	"private": true,
 	"dependencies": {
-		"@axway/api-builder-plugin-fn-base64": "^3.0.0",
-		"@axway/api-builder-plugin-fn-javascript": "^2.0.0",
-		"@axway/api-builder-plugin-fn-json": "^4.0.0",
-		"@axway/api-builder-plugin-fn-mustache": "^1.0.8",
-		"@axway/api-builder-plugin-fn-restclient": "^2.0.23",
-		"@axway/api-builder-plugin-fn-swagger": "^2.9.5",
-		"@axway/api-builder-runtime": "^4.66.15"
+		"@axway/api-builder-plugin-fn-base64": "^4.0.0",
+		"@axway/api-builder-plugin-fn-javascript": "^3.0.0",
+		"@axway/api-builder-plugin-fn-json": "^4.0.3",
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.11",
+		"@axway/api-builder-plugin-fn-restclient": "^2.1.0",
+		"@axway/api-builder-plugin-fn-swagger": "^3.1.0",
+		"@axway/api-builder-runtime": "^4.82.6"
 	},
 	"devDependencies": {
 		"@axway/api-builder-admin": "^1.44.7",
-		"chai": "^4.1.2",
-		"mocha": "^6.1.4"
+		"chai": "^4.3.6",
+		"mocha": "^9.2.1"
 	},
 	"scripts": {
 		"start": "node .",

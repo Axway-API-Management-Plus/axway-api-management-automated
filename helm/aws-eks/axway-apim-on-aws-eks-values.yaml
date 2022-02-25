@@ -4,13 +4,16 @@ global:
 
   domainName: "axway-apim-on-eks.de"
   dockerRepository: "ghcr.io/cwiechmann/axway-api-management-automated"
-  imageTag: "77-20211130-1-ae1a6bc"
+  imageTag: "77-20211130-v1-7cdd244"
+
+  acceptGeneralConditions: "yes"
 
 ##################################################################################################################################
 #   A D M I N - N O D E M A N A G E R
 ##################################################################################################################################
 anm:
    enabled: true
+   imageTag: 77-20211130-1-7cdd244
    ingress:
       enabled: true
       annotations: 
@@ -26,18 +29,22 @@ anm:
 
    resources:
       requests:
-         cpu: "200m"
+         cpu: "400m"
          memory: "500Mi"
       limits:
-         cpu: "500m"
+         cpu: "800m"
          memory: "700Mi"
+
+   # - name: extras
+   #   mountPath: /usr/share/extras
+   #   readOnly: true
 
 ##################################################################################################################################
 #   API MANAGER
 ##################################################################################################################################
 apimgr:
    enabled: true
-   imageTag: 77-20211130-v1-780fff6
+   imageTag: 77-20211130-v1-7cdd244
    ingress:
       enabled: true
       annotations: 
@@ -56,7 +63,7 @@ apimgr:
 ##################################################################################################################################
 apitraffic:
    enabled: true
-   imageTag: 77-20211130-v1-780fff6
+   imageTag: 77-20211130-v1-7cdd244
    domainName: xxx.com
    ingress:
       enabled: true
@@ -77,11 +84,11 @@ apitraffic:
 
    resources:
       requests:
-         cpu: "200m"
-         memory: "500Mi"
+         cpu: "500m"
+         memory: "1Gi"
       limits:
          cpu: "1000m"
-         memory: "1Gi"
+         memory: "2Gi"
 
    extraContainers:
      - name: filebeat
@@ -105,6 +112,25 @@ apitraffic:
            mountPath: /var/events/
          - name: audit
            mountPath: /var/audit/
+     - name: traceability
+       image: axway.jfrog.io/ampc-public-docker-release/agent/v7-traceability-agent:1.1.11
+       # command: [ "sh", "-c", "tail -f /dev/null" ]
+       envFrom:
+         - configMapRef:
+             name: axway-apim-traceability-config
+         - secretRef:
+             name: axway-apim-amplify-agents-secret
+       volumeMounts:
+         - name: agents-secret
+           mountPath: /opt/keys/private_key.pem
+           subPath: private_key.pem
+         - name: agents-secret
+           mountPath: /opt/keys/public_key.pem
+           subPath: public_key.pem
+         - name: opentraffic
+           mountPath: /opentraffic
+         - name: events
+           mountPath: /events/
 
    extraVolumes:
       - name: filebeat-config
@@ -113,6 +139,9 @@ apitraffic:
       - name: certificates
         secret:
           secretName: axway-elk-apim4elastic-certificates
+      - name: agents-secret
+        secret:
+          secretName: axway-apim-amplify-agents-secret
           
 
 ##################################################################################################################################
@@ -179,33 +208,85 @@ mysqlapiportal:
 
 agents:
    central:
-      clientId: DOSA_02ea38d92ab64e538214ecb77b17df8f
-      organizationId: 230910950274343
-      environment: rbi-ho-axway-apigw-v7
+      clientId: presales-aws-eks-sa_30c39dc9-db01-425b-800e-4daede40b701
+      organizationId: 963828447296913
+      environment: axway-v7-aws-eks
       privateKey: |
          -----BEGIN PRIVATE KEY-----
-         MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy6I5t5R0qKHWR
-         UN7Cgzz2raYhdZzQKWktVRvNnAVaJKrmK981nNIWqB8enooRTDVFEp7XazAZGDVN
-         .......
-         EEcOAeGzx36oqJx3mUlijZLTZJ/6Mdi9Cv6trapj6e88lB6z3q5wVeKWiLH1f6+d
-         UHIriuIHpSr6yz1Foataxpo=
+         MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDVBc1PFQKv+LAz
+         N8fA/enwpqu2drghaKc1pq5sB4jntw31EXCznhl3PLnFqDWewGu/0U7OWBsgz9aA
+         tY6XMFRITXW5xmSWZ9ej2oQZW1LDef/RhkPoo1uDOI1bwKYDKSCOZO/ndkv87+2s
+         P4SMkUEMqTI95uqMY+t6rESwJgwBoWGir1PhoJddW+aC6z0phPYtiEhrhTO3qb44
+         5wHB75R/v/tREhiLvJMWeOVaa8ZgkcsdIXAwRyA/gebiiqlOhx5q6wyt2oq3yeTh
+         2zq+Wo+euXtSQ9NCyn1CVixcoaTDzsoSVm84/Iog8clMkD8w9476e8dsCsJXIXeK
+         C9UfSb2xAgMBAAECggEASXnH2CgqFiJUPEZYKxQptez3O2d1mWhsjE/ix7ZNnYcB
+         VG9gjUPSCtOyTB/55rj+MVpzsS6opMereBeniDSOTaYSHjL1DP/iXE0J1Wkvgec5
+         ur5x+/MkpH1EHMq1OE/eP99G9HJUQXlMZGZARO/xHPnbL4jPi/8HAPgcdRmaeJDc
+         xy3x3rpHgooiUvg7DE89geT7ZB88ygFX7GReg/JZhlrlg3XwjmN/sCLy5ndRkK6k
+         eIazGApoHKHf17EqUfo/zPPZMt0HWJrARfHczFI8wgf40Wvc+FglPgJIifKosa1k
+         mMv5rq+mD5jkMF/JsM4NWSdoC0j2qN1H9TI0UjW11QKBgQD/rDxW2R+5tziR6epr
+         90qxa01dfYwGUX5nwWaVXJCPxpSG8Dr0Mr3rvkhsQ1ldohKhyDxUfLmM4mp2V/hN
+         jJOBCbG1YysxU1X19pK+ILQihBLeqQhu+ft4djmJNyrTCwUsIxPEf8evx2IgWV9p
+         iwHcKJG0hM7f/LXWVYjBpXC8xwKBgQDVS5fW051BNV5P7j1ZRTpCY+kdUCF2C7cw
+         qszeI9XYeAYj9LdXZY2vySMQWjzSFq58kWQK1IaKh53oC/4u1Hvskp2wgF+1vXFr
+         p8BGAUOGUlmR90OtWboPnGH2WRS3JlUl9MfPAypyvDxeFtSgUuTyfIQOgFjMH9Nv
+         noLyFdwJxwKBgQCeNowERkoOl6XnDXRmKVpMXhU69FTxF/77379GUEiY4A7LTd99
+         e+Tw/Ag/DpI/keqruIg01BXSa83ru9ZIzuP8Zu5US7DPzj0UfughxYUTEt3GcZ1p
+         Z0JJMge6tKvIezpRLMevwk7kpKJBWGzlmAKnpWc86S5Hh09S+g0tn94awwKBgQCJ
+         jtj8CTnPxjVu4zzZh9YM3xaGexk5YlDgqCa71OyjULTVF4vuZ2Y7SkK81xWGgG5D
+         lBirC2lBijkCYEmrtgm+Bsh//iq7sNOnFGbiPwpnZFCz3H3fHJDsZHShRc4gWC5t
+         7jG2hlon6NId9Cdoxk01PayFFa0u6A+aWuYkboicHQKBgFVr04hUynMg9Cn2nx9V
+         CqObhHIr5lKZmcmtY1mXINY8H8FL6/+VgqCfcoscX51xP4+SRJPsYAmDl3lLjQ1i
+         JTNagDn/pybDOP+5lj+Y6ZDeAz3JiE7HKrZWjHPyPxsDXGg9E82vBzCWC9pCxtzt
+         bYONz6u2qj96VSwQAMlXxJj/
          -----END PRIVATE KEY-----
+
       publicKey: |
          -----BEGIN PUBLIC KEY-----
-         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsuiObeUdKih1kVDewoM8
-         9q2mIXWc0ClpLVUbzZwFWiSq5ivfNZzSFqgfHp6KEUw1RRKe12swGRg1TWr5DBs/
-         ......
-         jEtwhEjLD44r/Tf50slR7HzjpvoMZabzhxijnAFqhodTPzqLkCFI03IhoOgqZO0t
-         ClLsxTTMKk0EqOgjnNY/rlNUplgb7tnfHsEhBbtYWzQFhBQQ+sv8nK/DUljXYP9z
-         GwIDAQAB
+         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1QXNTxUCr/iwMzfHwP3p
+         8Kartna4IWinNaaubAeI57cN9RFws54Zdzy5xag1nsBrv9FOzlgbIM/WgLWOlzBU
+         SE11ucZklmfXo9qEGVtSw3n/0YZD6KNbgziNW8CmAykgjmTv53ZL/O/trD+EjJFB
+         DKkyPebqjGPreqxEsCYMAaFhoq9T4aCXXVvmgus9KYT2LYhIa4Uzt6m+OOcBwe+U
+         f7/7URIYi7yTFnjlWmvGYJHLHSFwMEcgP4Hm4oqpToceausMrdqKt8nk4ds6vlqP
+         nrl7UkPTQsp9QlYsXKGkw87KElZvOPyKIPHJTJA/MPeO+nvHbArCVyF3igvVH0m9
+         sQIDAQAB
          -----END PUBLIC KEY-----
+
+   config: 
+      subscriptionsNotificationsWebhookUrl: "https://staging.cloud-elements.com/elements/api-v2/formulas/instances/466579/executions"
+      subscriptionsNotificationsWebhookHeaders: "Header=Authorization,Value=User GwNcAidmzSZ4o/W1KToYF79F0SpQp6VsHuP1h3OgEF0=, Organization 9f15f0d4a19f15f2de3cf4271e82d7aa,Header=Content-Type,Value=application/json"
+
+   apimanager:
+      username: apiadmin
+      password: axway123
+      insecureSSL: "true"
+
+   apigateway:
+      username: admin
+      password: changeme
+      insecureSSL: "true"
+
    discovery:
+      enabled: true
+      config:
+         agentName: "discovery-agent-v7"
+
+   traceability:
       enabled: false
-      agentName: "myAgentName"
-      apimanager:
-         username: apiadmin
-         password: highlySecure
-         insecureSSL: "true"
+      createTraceabilityConfig: true
+      logLevel: info
+
+      config: 
+         # Defauls to 3
+         agentName: "traceagent-v7"
+         compressionLevel: 9
+         redactionPathShow: "[{keyMatch:\".*\"}]"
+         redactionQueryArgumentShow: "[{keyMatch:\".*\"}]"
+         redactionRequestHeaderShow: "[{keyMatch:\"Accept.*\"}, {keyMatch:\"Connection\"}]"
+         redactionResponseHeaderShow: "[{keyMatch:\".*\"}]"
+         samplingPercentage: 5
+         exceptionList: "[ \"/healthcheck\", \"/\" ]"
+         usageReportingInterval: "60s"
 
 ##################################################################################################################################
 #   PVCs
@@ -230,4 +311,4 @@ pvcs:
       accessModes: [ "ReadWriteOnce" ]
       resources:
          requests:
-            storage: 2Gi
+            storage: 3Gi
