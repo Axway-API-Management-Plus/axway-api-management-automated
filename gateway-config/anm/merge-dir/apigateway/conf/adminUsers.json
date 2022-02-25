@@ -32,7 +32,7 @@
       "id": "user-6",
       "name": "achoudhary",
       "roles": ["role-1", "role-6", "role-7"]
-    },
+    }, 
     {
       "id": "user-7",
       "name": "anujkumar",
@@ -78,7 +78,13 @@
       "id": "role-7",
       "name": "Policy Developer",
       "displayName": "Policy Developer"
+    },
+    {
+      "id": "role-8",
+      "name": "Monitoring",
+      "displayName": "Monitoring"
     }
+    
   ],
   "uniqueIdCounters": {
     "Role": 8,

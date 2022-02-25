@@ -7,6 +7,8 @@ if [ "$APIGATEWAY_HOME" == "" -o "$API_TRAFFIC_URL" == "" ]; then
     echo "Missing APIGATEWAY_HOME. For example please call: ./scripts/callAPIs.sh \"/opt/Axway/apigateway\" \"https://traffic.axway-amplify-central.com\""
     echo "Or as a background process"
     echo "nohup ./callAPIs.sh /opt/Axway/apigateway https://traffic.axway-amplify-central.com >/dev/null 2>&1 &"
+    echo "Or"
+    echo "nohup ./callAPIs.sh /opt/Axway/apigateway https://traffic.axway-apim-on-eks.de >/dev/null 2>&1 &"
     exit
 fi
 
