@@ -147,64 +147,64 @@
    <node>/[UserStore]name=Default User Store</node>
   </branch>
  </storeType>
- <store id='CertStore-822652e4-303f-4bb1-bad7-5c5c1b96ae03' type='CertStore'>
+ <store id='CertStore' type='CertStore'>
   <name>Upgraded CertStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>CertStore-822652e4-303f-4bb1-bad7-5c5c1b96ae03.xml</credential>
+   <credential name='url'>CertStore.xml</credential>
   </connectionCredentials>
  </store>
- <store id='EnvSettingsStore-e6dbea5e-636c-412a-9850-a197d62e7456' type='EnvSettingsStore'>
+ <store id='EnvSettingsStore' type='EnvSettingsStore'>
   <name>Upgraded EnvSettingsStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>EnvSettingsStore-e6dbea5e-636c-412a-9850-a197d62e7456.xml</credential>
+   <credential name='url'>EnvSettingsStore.xml</credential>
   </connectionCredentials>
  </store>
- <store id='ExtConnsStore-be15b716-1102-4a74-b9b9-c051a45041ea' type='ExtConnsStore'>
+ <store id='ExtConnsStore' type='ExtConnsStore'>
   <name>Upgraded ExtConnsStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>ExtConnsStore-be15b716-1102-4a74-b9b9-c051a45041ea.xml</credential>
+   <credential name='url'>ExtConnsStore.xml</credential>
   </connectionCredentials>
  </store>
- <store id='ListenersStore-5d2ca2f4-3385-42b6-8a8e-928dad20726f' type='ListenersStore'>
+ <store id='ListenersStore' type='ListenersStore'>
   <name>Upgraded ListenersStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>ListenersStore-5d2ca2f4-3385-42b6-8a8e-928dad20726f.xml</credential>
+   <credential name='url'>ListenersStore.xml</credential>
   </connectionCredentials>
  </store>
- <store id='PrimaryStore-0e092b98-8b54-407d-8292-853059c86653' type='PrimaryStore'>
+ <store id='PrimaryStore' type='PrimaryStore'>
   <name>Upgraded PrimaryStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>PrimaryStore-0e092b98-8b54-407d-8292-853059c86653.xml</credential>
+   <credential name='url'>PrimaryStore.xml</credential>
   </connectionCredentials>
  </store>
- <store id='ResourceRepository-b6e191a0-58c5-412b-98fe-d3c398ec10c4' type='ResourceRepository'>
+ <store id='ResourceRepository' type='ResourceRepository'>
   <name>Upgraded ResourceRepository Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>ResourceRepository-b6e191a0-58c5-412b-98fe-d3c398ec10c4.xml</credential>
+   <credential name='url'>ResourceRepository.xml</credential>
   </connectionCredentials>
  </store>
- <store id='UserStore-ae136608-40b1-425b-bf76-21ef116c1aeb' type='UserStore'>
+ <store id='UserStore' type='UserStore'>
   <name>Upgraded UserStore Store</name>
   <description>Store generated from upgrade task</description>
   <connectionCredentials>
-   <credential name='url'>UserStore-ae136608-40b1-425b-bf76-21ef116c1aeb.xml</credential>
+   <credential name='url'>UserStore.xml</credential>
   </connectionCredentials>
  </store>
  <assembly id='UPGRADED'>
   <name>Upgraded Configuration</name>
-  <description>Upgraded Assembly, generated Thu Sep 02 14:02:03 CEST 2021</description>
-  <component id='CertStore-822652e4-303f-4bb1-bad7-5c5c1b96ae03'/>
-  <component id='EnvSettingsStore-e6dbea5e-636c-412a-9850-a197d62e7456'/>
-  <component id='ExtConnsStore-be15b716-1102-4a74-b9b9-c051a45041ea'/>
-  <component id='ListenersStore-5d2ca2f4-3385-42b6-8a8e-928dad20726f'/>
-  <component id='PrimaryStore-0e092b98-8b54-407d-8292-853059c86653'/>
-  <component id='ResourceRepository-b6e191a0-58c5-412b-98fe-d3c398ec10c4'/>
-  <component id='UserStore-ae136608-40b1-425b-bf76-21ef116c1aeb'/>
+  <description>Upgraded Assembly, generated Thu Feb 24 13:34:19 CET 2022</description>
+  <component id='CertStore'/>
+  <component id='EnvSettingsStore'/>
+  <component id='ExtConnsStore'/>
+  <component id='ListenersStore'/>
+  <component id='PrimaryStore'/>
+  <component id='ResourceRepository'/>
+  <component id='UserStore'/>
  </assembly>
 </configuration>

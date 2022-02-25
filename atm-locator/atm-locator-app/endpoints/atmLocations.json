@@ -1,0 +1,245 @@
+{
+  "info": {
+    "version": "2.0",
+    "description": "List of ATM  locations for Yoisho Banking Corporation",
+    "title": "ATM Locations",
+    "contact": {
+      "name": "Uli Hitzel",
+      "url": "https://developer.yoisho.dob.jp"
+    },
+    "license": {
+      "name": "Apache 2.0"
+    }
+  },
+  "paths": {
+    "/atm/{id}": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Returns the updated ATM",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "examples": {
+              "example-1": {
+                "message": "updated",
+                "id": 105
+              }
+            }
+          }
+        },
+        "summary": "Update ATM Location",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "name": "body",
+            "in": "body"
+          }
+        ],
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "PUT-atm-location",
+        "description": "Updates an existing ATM.",
+        "x-flow": "atmLocations-PUT-atm-location"
+      },
+      "delete": {
+        "summary": "Delete ATM Location",
+        "responses": {
+          "204": {
+            "description": "",
+            "examples": {
+              "example-1": {
+                "message": " 565 deleted"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "DELETE-atm-location",
+        "description": "Delete an ATM with the given ID.",
+        "x-flow": "atmLocations-DELETE-atm-location"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "id",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "summary": "Get ATM Location",
+        "responses": {
+          "200": {
+            "description": "Returns the ATM with the provided ID",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "examples": {
+              "example-1": {
+                "lat": "35.6284713",
+                "lon": "139.736571",
+                "location": "Shinagawa Station"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "GET-atm-location",
+        "description": "Get the location of an ATM for a given ID.",
+        "x-flow": "atmLocations-GET-atm-location"
+      }
+    },
+    "/atm": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Returns the generated ATM",
+            "schema": {
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "examples": {
+              "example-1": {
+                "message": "created",
+                "id": "565"
+              }
+            }
+          }
+        },
+        "summary": "Create ATM Location",
+        "parameters": [
+          {
+            "schema": {
+              "example": {
+                "lat": "35.6925508",
+                "lon": "139.6922616",
+                "location": "Shinjuku Station"
+              },
+              "$ref": "#/definitions/atm-location-input"
+            },
+            "name": "body",
+            "in": "body"
+          }
+        ],
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "POST-atm-location",
+        "description": "Create a new ATM.",
+        "x-flow": "atmLocations-POST-atm-location"
+      },
+      "get": {
+        "summary": "List Atm locations",
+        "responses": {
+          "200": {
+            "examples": {
+              "example-1": {
+                "result": [
+                  {
+                    "lat": "35.6684231",
+                    "lon": "139.6833085",
+                    "location": "Ebisu Station",
+                    "id": "1"
+                  },
+                  {
+                    "lat": "35.6284713",
+                    "lon": "139.736571",
+                    "location": "Shinagawa Station",
+                    "id": "2"
+                  }
+                ]
+              }
+            },
+            "description": "Returns an Array of ATM locations",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "lat": {
+                        "type": "string"
+                      },
+                      "lon": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Atm locations"
+        ],
+        "operationId": "LIST-atm-locations",
+        "description": "Get all ATMs",
+        "x-flow": "atmLocations-LIST-atm-locations"
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-atm",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Delete something"
+      }
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "basePath": "/banking/v2",
+  "host": "backend.yoisho.dob.jp",
+  "definitions": {
+    "atm-location-input": {
+      "required": [
+        "location"
+      ],
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "string"
+        },
+        "lon": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "title": "ATM Location Input"
+    }
+  },
+  "swagger": "2.0",
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Atm locations"
+    }
+  ]
+}

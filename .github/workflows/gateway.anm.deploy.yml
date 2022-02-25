@@ -3,11 +3,16 @@ name: Deploy Admin-Node-Manager
 env:
   dockerRegistry: ghcr.io
   dockerRepository: cwiechmann/axway-api-management-automated
-  baseImage: "base:77-20210830-1"
-  outImage: "anm:77-20210830-1"
+  baseImage: "base:77-20220228-1"
+  outImage: "anm:77-20220228-1"
 
 on:
   push:
+    branches:
+      - main
+    paths:
+      - gateway-config/anm/**
+  pull_request:
     branches:
       - main
     paths:
@@ -46,9 +51,9 @@ jobs:
           jar tvf anm.fed
       - name: Build ANM image
         run: |
-          tar xvfz APIGateway_7.7.20210330-DockerScripts-2.2.0-2.tar.gz
+          tar xvfz apigw-emt-scripts-2.4.0-20220222.150412-10.tar.gz
           echo "${{ secrets.APIGATEWAY_LICENSE }}" | base64 -d > license.lic
-          ./apigw-emt-scripts-2.2.0-2/build_anm_image.py --license=license.lic --default-cert --fed=anm.fed --metrics --merge-dir anm/merge-dir/apigateway --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
+          ./apigw-emt-scripts-2.4.0-SNAPSHOT/build_anm_image.py --license=license.lic --default-cert --fed=anm.fed --metrics --merge-dir anm/merge-dir/apigateway --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
       - name: Push image
         run: |
           docker push ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
@@ -62,6 +67,6 @@ jobs:
         run: |
           mkdir  $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
-          kubectl set image -n apim deployment/anm anm=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
+          kubectl set image -n apim deployment/axway-apim-anm axway-apim-anm=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
       - name: Verify ANM deployment
-        run: kubectl -n apim rollout status deployment/anm
+        run: kubectl -n apim rollout status deployment/axway-apim-anm

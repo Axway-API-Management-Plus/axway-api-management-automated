@@ -1,0 +1,41 @@
+{
+	"name": "atm-locator-app",
+	"description": "An API Builder service",
+	"main": "app.js",
+	"version": "1.0.0",
+	"license": "",
+	"keywords": [
+		"api-builder",
+		"micro-service",
+		"middleware",
+		"orm",
+		"service"
+	],
+	"engines": {
+		"node": ">=14.17"
+	},
+	"repository": {},
+	"private": true,
+	"dependencies": {
+		"@axway/api-builder-runtime": "^4.74.8",
+		"@axway/api-builder-plugin-invoke-flow": "^1.1.2",
+		"@axway/api-builder-plugin-fn-base64": "^4.0.3",
+		"@axway/api-builder-plugin-fn-javascript": "^3.0.3",
+		"@axway/api-builder-plugin-fn-json": "^4.0.3",
+		"@axway/api-builder-plugin-fn-logger": "^1.0.2",
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.11",
+		"@axway/api-builder-plugin-fn-restclient": "^2.0.26",
+		"@axway/api-builder-plugin-fn-swagger": "^3.0.8",
+		"elastic-apm-node": "^3.27.0"
+	},
+	"devDependencies": {
+		"@axway/api-builder-admin": "^1.48.3",
+		"chai": "^4.3.4",
+		"got": "^11.8.3",
+		"mocha": "^9.1.2"
+	},
+	"scripts": {
+		"start": "node .",
+		"test": "mocha --colors ./test --recursive -R spec"
+	}
+}

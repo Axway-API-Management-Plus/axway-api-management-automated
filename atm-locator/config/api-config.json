@@ -1,0 +1,81 @@
+{
+  "name": "ATM Locator API",
+  "path": "/api/atm/locator",
+  "state": "published",
+  "version": "1.1",
+  "organization": "Axway",
+  "apiSpecification": {
+    "resource": "../atm-locator-app/endpoints/atmLocations.json"
+  },
+  "image": "atm-locator-icon.png",
+  "backendBasepath" : "http://atm-locator-app:8080/api/banking/v2",
+  "summary": "List of ATM locations for Yoisho Banking Corporation",
+  "descriptionType": "markdownLocal",
+  "markdownLocal": [ 
+    "../../lib/generic-infos.md", 
+    "ORIGINAL",
+    "api-info.md" 
+  ],
+  "securityProfiles": [
+    {
+      "name": "_default",
+      "isDefault": true,
+      "devices": [
+        {
+          "name": "API Key",
+          "type": "apiKey",
+          "order": 1,
+          "properties": {
+            "apiKeyFieldName": "KeyId",
+            "takeFrom": "HEADER",
+            "removeCredentialsOnSuccess": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "authenticationProfiles" : [ {
+    "name" : "_default",
+    "isDefault" : true,
+    "parameters" : {
+      "username" : "SoJZ+VvN5eJO9gPwFflSaDvPK2yGMtqj",
+      "password" : ""
+    },
+    "type" : "http_basic"
+  } ],
+  "clientOrganizations": ["Plexus Health", "Axway", "FastCars", "Partners"],
+  "customProperties": {
+    "securityLevel": "public",
+    "publicAPI": "true"
+  },
+  "tags": {
+    "Portal": ["Partners"]
+  },
+  "applicationQuota": {
+    "restrictions": [
+      {
+        "method": "*",
+        "type": "throttle",
+        "config": {
+          "period": "minute",
+          "messages": 5,
+          "per": 1
+        }
+      }
+    ]
+  },
+  "applications": [
+    {
+      "name": "Plexus Suite - Appointment Management"
+    },
+    {
+      "name": "Plexus Health Center"
+    },
+    {
+      "name": "Plexus Suite - Patient Monitoring"
+    },
+    {
+      "name": "Axway Client App"
+    }
+  ]
+}
