@@ -51,7 +51,7 @@ do
 	echo "Header: $header"
 	echo "Verb: $verb"
 	set -x
-	${APIGATEWAY_HOME}/Linux.x86_64/bin/sr -d 5 -p 5 -w 8 -qq ${API_TRAFFIC_URL}${uri} -A "${header}" -A user-agent:Axway-API-Gateway-Stress -v GET
+	${APIGATEWAY_HOME}/Linux.x86_64/bin/sr -d 1 -p 1 -qq ${API_TRAFFIC_URL}${uri} -A "${header}" -A user-agent:Axway-API-Gateway-Stress -v GET
 	set +x
 
 done
