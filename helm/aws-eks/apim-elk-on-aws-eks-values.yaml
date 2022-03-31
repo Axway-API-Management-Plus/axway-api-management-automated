@@ -1,6 +1,7 @@
 # A sample myvalues.yaml file
 apibuilder4elastic: 
   imageTag: "latest"
+  imagePullPolicy: Always
   replicas: 1
   anmUrl: "https://axway-apim-anm:8090"
   apimgrUrl: "https://apimgr:8075"
@@ -13,6 +14,7 @@ apibuilder4elastic:
   apmserver:
     verifyServerCert: "false"
   logLevel: debug
+  eventlogCustomAttributes: "user-agent"
   retentionPeriodConfig: "./config/my-retention-period.json"
 
   extraVolumes:
@@ -35,7 +37,7 @@ elasticsearch:
     storageClassName: gp2
     resources:
       requests:
-        storage: 100Gi
+        storage: 120Gi
   esJavaOpts: "-Xms4g -Xmx4g"
   resources:
     requests:
@@ -98,12 +100,14 @@ logstash:
       cpu: "3000m"
       memory: "6Gi"
 
+  cacheAPIPaths: "/petstore/v2/pet, /careplan/"
+
 filebeat: 
   # Only create the ConfigMaps which are used by Filebeat running along the API-Gateways as a side-car
   createFilebeatConfig: true
   # imageTag: "7.16.2"
 
-  elasticsearchClusterUUID: i1djDUVbTcKj2ySgf1PCmg
+  elasticsearchClusterUUID: Vg0PRj28SY2mLuOEkzMMng
 
   validateElasticsearchCertificate: "none"
 
