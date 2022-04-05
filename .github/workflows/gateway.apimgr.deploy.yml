@@ -47,16 +47,20 @@ jobs:
       - name: Create FED-File
         run: |
           sed -i 's/^Id:\s.*$/Id: fed/' apimgr/fed/meta-inf/manifest.mf
-          jar cvfm apimanager.fed apimgr/fed/meta-inf/manifest.mf -C apimgr fed
-          jar tvf apimanager.fed
-      - name: Build Manager image
-        run: |
-          tar xvfz apigw-emt-scripts-2.4.0-20220222.150412-10.tar.gz
-          echo "${{ secrets.APIGATEWAY_LICENSE }}" | base64 -d > license.lic
-          ./apigw-emt-scripts-2.4.0-SNAPSHOT/build_gw_image.py --license=license.lic --merge-dir apimgr/merge-dir/apigateway --default-cert --fed=apimanager.fed --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
-      - name: Push image
-        run: |
-          docker push ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
+          jar cvfm releases/apimanager-${{ env.IMAGE_TAG }}.fed apimgr/fed/meta-inf/manifest.mf -C apimgr fed
+          jar tvf releases/apimanager-${{ env.IMAGE_TAG }}.fed
+      - name: Push created FED-File
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'FED-File released'
+      # - name: Build Manager image
+      #   run: |
+      #     tar xvfz apigw-emt-scripts-2.4.0-20220222.150412-10.tar.gz
+      #     echo "${{ secrets.APIGATEWAY_LICENSE }}" | base64 -d > license.lic
+      #     ./apigw-emt-scripts-2.4.0-SNAPSHOT/build_gw_image.py --license=license.lic --merge-dir apimgr/merge-dir/apigateway --default-cert --fed=apimanager.fed --parent-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }} --out-image=${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
+      # - name: Push image
+      #   run: |
+      #     docker push ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.outImage }}-${{ env.IMAGE_TAG }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
