@@ -97,9 +97,10 @@ The API gateways are controlled by policies, which are configured in Policy Stud
 
 ### API Gateway Updates
 
-Using DevOps pipelines and a Kubernetes cluster, updating the API management platform is done by a rolling exchange of the corresponding Docker images, which are built by the pipeline and registered with the Kubernetes cluster.
+To update API Gateway policies, the Policy Studio project is pipelined into an FED file, which is downloaded through an Init container and thus made available to the API Gateway.  
+The following video demonstrates the process:  
+[![Policy-Studio Configuration changes](https://img.youtube.com/vi/2fpoCuSxUxs/0.jpg)](https://youtu.be/2fpoCuSxUxs)  
 
-[![Policy-Studio - Change Health-Check API](https://img.youtube.com/vi/35uEpu2Y8YU/0.jpg)](https://youtu.be/35uEpu2Y8YU)  
 
 ### Mutual SSL
 
