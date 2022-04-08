@@ -1,0 +1,55 @@
+name: Rollout API-Gateway config
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - gateway-config/apigateway/config/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - gateway-config/apigateway/config/**
+  release:
+    types:
+      - published
+
+defaults:
+  run:
+    working-directory: gateway-config
+
+jobs:
+  rollout-apigw-config:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Rollout API-GW config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Create FED-File
+        run: |
+          sed -i 's/^Id:\s.*$/Id: config/' apigateway/config/META-INF/manifest.mf
+          mkdir -p apigateway/fed
+          jar cvfm apigateway/fed/apigateway.fed apigateway/config/META-INF/manifest.mf -C apigateway config
+          jar tvf apigateway/fed/apigateway.fed
+      - name: Push created FED-File
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'FED-File released'
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+      - name: Rollout configuration
+        run: |
+          mkdir  $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          kubectl -n apim rollout restart deployment traffic
+          kubectl -n apim rollout restart deployment apimgr
+      - name: Verify Manager deployment
+        run: kubectl -n apim rollout status deployment/apimgr
+      - name: Verify Traffic deployment
+        run: kubectl -n apim rollout status deployment/traffic
