@@ -128,3 +128,5 @@ You are welcome to  fork this repository and customize it according to your own 
 | AWS_ACCESS_KEY_ID      | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
 | AWS_SECRET_ACCESS_KEY  | Used to authenticate at AWS in oder to control the K8S-Cluster running at AWS-EKS      |
 | KUBE_CONFIG_DATA       | The Base64 encoded Kubectl configuration. cat $HOME/.kube/config | base64              |
+| DOCKER_REGISTRY        | The Docker Registry to pull and push Images  e.g. ghcr.io                              |
+| DOCKER_REPO            | The Docker Repository to work with  to pull and push Images e.g. cwiechmann/ay-api-management-automated  |

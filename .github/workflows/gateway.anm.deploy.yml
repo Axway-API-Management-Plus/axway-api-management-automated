@@ -1,8 +1,8 @@
 name: "2.(M) Deploy Admin-Node-Manager"
 
 env:
-  dockerRegistry: ghcr.io
-  dockerRepository: cwiechmann/axway-api-management-automated
+  dockerRegistry: ${{ secrets.DOCKER_REGISTRY }}
+  dockerRepository: ${{ secrets.DOCKER_REPO }}
   baseImage: "base:77-20220228-1"
   outImage: "anm"
   outImageVersion: "77-20220228-1"
