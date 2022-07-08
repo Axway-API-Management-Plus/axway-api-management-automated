@@ -48,7 +48,7 @@ jobs:
         run: |
           mkdir  $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
-          aws eks --region eu-west-1 update-kubeconfig --name eks-amplify
+          aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
           kubectl version
       - name: Set image version
         run: |

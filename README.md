@@ -131,3 +131,5 @@ You are welcome to  fork this repository and customize it according to your own 
 | BASE_IMAGE             | The Base Image to pull  e.g. ghcr.io/cwiechmann/axway-api-management-automated/base:77-20220530-1   |
 | DOCKER_REGISTRY        | The Docker Registry to push the build Images  e.g. ghcr.io                              |
 | DOCKER_REPO            | The Docker Repository to push the build Images e.g. mpentzek/ay-api-management-automated  |
+| AWS_REGION             | The AWS Region e.g. eu-west-1                                                              |
+| EKS_CLUSTER_NAME       | The Name of the EKS Cluster                                                              |
