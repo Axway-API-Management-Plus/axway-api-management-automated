@@ -45,7 +45,7 @@ anm:
           #!/bin/sh
           echo "Download API-Gateway config from: https://raw.githubusercontent.com/cwiechmann/axway-api-management-automated/main/gateway-config/anm/fed/anm.fed"
           wget -O /merge/fed https://raw.githubusercontent.com/cwiechmann/axway-api-management-automated/main/gateway-config/anm/fed/anm.fed
-  imageTag: 77-20220228-1-2022-07-08-09-52
+  imageTag: 77-20220228-1-2022-07-08-10-13
 ##################################################################################################################################
 #   API MANAGER
 ##################################################################################################################################
