@@ -2,7 +2,7 @@ global:
   imagePullSecrets:
     - name: docker-registry.demo.axway.com
   domainName: "apim-presales-dach.de"
-  dockerRepository: "ghcr.io/cwiechmann/axway-api-management-automated"
+  dockerRepository: "ghcr.io/mpentzek/axway-api-management-automated"
   imageTag: "77-20220228-1-2022-04-07-12-55"
   acceptGeneralConditions: "yes"
   existingLicenseSecret: "axway-license"
