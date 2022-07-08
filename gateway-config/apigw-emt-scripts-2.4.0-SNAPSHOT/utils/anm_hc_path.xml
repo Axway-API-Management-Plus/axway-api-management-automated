@@ -1,0 +1,93 @@
+<entityStoreData>
+
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="XMLFirewall">
+	<key type='NetService'>
+		<id field='name' value='Service'/>
+		<key type='HTTP'>
+			<id field='name' value='Management Services'/>
+		</key>
+	</key>
+	<fval name="corsProfile"><value contentType="reference">-1</value></fval>
+	<fval name="corsUsage"><value>HTTP</value></fval>
+	<fval name="enableAccessLogging"><value>0</value></fval>
+	<fval name="enabled"><value>1</value></fval>
+	<fval name="evaluate"><value>1</value></fval>
+	<fval name="filterCircuit"><value contentType="reference">
+<key type='CircuitContainer'><id field='name' value='Policy Library'/><key type='FilterCircuit'><id field='name' value='Health Check'/></key></key>	</value></fval>
+	<fval name="httpMethod"><value>*</value></fval>
+	<fval name="logMask"><value>0</value></fval>
+	<fval name="pathMatching"><value>LONGEST</value></fval>
+	<fval name="payloadMask"><value>0</value></fval>
+	<fval name="trafficMonitoringEnabled"><value>0</value></fval>
+	<fval name="uriprefix"><value>/healthcheck</value></fval>
+</entity>
+
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="PortableCircuitReference">
+	<key type='NetService'>
+		<id field='name' value='Service'/>
+		<key type='HTTP'>
+			<id field='name' value='Management Services'/>
+			<key type='XMLFirewall'>
+				<id field='uriprefix' value='/healthcheck'/>
+				<id field='httpMethod' value='*'/>
+			</key>
+		</key>
+	</key>
+	<fval name="circuitPK"><value contentType="reference">-1</value></fval>
+	<fval name="evaluate"><value>true</value></fval>
+	<fval name="name"><value>CUSTOM_POLICY_REQ</value></fval>
+	<fval name="priority"><value>1</value></fval>
+</entity>
+
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="PortableCircuitReference">
+	<key type='NetService'>
+		<id field='name' value='Service'/>
+		<key type='HTTP'>
+			<id field='name' value='Management Services'/>
+			<key type='XMLFirewall'>
+				<id field='uriprefix' value='/healthcheck'/>
+				<id field='httpMethod' value='*'/>
+			</key>
+		</key>
+	</key>
+	<fval name="circuitPK"><value contentType="reference">-1</value></fval>
+	<fval name="evaluate"><value>true</value></fval>
+	<fval name="name"><value>CUSTOM_POLICY_RSP</value></fval>
+	<fval name="priority"><value>3</value></fval>
+</entity>
+
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SoftCircuitReference">
+	<key type='NetService'>
+		<id field='name' value='Service'/>
+		<key type='HTTP'>
+			<id field='name' value='Management Services'/>
+			<key type='XMLFirewall'>
+				<id field='uriprefix' value='/healthcheck'/>
+				<id field='httpMethod' value='*'/>
+			</key>
+		</key>
+	</key>
+	<fval name="circuitPK"><value>system.policy.request</value></fval>
+	<fval name="evaluate"><value>0</value></fval>
+	<fval name="name"><value>GLOBAL_POLICY_REQ</value></fval>
+	<fval name="priority"><value>0</value></fval>
+</entity>
+
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="SoftCircuitReference">
+	<key type='NetService'>
+		<id field='name' value='Service'/>
+		<key type='HTTP'>
+			<id field='name' value='Management Services'/>
+			<key type='XMLFirewall'>
+				<id field='uriprefix' value='/healthcheck'/>
+				<id field='httpMethod' value='*'/>
+			</key>
+		</key>
+	</key>
+	<fval name="circuitPK"><value>system.policy.response</value></fval>
+	<fval name="evaluate"><value>0</value></fval>
+	<fval name="name"><value>GLOBAL_POLICY_RSP</value></fval>
+	<fval name="priority"><value>4</value></fval>
+</entity>
+
+</entityStoreData>

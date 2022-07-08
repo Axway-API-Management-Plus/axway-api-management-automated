@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ ! "$ACCEPT_GENERAL_CONDITIONS" == "yes" ]; then
+  echo "The parameter ACCEPT_GENERAL_CONDITIONS must be set to yes to use the product"
+else
+  component=`basename "$0"`
+  . `dirname "$0"`/../lib/venv "$0"
+  . `dirname "$0"`/../lib/venv-ld_preload
+  . `dirname "$0"`/emt-common
+  
+  merge_external_files
+  
+  echo "Launching Node Manager in EMT mode..."
+  set_heap_size
+  exec $VDISTDIR/posix/bin/nodemanager $heap_size
+fi

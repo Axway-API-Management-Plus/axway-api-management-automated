@@ -1,0 +1,7 @@
+#!/bin/sh
+
+component=`basename "$0"`
+. `dirname "$0"`/../lib/venv "$0"
+. `dirname "$0"`/../lib/venv-ld_preload
+
+exec "$V_PLATFORM_BIN/vshell" -h "$VDISTDIR" -Dquiet -N -e "$VDISTDIR/system/conf/jython.xml" "$VDISTDIR/posix/bin/setup_emt_instance.py" "$@"
