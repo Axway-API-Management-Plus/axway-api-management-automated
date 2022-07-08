@@ -1,0 +1,54 @@
+default:
+  tags:
+    - apigw-docker
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+
+stages:
+  - test
+
+shellcheck:
+  image:
+    #name: alpine:3.14
+    name: dockerhub.artifactory-phx.ecd.axway.int/library/alpine:3.14
+    entrypoint: ["/bin/sh", "-c"]
+  stage: test
+  script:
+    - apk add --no-cache shellcheck
+    - find $PWD -type f -name \*.sh | grep -v target/ | xargs shellcheck
+  only:
+    - main
+    - merge_requests
+    - tags
+
+code_quality:
+  services:
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+    paths:
+      - gl-code-quality-report.json
+  tags:
+    - cq-sans-dind
+
+checkov-dockerfiles:
+  image:
+    name: dockerhub.artifactory-phx.ecd.axway.int/bridgecrew/checkov:latest
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  stage: test
+  script:
+    - checkov --directory . --skip-path=target --framework dockerfile --output junitxml | tee junitxml-dockerfiles.xml | grep "testsuites "
+  artifacts:
+    reports:
+      junit:
+        - junitxml-dockerfiles.xml
+    paths:
+      - junitxml-dockerfiles.xml
+  only:
+    - main
+    - merge_requests
+    - tags

@@ -1,0 +1,46 @@
+[ca]
+default_ca = CA_default
+ 
+[CA_default]
+basedir = ?
+privatedir = $basedir
+tempdir = $basedir
+
+database = $basedir/index.txt 
+new_certs_dir = $tempdir
+  
+certificate = $basedir/domaincert.pem
+serial = $basedir/serial 
+private_key = $privatedir/domainkey.pem
+RANDFILE = $privatedir/.rand
+
+policy = policy_any
+email_in_dn = no
+
+copy_extensions = copyall
+unique_subject = no
+default_days = 36500
+
+[policy_any]
+domainComponent = optional
+organizationalUnitName = optional
+organizationName = optional
+localityName = optional
+stateOrProvinceName = optional
+stateOrProvinceName = optional
+countryName = optional
+commonName = supplied
+
+[req]
+distinguished_name = req_distinguished_name
+
+[req_distinguished_name]
+
+[x509_extensions]
+# Need this so that when we sign a CSR we copy the extensions from the CSR as
+# copy_extensions=copyall. Also we ensure we get a v3 certificate as opposed to v1.
+
+[domain_extensions]
+basicConstraints=CA:TRUE, pathlen:0
+keyUsage = digitalSignature, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign
+

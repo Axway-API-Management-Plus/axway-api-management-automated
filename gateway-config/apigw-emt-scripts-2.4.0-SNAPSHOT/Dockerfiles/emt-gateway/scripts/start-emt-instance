@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ ! "$ACCEPT_GENERAL_CONDITIONS" == "yes" ]; then
+  echo "The parameter ACCEPT_GENERAL_CONDITIONS must be set to yes to use the product"
+else
+  component=`basename "$0"`
+  . `dirname "$0"`/../lib/venv "$0"
+  . `dirname "$0"`/../lib/venv-ld_preload
+  . `dirname "$0"`/emt-common
+  
+  instance_dir=$VDISTDIR/groups/topologylinks/emt-group-emt-service
+  conf_file=conf/service.xml
+  
+  merge_external_files
+  
+  # Set instance ID to container hostname
+  sed -i -e "s/emt-service/$(uname -n)/" "$instance_dir/conf/serviceids.xml"
+  
+  if [ "$EMT_FIPS_MODE" == "true" ]; then fips_mode="-DFIPS"; else fips_mode=""; fi
+  
+  echo "Launching API Gateway in EMT mode..."
+  set_heap_size
+  exec "$V_PLATFORM_BIN/vshell" $fips_mode $heap_size -h "$instance_dir" -DLicenseType=APIGateway -v ${instanceargs} $conf_file
+fi
