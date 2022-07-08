@@ -1,31 +1,14 @@
-# A sample myvalues.yaml file
-apibuilder4elastic: 
-  imageTag: "latest"
-  imagePullPolicy: Always
+apibuilder4elastic:
   replicas: 1
+  ingress:
+    enabled: false 
   anmUrl: "https://axway-apim-anm:8090"
   apimgrUrl: "https://apimgr:8075"
   secrets: 
     apimgrUsername: "apiadmin"
-    apimgrPassword: "axway123"
-
-  validateElasticsearchCertificate: "false"
-
-  apmserver:
+    apimgrPassword: "markus"
+  apmserver: 
     verifyServerCert: "false"
-  logLevel: debug
-  eventlogCustomAttributes: "user-agent"
-  retentionPeriodConfig: "./config/my-retention-period.json"
-
-  extraVolumes:
-    - name: retentionperiod
-      configMap:
-        name: retentionperiod
-
-  extraVolumeMounts: 
-    - name: retentionperiod
-      mountPath: /app/config/
-
 # Enable, if you would like to deploy a new Elasticsearch cluster for the solution
 elasticsearch:
   enabled: true
@@ -34,30 +17,30 @@ elasticsearch:
   extraInitContainers: [] # To be removed on release after 3.2.0
   volumeClaimTemplate:
     accessModes: [ "ReadWriteOnce" ]
-    storageClassName: gp3
+    storageClassName: ebs-sc
     resources:
       requests:
-        storage: 120Gi
-  esJavaOpts: "-Xms4g -Xmx4g"
+        storage: 80Gi
+  esJavaOpts: "-Xms3g -Xmx3g"
   resources:
     requests:
-      cpu: "2000m"
-      memory: "8Gi"
+      cpu: "1500m"
+      memory: "6Gi"
     limits:
-      cpu: "4000m"
-      memory: "8Gi"
-
+      cpu: "3000m"
+      memory: "6Gi"
   # For this demo environment it's okay to have two ES-Nodes on the same worker node
   antiAffinity: "ignore"
-
   # Enabling this will publicly expose your Elasticsearch instance.
   # Only enable this if you have security enabled on your cluster
   ingress: 
     enabled: false
 
+
 # Enable, if you would like to deploy Kibana for the solution
 kibana:
   enabled: true
+  replicas: 1
   # imageTag: "7.16.2"
   validateElasticsearchCertificate: "none"
   ingress:
@@ -75,7 +58,7 @@ kibana:
       # 302 is also accepted, as Kibana is performing a redirect
       alb.ingress.kubernetes.io/success-codes: 200,302
     hosts:
-      - host: kibana.axway-apim-on-eks.de
+      - host: kibana.apim-presales-dach.de
         paths:
           - path: /*
 
@@ -88,7 +71,7 @@ kibana:
       memory: "700Mi"
 
 logstash:
-  replicas: 2
+  replicas: 1
   # imageTag: "7.16.2"
   logstashJavaOpts: "-Xmx6g -Xms6g"
   validateElasticsearchCertificate: "none"
@@ -107,7 +90,7 @@ filebeat:
   createFilebeatConfig: true
   # imageTag: "7.16.2"
 
-  elasticsearchClusterUUID: Vg0PRj28SY2mLuOEkzMMng
+  elasticsearchClusterUUID: GchxbAcPTPybtLibINuNBA
 
   validateElasticsearchCertificate: "none"
 
@@ -119,7 +102,7 @@ filebeat:
 apm-server:
   enabled: true
 
-  elasticsearchClusterUUID: i1djDUVbTcKj2ySgf1PCmg
+  elasticsearchClusterUUID: GchxbAcPTPybtLibINuNBA
 
   validateElasticsearchCertificate: "none"
 
