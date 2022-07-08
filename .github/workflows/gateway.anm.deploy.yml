@@ -1,8 +1,11 @@
 name: "2.(M) Deploy Admin-Node-Manager"
 
 env:
+  baseDockerRegistry: ${{ secrets.BASE_DOCKER_REGISTRY }}
+  baseDockerRepository: ${{ secrets.BASE_DOCKER_REPO }}
   dockerRegistry: ${{ secrets.DOCKER_REGISTRY }}
   dockerRepository: ${{ secrets.DOCKER_REPO }}
+
   baseImage: "base:77-20220228-1"
   outImage: "anm"
   outImageVersion: "77-20220228-1"
@@ -48,7 +51,7 @@ jobs:
             echo "IMAGE_TAG=${{ env.outImageVersion }}-$(echo ${date})" >> $GITHUB_ENV
           fi
       - name: Pull base image
-        run: docker pull ${{ env.dockerRegistry }}/${{ env.dockerRepository }}/${{ env.baseImage }}
+        run: docker pull ${{ env.baseDockerRegistry }}/${{ env.baseDockerRepository }}/${{ env.baseImage }}
       - name: Build ANM image
         run: |
           tar xvfz apigw-emt-scripts-2.4.0-20220222.150412-10.tar.gz
